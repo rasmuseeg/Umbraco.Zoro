@@ -1,0 +1,44 @@
+@using VintageFinder.Web.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<PaginationModel>
+@{
+    if (Model.TotalPages > 0)
+    {
+        @RenderPager(Model)
+    }
+}
+
+@helper RenderPager(PaginationModel model)
+{
+    <nav aria-label="Page navigation" class="text-xs-center">
+        <ul class="pagination">
+            <li class="page-item @Umbraco.If(model.CurrentPage <= 1, "disabled")">
+                <a class="page-link" href="@Umbraco.If(model.CurrentPage > 1, Umbraco.ModifyQueryString("p", (model.CurrentPage - 1)), "#")"
+                   aria-label="@Umbraco.GetDictionaryValue("Previous", "Previous")">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">@Umbraco.GetDictionaryValue("Previous", "Previous")</span>
+                </a>
+            </li>
+
+            @for (var i = 1; i <= model.TotalPages; i++)
+            {
+                <li class="page-item @Umbraco.If( model.CurrentPage == i, "active" )">
+                    @if (model.CurrentPage == i)
+                    {
+                        <span class="page-link">@i <span class="sr-only">(current)</span></span>
+                    }
+                    else
+                    {
+                        <a class="page-link" href="@Umbraco.ModifyQueryString("p", i)">@i</a>
+                    }
+                </li>
+            }
+
+            <li class="page-item @Umbraco.If(model.CurrentPage >= model.TotalPages, "disabled")">
+                <a class="page-link" href="@Umbraco.If(model.CurrentPage < model.TotalPages, Umbraco.ModifyQueryString("p", model.CurrentPage + 1), "#")"
+                   aria-label="@(Umbraco.GetDictionaryValue( "Next", "Next" ))">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+}

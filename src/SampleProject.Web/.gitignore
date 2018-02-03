@@ -1,0 +1,13 @@
+# Visual Studio
+*.sou
+.vs/
+obj/
+bin/
+**/packages/
+
+# Umbraco caches
+**/App_Data/
+**/Media/
+
+# NPM
+**/node_modules/

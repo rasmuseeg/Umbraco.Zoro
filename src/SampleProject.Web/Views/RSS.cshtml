@@ -1,0 +1,143 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using System.Xml.Linq;
+@using umbraco.cms.businesslogic.web;
+@using System.Web.Configuration;
+@using System.Text;
+@using System.Globalization;
+@{
+    Layout = null;
+
+    List<string> contentTypes = new List<string>() { };
+    string[] titleFields = new[] { "teaserHeading", "heading" };
+    string[] descriptionFields = new[] { "teaserDescription", "subheading" };
+
+    // QueryString
+    DateTime? dateFrom = Umbraco.GetQueryString<DateTime?>("from", null);
+    DateTime? dateTo = Umbraco.GetQueryString<DateTime?>("to", null);
+
+    string domain = Request.Url.GetLeftPart(UriPartial.Authority);
+
+    XDocument doc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"));
+    XElement rss = new XElement("rss",
+        new XAttribute("version", "2.0"),
+        new XAttribute(XNamespace.Xmlns + "media", "http://search.yahoo.com/mrss/")
+    );
+
+    XElement channel = new XElement("channel",
+        new XElement("title", HttpUtility.HtmlEncode(Model.Content.GetCoalesceValue<string>(titleFields) ?? Model.Content.Name)),
+        new XElement("link", Request.Url.ToString()),
+        new XElement("description", new XCData(Model.Content.GetCoalesceValue<string>(descriptionFields) ?? "")),
+        new XElement("language", Model.CurrentCulture.TwoLetterISOLanguageName),
+        new XElement("pubDate", GetRFCTime(DateTime.Now)),
+        new XElement("lastBuildDate", GetRFCTime(Model.Content.UpdateDate)),
+        new XElement("generator", "Umbraco v" + WebConfigurationManager.AppSettings["umbracoConfigurationStatus"] as string)
+      );
+
+    var result = Model.Content
+        .Children()
+        .Where(x => x.IsVisible()
+        && (!dateFrom.HasValue || x.GetPropertyValue<DateTime?>("date", x.CreateDate) >= dateFrom.Value)
+        && (!dateTo.HasValue || x.GetPropertyValue<DateTime?>("date", x.CreateDate) <= dateTo.Value));
+
+    channel.Add(GetItems(result, domain, titleFields, descriptionFields));
+    rss.Add(channel);
+    doc.Add(rss);
+
+    // Add headers
+    Response.AddHeader("Content-Type", "application/rss+xml, application/rdf+xml, application/atom+xml, application/xml, text/xml; charset=utf-8");
+    Response.AddHeader("Content-Disposition", "filename=rss.xml");
+
+    // write the xml document to respons
+    @Html.Raw("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
+    @Html.Raw(doc.ToString())
+}
+@functions{
+    /// <summary>
+    /// Convert a DateTime to RFC-822 format
+    /// </summary>
+    /// <param name="date">DateTime objec to be converted</param>
+    /// <returns>RFC-822 date-time</returns>
+    public string GetRFCTime(DateTime date)
+    {
+        String rfc822 = date.ToString("r");
+        return rfc822;
+    }
+
+    /// <summary>
+    /// Get the current mimetype for extension
+    /// </summary>
+    /// <returns>E.g: image/png</returns>
+    public string GetMimeTypeFromExtension(string extension)
+    {
+        switch (extension)
+        {
+            case "png":
+            case "jpg":
+                return "image/png";
+
+            case "jpeg":
+                return "image/jpeg";
+        }
+        return string.Empty;
+    }
+
+    public XElement[] GetItems(IEnumerable<IPublishedContent> result, string domain, string[] titleFields, string[] descriptionFields)
+    {
+        var items = new List<XElement>();
+        foreach (var item in result)
+        {
+            XElement xmlItem = new XElement("item",
+                new XElement("title", HttpUtility.HtmlEncode(item.GetCoalesceValue<string>(titleFields) ?? item.Name)),
+                new XElement("link", item.UrlAbsolute()),
+                new XElement("description", new XCData(item.GetCoalesceValue<string>(descriptionFields) ?? "")),
+                new XElement("pubDate", GetRFCTime(item.UpdateDate)),
+                new XElement("guid", new XAttribute("isPermaLink", true), domain + "/" + item.Id)
+            );
+
+            if (item.HasValue("author"))
+            {
+                xmlItem.Add(new XElement("author", item.GetPropertyValue<IPublishedContent>("author").Name));
+            }
+
+            // Image for node
+            List<IPublishedContent> images = new List<IPublishedContent>();
+            if (item.HasValue("image"))
+            {
+                images.Add(item.GetPropertyValue<IPublishedContent>("image"));
+            }
+            else if (item.HasValue("images"))
+            {
+                images.AddRange(item.GetPropertyValue<IEnumerable<IPublishedContent>>("images"));
+            }
+
+            if (images.Any())
+            {
+                var image = images.FirstOrDefault();
+                int width = 564;
+                int height = 380;
+                string mimetype = GetMimeTypeFromExtension(image.GetPropertyValue<string>("umbracoExtension", ""));
+
+                // rss 2.0 enclosure
+                XElement xmlEnclosure = new XElement("enclosure",
+                    new XAttribute("url", domain + image.Url),
+                    new XAttribute("type", mimetype),
+                    new XAttribute("length", image.GetPropertyValue<string>("umbracoBytes"))
+                );
+                xmlItem.Add(xmlEnclosure);
+
+                // used for mailchimp
+                XElement xmlMedia = new XElement("{http://search.yahoo.com/mrss/}content",
+                    new XAttribute("url", domain + image.GetCropUrl(width: width, height: height)),
+                    new XAttribute("type", mimetype),
+                    new XAttribute("medium", "image"),
+                    new XAttribute("width", width),
+                    new XAttribute("height", height)
+                );
+                xmlItem.Add(xmlMedia);
+            }
+
+            items.Add(xmlItem);
+        }
+        return items.ToArray();
+    }
+}

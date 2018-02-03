@@ -1,0 +1,95 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    @* Remember to site  prefix="og: http://ogp.me/ns#" on the html tag, else linkedin wont pickup images
+    Add facebookAppId property to site
+    Add twitterUsername to site
+
+    For debugging see:
+        * https://developers.facebook.com/tools/debug
+        * https://cards-dev.twitter.com/validator
+    *@
+    <!-- og -->
+    @RenderProperties()
+    var media = new List<IPublishedContent>();
+    media.AddRange(Model.Content.GetPropertyValue("ogImages", Enumerable.Empty<IPublishedContent>()));
+    @RenderMedia(media)
+    <!-- ./og (updated: @DateTime.Now.ToString())-->
+}
+
+@helper RenderProperties() {
+    <meta prefix="og: http://ogp.me/ns#" property="fb:app_id" content="@Model.Content.GetPropertyValue("facebookAppId", true, "")" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="@Model.Content.GetPropertyValue("siteName", true, "")" />
+    @*<meta property="og:type" content="article" />*@
+    <meta property="og:locale" content="@Model.CurrentCulture.ToString().Replace("-", "_")" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="@Model.Content.GetPropertyValue("ogTitle", "")" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:url" content="@Model.Content.UrlAbsolute()" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:description" content="@Model.Content.GetPropertyValue( "ogDescription", "" )" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:updated_time" content="@Model.Content.UpdateDate.ToIsoString()" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Model.Content.GetPropertyValue("twitterUsername", true, "")" />
+    <meta name="twitter:title" content="@Model.Content.GetPropertyValue("ogTitle", "")" />
+    <meta name="twitter:text:title" content="@Model.Content.GetPropertyValue("ogTitle", "")" />
+    <meta name="twitter:description" content="@Model.Content.GetPropertyValue( "ogDescription", "" )" />
+    <meta name="twitter:text:description" content="@Model.Content.GetPropertyValue( "ogDescription", "" )" />
+}
+
+@helper RenderMedia(IEnumerable<IPublishedContent> selectedMedia) {
+    <!-- media -->
+    if (selectedMedia.Any())
+    {
+        foreach (IPublishedContent media in selectedMedia)
+        {
+            if (media.DocumentTypeAlias == "Image")
+            {
+                @RenderImage(media);
+            }
+        }
+    }
+    else
+    {
+        <!-- empty -->
+    }
+    <!-- ./media -->
+}
+
+@helper RenderImage(IPublishedContent image)
+{
+    if (image != null) {
+        <meta name="twitter:image" content="@(Model.Content.AncestorOrSelf(1).UrlAbsolute() + image.Url.Substring(1))" />
+        <meta prefix="og: http://ogp.me/ns#" property="og:image"           content="@(Model.Content.AncestorOrSelf(1).UrlAbsolute() + image.Url.Substring(1))" />
+        <meta prefix="og: http://ogp.me/ns#" property="og:image:type"      content="@GetMimeType(image)" />
+        <meta prefix="og: http://ogp.me/ns#" property="og:image:width"     content="@image.GetPropertyValue("umbracoWidth", "")" />
+        <meta prefix="og: http://ogp.me/ns#" property="og:image:height"    content="@image.GetPropertyValue("umbracoHeight", "")" />
+    }
+}
+
+@helper RenderVideo(IPublishedContent video) {
+    <meta prefix="og: http://ogp.me/ns#" property="og:video"           content="@(Model.Content.AncestorOrSelf(1).UrlAbsolute() + video.Url.Substring(1))" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:video:type"      content="@(GetMimeType(video))" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:video:width"     content="@video.GetPropertyValue("umbracoWidth", "")" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:video:height"    content="@video.GetPropertyValue("umbracoHeight", "")" />
+    @*<meta property="og:image"           content="@video.GetPropertyValue("")" />*@
+}
+
+@functions {
+    public Dictionary<string,string> SupportedMimeTypes = new Dictionary<string, string> {
+        { "jpg", "image/jpeg" },
+        { "jpeg", "image/jpeg"},
+        { "png", "image/png"},
+        { "gif", "image/gif"},
+        { "flv", "application/x-shockwave-flash"},
+        { "mp4", "video/mp4" }
+    };
+
+    public string GetMimeType(IPublishedContent media)
+    {
+        string extension = media.GetPropertyValue<string>("umbracoExtension", "");
+        if (SupportedMimeTypes.ContainsKey(extension))
+        {
+            return SupportedMimeTypes[extension];
+        }
+
+        return null;
+    }
+}

@@ -1,0 +1,27 @@
+﻿@inherits UmbracoTemplatePage
+@{
+    string COOKIE_NAME = "CookieConcent";
+    if (Request.HttpMethod == WebRequestMethods.Http.Post)
+    {
+        if (Request.Form[COOKIE_NAME] != null)
+        {
+            Response.Cookies.Add(new HttpCookie(COOKIE_NAME, "1")
+            {
+                Expires = DateTime.Now.AddDays(30),
+                Domain = Request.Url.Host,
+                Path = "/",
+                Secure = Request.Url.Scheme == "http",
+                HttpOnly = false
+            });
+        }
+    }
+    if (Request.Cookies[COOKIE_NAME] == null)
+    {
+        <div class="alert alert-info" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Vi bruger cookies!</strong> Vi bruger cookies for at forbedre bruger oplevelsen. <a href="#" class="alert-link">Læs mere her</a>
+        </div>
+    }
+}
