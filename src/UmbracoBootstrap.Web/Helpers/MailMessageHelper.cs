@@ -13,7 +13,7 @@ using System.Web.Hosting;
 using Umbraco.Core.Configuration;
 using Umbraco.Core.Logging;
 
-namespace NordicCreativeLeadership.Web.Helpers
+namespace UmbracoBoostrap.Web.Helpers
 {
     public class MailMessageHelper
     {
