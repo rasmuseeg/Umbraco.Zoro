@@ -45,19 +45,19 @@ gulp.task('scss', function () {
 });
 
 gulp.task('bootstrap', function () {
-    return gulp.src(['assets/bootstrap/scss/bootstrap.scss'])
+    return gulp.src(['assets/lib/boostrap/scss/bootstrap.scss'])
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
         .pipe(sourcemaps.write('.', {
             includeContent: false,
-            sourceRoot: '/assets/scss/bootstrap'
+            sourceRoot: '/assets/lib/boostrap/scss'
         }))
         //.pipe(autoprefixer(autoprefixerOptions))
         .pipe(gulp.dest('assets/css'));
 });
 
 gulp.task("watch-bootstrap", function () {
-    return gulp.watch("assets/bootstrap/**/*.scss", ["bootstrap"]);
+    return gulp.watch("assets/lib/bootstrap/sccs/**/*.scss", ["bootstrap"]);
 });
 
 gulp.task("watch-scss", function () {

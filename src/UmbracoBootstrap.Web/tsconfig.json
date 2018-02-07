@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "lib": [ "dom", "es2015" ],
+      "outDir": "scripts/build/",
+      "target": "es5",
+      "module": "commonjs",
+      "sourceMap": true,
+      "removeComments": true,
+      "suppressImplicitAnyIndexErrors": true,
+      "alwaysStrict": true,
+      "jsx": "react"
+    },
+    "compileOnSave": true,
+    "exclude": [
+      "node_modules"
+    ]
+  }
+  
+  

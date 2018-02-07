@@ -1,0 +1,17 @@
+@model Umbraco.Forms.Mvc.Models.FieldViewModel
+@{ var i = 0; }
+
+<div class="radiobuttonlist form-group" id="@Model.Id">
+@foreach (Umbraco.Forms.Mvc.Models.PrevalueViewModel pv in Model.PreValues) {
+    <div class="radio">
+         <label for="@string.Concat(Model.Id,"_",i)">
+             <input type="radio" name="@Model.Id" id="@string.Concat(Model.Id,"_",i)" value="@pv.Value"
+                        @if (Model.Mandatory) {<text>data-val="true" data-val-requiredlist="@Model.RequiredErrorMessage"</text>}
+                        @if (Model.ContainsValue(pv.Value)){<text>checked="checked"</text>}>
+            <span>@pv.Value</span>
+        </label>
+    </div>
+    i++;
+}
+</div>
+
