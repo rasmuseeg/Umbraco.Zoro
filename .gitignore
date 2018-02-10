@@ -1,13 +1,16 @@
 # Visual Studio
 *.sou
+*.user
 .vs/
 obj/
 bin/
+
+# Nuget packages
 **/packages/
 
 # Umbraco caches
 **/App_Data/
-**/Media/
+**/[Mm]edia/
 
 # NPM
 **/node_modules/
