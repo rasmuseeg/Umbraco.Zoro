@@ -1,4 +1,4 @@
-/// <binding ProjectOpened='watch-bootstrap, watch-scss' />
+/// <binding ProjectOpened='watch-scss' />
 'use strict';
 require('es6-promise').polyfill();
 
@@ -44,24 +44,8 @@ gulp.task('scss', function () {
         .pipe(gulp.dest('assets/css'));
 });
 
-gulp.task('bootstrap', function () {
-    return gulp.src(['assets/lib/boostrap/scss/bootstrap.scss'])
-        .pipe(sourcemaps.init())
-        .pipe(sass().on('error', sass.logError))
-        .pipe(sourcemaps.write('.', {
-            includeContent: false,
-            sourceRoot: '/assets/lib/boostrap/scss'
-        }))
-        //.pipe(autoprefixer(autoprefixerOptions))
-        .pipe(gulp.dest('assets/css'));
-});
-
-gulp.task("watch-bootstrap", function () {
-    return gulp.watch("assets/lib/bootstrap/sccs/**/*.scss", ["bootstrap"]);
-});
-
 gulp.task("watch-scss", function () {
     return gulp.watch("assets/scss/**/*.scss", ["scss"]);
 });
 
-gulp.task("default", ["bootstrap", "scss", "watch-scss", 'watch-boostrap']);
+gulp.task("default", ["scss", "watch-scss"]);
