@@ -1,6 +1,7 @@
 ﻿@inherits UmbracoTemplatePage
 @{ 
     Html.RequiresCss("~/assets/css/custom.css");
+    var site = Model.Content.Site();
 }
 <!DOCTYPE html>
 <html lang="@Model.CurrentCulture.TwoLetterISOLanguageName" prefix="og: http://ogp.me/ns#">
@@ -15,6 +16,9 @@
     
 </head>
 <body>
+    <header class="mb-5">
+        @Html.Partial("_SiteNavbar")
+    </header>
     <main class="@Model.Content.DocumentTypeAlias.ToLower()">
         @RenderBody()
     </main>

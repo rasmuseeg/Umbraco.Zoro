@@ -438,6 +438,7 @@
     <Content Include="Views\MacroPartials\_ForgotPasswordMacro.cshtml" />
     <Content Include="Views\MacroPartials\_LoginMacro.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Partials\_SiteNavbar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -56,18 +56,18 @@ namespace UmbracoBootstrap.Web.Controllers
                     LogHelper.Info<MemberController>(message);
                     return CurrentUmbracoPage();
                 }
-            }
 
-            // TODO: Implement remember me / persistence functionality
+                // TODO: Implement remember me / persistence functionality
 
-            if (Members.Login(member.Username, model.Password))
-            {
-                if (!string.IsNullOrEmpty(model.RedirectUrl))
+                if (Members.Login(member.Username, model.Password))
                 {
-                    return Redirect(model.RedirectUrl);
-                }
+                    if (!string.IsNullOrEmpty(model.RedirectUrl))
+                    {
+                        return Redirect(model.RedirectUrl);
+                    }
 
-                return RedirectToCurrentUmbracoUrl();
+                    return RedirectToCurrentUmbracoUrl();
+                }
             }
 
             message = Umbraco.GetDictionaryValue("AccountCredentialsError", "AccountCredentialsError");
