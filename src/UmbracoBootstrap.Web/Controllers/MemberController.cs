@@ -1,5 +1,5 @@
-﻿using NordicCreativeLeadership.Web.Helpers;
-using NordicCreativeLeadership.Web.Models;
+﻿using UmbracoBootstrap.Web.Helpers;
+using UmbracoBootstrap.Web.Models;
 using System;
 using System.Linq;
 using System.Net.Mail;
@@ -11,7 +11,7 @@ using Umbraco.Core.Logging;
 using Umbraco.Web;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.PublishedCache;
-using ContentModels = NordicCreativeLeadership.Web.PublishedContentModels;
+using ContentModels = UmbracoBootstrap.Web.PublishedContentModels;
 
 namespace UmbracoBootstrap.Web.Controllers
 {
@@ -33,19 +33,25 @@ namespace UmbracoBootstrap.Web.Controllers
 
             string message = "";
 
-            var member = Services.MemberService.GetByUsername(model.Username);
+            Umbraco.Core.Models.IMember member = null;
+            // Determine if username is a email
+            if (!model.Username.Contains("@"))
+                member = Services.MemberService.GetByUsername(model.Username);
+            else
+                member = Services.MemberService.GetByEmail(model.Username.ToLower());
+
             if (member != null)
             {
                 if (member.IsLockedOut)
                 {
-                    message = string.Format(Umbraco.GetDictionaryValue("AccountLockoutError"), Membership.MaxInvalidPasswordAttempts);
+                    message = string.Format(Umbraco.GetDictionaryValue("AccountLockoutError", "AccountNotApprovedError"), Membership.MaxInvalidPasswordAttempts);
                     ModelState.AddModelError("loginModel", message);
                     LogHelper.Info<MemberController>(message);
                     return CurrentUmbracoPage();
                 }
                 if (member.IsApproved == false)
                 {
-                    message = Umbraco.GetDictionaryValue("AccountNotApprovedError");
+                    message = Umbraco.GetDictionaryValue("AccountNotApprovedError", "AccountNotApprovedError");
                     ModelState.AddModelError("loginModel", message);
                     LogHelper.Info<MemberController>(message);
                     return CurrentUmbracoPage();
@@ -54,7 +60,7 @@ namespace UmbracoBootstrap.Web.Controllers
 
             // TODO: Implement remember me / persistence functionality
 
-            if (Members.Login(model.Username, model.Password))
+            if (Members.Login(member.Username, model.Password))
             {
                 if (!string.IsNullOrEmpty(model.RedirectUrl))
                 {
@@ -64,7 +70,7 @@ namespace UmbracoBootstrap.Web.Controllers
                 return RedirectToCurrentUmbracoUrl();
             }
 
-            message = Umbraco.GetDictionaryValue("AccountCredentialsError");
+            message = Umbraco.GetDictionaryValue("AccountCredentialsError", "AccountCredentialsError");
             ModelState.AddModelError("loginModel", message);
             LogHelper.Info<MemberController>(message);
 
@@ -90,16 +96,15 @@ namespace UmbracoBootstrap.Web.Controllers
                 id = Members.GetCurrentMemberId();
             }
 
-            ContentModels.Member member = (ContentModels.Member)Umbraco.TypedMember(id);
+            //ContentModels.Member member = (ContentModels.Member)Umbraco.TypedMember(id);
 
             var model = new ProfileModel
             {
-                Id = member.Id,
-                Email = member.Email.ToLower(),
-                Username = member.UserName,
-                FirstName = member.FirstName,
-                LastName = member.LastName,
-                PhotoUrl = member.GetPropertyValue<string>("photo")
+                //Id = member.Id,
+                //Email = member.Email.ToLower(),
+                //FirstName = member.FirstName,
+                //LastName = member.LastName,
+                //PhotoUrl = member.GetPropertyValue<string>("photo")
             };
 
             return PartialView("~/Views/Members/Edit.cshtml", model);
@@ -114,7 +119,7 @@ namespace UmbracoBootstrap.Web.Controllers
 
             var member = Services.MemberService.GetById(model.Id);
             // save current username for later
-            string userName = member.Username;
+            string username = member.Username;
             // Should we remove photo?
             // Current member has photo, and it have been removed on frontend.
             if (string.IsNullOrWhiteSpace(member.GetValue<string>("photo")) == false
@@ -131,11 +136,11 @@ namespace UmbracoBootstrap.Web.Controllers
 
             member.Name = model.FullName;
             member.Email = model.Email;
-            member.Username = model.Username;
+            member.Username = model.Email;
 
             Services.MemberService.Save(member);
 
-            if (userName.Equals(model.Username) == false)
+            if (username != model.Username)
             {
                 TempData["ProfileUsernameChanged"] = true;
                 Members.Logout();
@@ -212,9 +217,9 @@ namespace UmbracoBootstrap.Web.Controllers
 
             // Send confirmation email
 
-            var redirectPage = CurrentPage.Parent.FirstChild<ContentModels.Activate>();
-            string redirectUrl = redirectPage.UrlAbsolute();
-            redirectUrl = await SendConfirmAccountMail(member, redirectUrl);
+            //var redirectPage = CurrentPage.Parent.FirstChild<ContentModels.Activate>();
+            //string redirectUrl = redirectPage.UrlAbsolute();
+            string redirectUrl = await SendConfirmAccountMail(member, model.RedirectUrl);
 
             TempData["RegisterSuccess"] = member.Email;
 
@@ -240,6 +245,12 @@ namespace UmbracoBootstrap.Web.Controllers
             return RedirectToCurrentUmbracoUrl();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="member"></param>
+        /// <param name="redirectUrl"></param>
+        /// <returns>{redirectUrl}?email={Url.Encode(member.Email)}&key={securityKey}</returns>
         private async Task<string> SendConfirmAccountMail(Umbraco.Core.Models.IMember member, string redirectUrl)
         {
             try
@@ -267,114 +278,113 @@ namespace UmbracoBootstrap.Web.Controllers
             }
         }
 
+        //[HttpPost]
+        //public ActionResult HandleConfirmAccount([Bind(Prefix = "confirmAccountModel")]ConfirmAccountModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return CurrentUmbracoPage();
+
+        //    // Get member by email
+        //    var member = Services.MemberService.GetByEmail(model.Email);
+        //    if (member == null)
+        //    {
+        //        LogHelper.Error<MemberController>("Unable to find member by email.", new NullReferenceException("member"));
+        //        ModelState.AddModelError("", Umbraco.GetDictionaryValue("AccountNotFound", "AccountNotFound"));
+        //        LogHelper.Info<MemberController>("AccountNotFound");
+        //        return CurrentUmbracoPage();
+        //    }
+
+        //    // Make sure security key is a match
+        //    //if (!member.GetValue<string>(SECURITY_KEY_ALIAS).Equals(model.SecurityKey))
+        //    //{
+        //    //    ModelState.AddModelError("", Umbraco.GetDictionaryValue("InvalidSecurityKey", "InvalidSecurityKey"));
+        //    //    LogHelper.Info<MemberController>("InvalidSecurityKey");
+        //    //    return CurrentUmbracoPage();
+        //    //}
+
+        //    // Validate activation code
+        //    string securityCode = member.GetValue<string>(SECURITY_CODE_ALIAS);
+        //    if (!securityCode.Equals(model.SecurityCode.ToUpper()))
+        //    {
+        //        ModelState.AddModelError(nameof(model.SecurityCode), Umbraco.GetDictionaryValue("InvalidSecurityCode"));
+        //        LogHelper.Info<MemberController>("InvalidSecurityCode");
+        //        return CurrentUmbracoPage();
+        //    }
+
+        //    member.IsApproved = true;
+        //    Services.MemberService.Save(member);
+        //    Services.MemberService.AssignRole(member.Id, MemberGroups.Default);
+
+        //    TempData["ConfirmAccountSuccess"] = true;
+        //    LogHelper.Info<MemberController>("Account has been confirmed: {0}", () => member.Email);
+        //    return Redirect(model.RedirectUrl);
+        //}
+
+        //public async Task<ActionResult> HandleDeleteAccount([Bind(Prefix = "deleteAccountModel")]DeleteAccountModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return CurrentUmbracoPage();
+        //    }
+
+        //    var member = Services.MemberService.GetByEmail(model.Email);
+        //    if (member == null)
+        //    {
+        //        ModelState.AddModelError("deleteAccountModel", Umbraco.GetDictionaryValue("AccountNotFound", "AccountNotFound"));
+        //        return View(model);
+        //    }
+        //    Services.MemberService.Delete(member);
+
+        //    string email = member.Email;
+        //    string subject = "";
+        //    string viewPath = "~/Views/Email/DeleteAccountEmail.cshtml";
+        //    var deleteAccountMailModel = new DeleteAccountMailModel()
+        //    { 
+        //    };
+        //    await SendMailMessage(email, subject, viewPath, deleteAccountMailModel);
+
+        //    TempData["DeleteAccountSuccess"] = true;
+
+        //    return Redirect("/");
+        //}
+
+        /// <summary>
+        /// Handles password change request
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult HandleConfirmAccount([Bind(Prefix = "confirmAccountModel")]ConfirmAccountModel model)
+        public ActionResult HandleForgotPassword(ForgotPasswordModel model)
         {
             if (!ModelState.IsValid)
                 return CurrentUmbracoPage();
 
-            // Get member by email
-            var member = Services.MemberService.GetByEmail(model.Email);
+            var member = Services.MemberService.GetById(model.MemberId);
             if (member == null)
+                throw new NullReferenceException("member");
+
+            try
             {
-                LogHelper.Error<MemberController>("Unable to find member by email.", new NullReferenceException("member"));
-                ModelState.AddModelError("", Umbraco.GetDictionaryValue("AccountNotFound", "AccountNotFound"));
-                LogHelper.Info<MemberController>("AccountNotFound");
+                Services.MemberService.SavePassword(member, model.Password);
+
+                MailMessageHelper.Current.SendMailMessage(
+                    member.Email,
+                    "PasswordChangedMail",
+                    CurrentPage,
+                    this.ControllerContext
+                );
+            }
+            catch (Exception ex)
+            {
+                // Propperly a validation error
+                ModelState.AddModelError(nameof(model.Password), ex);
                 return CurrentUmbracoPage();
             }
 
-            // Make sure security key is a match
-            //if (!member.GetValue<string>(SECURITY_KEY_ALIAS).Equals(model.SecurityKey))
-            //{
-            //    ModelState.AddModelError("", Umbraco.GetDictionaryValue("InvalidSecurityKey", "InvalidSecurityKey"));
-            //    LogHelper.Info<MemberController>("InvalidSecurityKey");
-            //    return CurrentUmbracoPage();
-            //}
+            TempData["PasswordChanged"] = true;
 
-            // Validate activation code
-            string securityCode = member.GetValue<string>(SECURITY_CODE_ALIAS);
-            if (!securityCode.Equals(model.SecurityCode.ToUpper()))
-            {
-                ModelState.AddModelError(nameof(model.SecurityCode), Umbraco.GetDictionaryValue("InvalidSecurityCode"));
-                LogHelper.Info<MemberController>("InvalidSecurityCode");
-                return CurrentUmbracoPage();
-            }
-
-            member.IsApproved = true;
-            Services.MemberService.Save(member);
-            Services.MemberService.AssignRole(member.Id, MemberGroups.Confirmed);
-
-            TempData["ConfirmAccountSuccess"] = true;
-            LogHelper.Info<MemberController>("Account has been confirmed: {0}", () => member.Email);
-            return Redirect(model.RedirectUrl);
+            return RedirectToCurrentUmbracoPage();
         }
-
-        public async Task<ActionResult> HandleDeleteAccount([Bind(Prefix = "deleteAccountModel")]DeleteAccountModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return CurrentUmbracoPage();
-            }
-
-            var member = Services.MemberService.GetByEmail(model.Email);
-            if (member == null)
-            {
-                ModelState.AddModelError("deleteAccountModel", Umbraco.GetDictionaryValue("AccountNotFound", "AccountNotFound"));
-                return View(model);
-            }
-            Services.MemberService.Delete(member);
-
-            string email = member.Email;
-            string subject = "";
-            string viewPath = "~/Views/Email/DeleteAccountEmail.cshtml";
-            var deleteAccountMailModel = new DeleteAccountMailModel()
-            { 
-            };
-            await SendMailMessage(email, subject, viewPath, deleteAccountMailModel);
-
-            TempData["DeleteAccountSuccess"] = true;
-
-            return Redirect("/");
-        }
-
-
-
-       
-
-        [HttpPost]
-        [NotChildAction]
-        public ActionResult HandleForgotPassword([Bind(Prefix = "forgotPasswordModel")]ForgotPasswordModel model)
-        {
-            if (!ModelState.IsValid)
-                return CurrentUmbracoPage();
-
-            var member = Services.MemberService.GetByEmail(model.Email);
-
-            if (member == null)
-            {
-                TempData["ForgotPasswordError"] = true;
-                return RedirectToCurrentUmbracoPage();
-            }
-            string key = GenerateSecurityKeyOnMember(member);
-
-            var passwordResetConfirmationMailModel = new PasswordResetConfirmationMailModel()
-            {
-                Member = (ContentModels.Member)Umbraco.TypedMember(member.Id),
-                Permalink = CurrentPage.UrlAbsolute() + "?key=" + key + "&email=" + Url.Encode(member.Email)
-            };
-
-            MailMessageHelper.Current.SendMailMessage(
-                member.Email,
-                "PasswordResetConfirmation",
-                passwordResetConfirmationMailModel,
-                 this.ControllerContext
-            );
-
-            TempData["ForgotPasswordSuccess"] = true;
-
-            return RedirectToCurrentUmbracoUrl();
-        }
-
 
 
         [ChildActionOnly]
@@ -418,8 +428,8 @@ namespace UmbracoBootstrap.Web.Controllers
 
                 MailMessageHelper.Current.SendMailMessage(
                     member.Email,
-                    "PasswordChangedMail", 
-                    CurrentPage, 
+                    "PasswordChangedMail",
+                    CurrentPage,
                     this.ControllerContext
                 );
             }

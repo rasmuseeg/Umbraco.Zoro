@@ -1,6 +1,4 @@
 ﻿using HtmlAgilityPack;
-using RazorEngine;
-using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,7 +11,7 @@ using System.Web.Hosting;
 using Umbraco.Core.Configuration;
 using Umbraco.Core.Logging;
 
-namespace UmbracoBoostrap.Web.Helpers
+namespace UmbracoBootstrap.Web.Helpers
 {
     public class MailMessageHelper
     {
@@ -112,27 +110,27 @@ namespace UmbracoBoostrap.Web.Helpers
             }
         }
 
-        public string ParseTemplate<T>(string viewPath, T model)
-        {
-            string templateKey = viewPath;
-            string relativePath = viewPath;
-            if (viewPath.StartsWith("~/"))
-                relativePath = relativePath.Substring(2);
+        //public string ParseTemplate<T>(string viewPath, T model)
+        //{
+        //    string templateKey = viewPath;
+        //    string relativePath = viewPath;
+        //    if (viewPath.StartsWith("~/"))
+        //        relativePath = relativePath.Substring(2);
 
-            Type modelType = model.GetType();
+        //    Type modelType = model.GetType();
 
-            string templateAbsolutePath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, relativePath);
+        //    string templateAbsolutePath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, relativePath);
 
-            if (Engine.Razor.IsTemplateCached(templateKey, modelType) == false)
-            {
-                string templateSource = System.IO.File.ReadAllText(templateAbsolutePath);
-                return Engine.Razor.RunCompile(templateSource, templateKey, modelType, model);
-            }
-            else
-            {
-                return Engine.Razor.Run(templateKey, modelType, model);
-            }
-        }
+        //    if (Engine.Razor.IsTemplateCached(templateKey, modelType) == false)
+        //    {
+        //        string templateSource = System.IO.File.ReadAllText(templateAbsolutePath);
+        //        return Engine.Razor.RunCompile(templateSource, templateKey, modelType, model);
+        //    }
+        //    else
+        //    {
+        //        return Engine.Razor.Run(templateKey, modelType, model);
+        //    }
+        //}
 
         //public string GetAbsolutePath(string relativePath, string basePath)
         //{

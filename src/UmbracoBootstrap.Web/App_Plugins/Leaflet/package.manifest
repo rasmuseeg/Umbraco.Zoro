@@ -1,0 +1,42 @@
+﻿{
+  "propertyEditors": [
+    {
+      "alias": "Leaflet.Map",
+      "name": "Leaflet Map",
+      "editor": {
+        "valueType": "JSON",
+        "view": "~/App_Plugins/Leaflet/Backoffice/PropertyEditors/leaflet.html"
+      },
+      "prevalues": {
+        "fields": [
+          {
+            "label": "Attribution",
+            "key": "attribution",
+            "description": "Write attribution here",
+            "view": "textstring"
+          },
+          {
+            "label": "Url template",
+            "key": "urlTemplate",
+            "description": "A string of the following form: '//{s}.somedomain.com/blabla/{z}/{x}/{y}{r}.png'",
+            "view": "textstring"
+          },
+          {
+            "label": "Image path",
+            "key": "imagePath",
+            "description": "",
+            "view": "textstring"
+          }
+        ]
+      },
+      "defaultConfig": {
+        "attribution": "",
+        "tileLayerUrl": "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "imagePath": "/App_Plugins/Leaflet/Assets/Images/"
+      }
+    }
+  ],
+  "javascript": [
+    "~/App_Plugins/Leaflet/Backoffice/PropertyEditors/Controllers/leaflet.controller.js"
+  ]
+}

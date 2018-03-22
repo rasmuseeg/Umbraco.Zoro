@@ -1,0 +1,65 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@using System.Web.Mvc.Html
+@using ClientDependency.Core.Mvc
+@using Umbraco.Web
+@using CadpeopleApps.Web.Models
+@using CadpeopleApps.Web.Controllers
+
+@{
+    var loginStatusModel = Members.GetCurrentLoginStatus();
+    var redirectPage = Umbraco.TypedContent(Model.MacroParameters.GetValue<string>("redirectUrl", null));
+
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+    //Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.min.js");
+    //Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.unobtrusive.min.js");
+}
+
+@if (loginStatusModel.IsLoggedIn)
+{
+    var logoutModel = new LogoutModel();
+    logoutModel.RedirectUrl = redirectPage != null ? redirectPage.Url : "/";
+
+    <p>@string.Format(Umbraco.GetDictionaryValue("Logged on as", "You are currently logged in as {0}"), @loginStatusModel.Name)</p>
+
+    using (Html.BeginUmbracoForm<MemberController>("HandleLogout"))
+    {
+        <button class="btn btn-default">@Umbraco.GetDictionaryValue("Logout", "Log ud")</button>
+
+        @Html.HiddenFor(m => logoutModel.RedirectUrl)
+    }
+}
+else
+{
+    var loginModel = new LoginModel();
+    loginModel.RedirectUrl = Umbraco.GetQueryString<string>("redirectUrl", "");
+    if (string.IsNullOrEmpty(loginModel.RedirectUrl) && redirectPage != null)
+    {
+        if(Request.Url.AbsolutePath == Model.Content.Url || Request.Url.AbsolutePath == "/")
+        {
+            loginModel.RedirectUrl = redirectPage.Url;
+        }
+    }
+
+    using (Html.BeginUmbracoForm<MemberController>("HandleLogin"))
+    {
+        @Html.ValidationSummary("loginModel", true)
+
+        <div class="form-group">
+            @Html.LabelFor(m=> loginModel.Username, new { @class="control-label" })
+            @Html.TextBoxFor(m => loginModel.Username, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => loginModel.Username)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m=> loginModel.Password, new { @class="control-label" })
+            @Html.PasswordFor(m => loginModel.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => loginModel.Password)
+        </div>
+
+        @Html.HiddenFor(m=> loginModel.RedirectUrl)
+
+        <button class="btn btn-default">Log på</button>
+    }
+}

@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UmbracoBootstrap.Web", "UmbracoBootstrap.Web\UmbracoBootstrap.Web.csproj", "{646E25F3-8F31-4539-BAAF-C9C1613FE6E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".git", ".git", "{B84F96ED-EEC6-41EA-AC58-3FAF0FB88733}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "udt", "udt", "{548FC74A-F182-4CCD-88A9-783B787C33F9}"
+	ProjectSection(SolutionItems) = preProject
+		..\udt\BehaviorComposition.udt = ..\udt\BehaviorComposition.udt
+		..\udt\SEOComposition.udt = ..\udt\SEOComposition.udt
+		..\udt\SoMeComposition.udt = ..\udt\SoMeComposition.udt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{646E25F3-8F31-4539-BAAF-C9C1613FE6E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{646E25F3-8F31-4539-BAAF-C9C1613FE6E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{646E25F3-8F31-4539-BAAF-C9C1613FE6E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{646E25F3-8F31-4539-BAAF-C9C1613FE6E9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D2F192A8-A112-4C0F-AD43-B18D12E61250}
+	EndGlobalSection
+EndGlobal
