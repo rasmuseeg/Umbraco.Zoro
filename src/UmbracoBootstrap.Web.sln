@@ -19,6 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "udt", "udt", "{548FC74A-F18
 		..\udt\SoMeComposition.udt = ..\udt\SoMeComposition.udt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".vs", ".vs", "{23C90262-CFC6-40A1-AE30-FB64C4ACD26D}"
+	ProjectSection(SolutionItems) = preProject
+		.vs\config\applicationhost.config = .vs\config\applicationhost.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
