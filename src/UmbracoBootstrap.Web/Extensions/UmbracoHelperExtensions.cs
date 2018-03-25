@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-using Niras.Web.Models;
 
 namespace Umbraco.Web
 {
@@ -145,10 +144,10 @@ namespace Umbraco.Web
             return items.Skip(skips).Take(pageSize);
         }
 
-        public static IEnumerable<T> GetPagedResult<T>(this UmbracoHelper helper, IEnumerable<T> items, int currentPage, int pageSize, out PaginationModel pagi)
-        {
-            pagi = new PaginationModel(items.Count(), currentPage, pageSize);
-            return items.Skip(pagi.Skips).Take(pagi.PageSize);
-        }
+        //public static IEnumerable<T> GetPagedResult<T>(this UmbracoHelper helper, IEnumerable<T> items, int currentPage, int pageSize, out PaginationModel pagi)
+        //{
+        //    pagi = new PaginationModel(items.Count(), currentPage, pageSize);
+        //    return items.Skip(pagi.Skips).Take(pagi.PageSize);
+        //}
     }
 }

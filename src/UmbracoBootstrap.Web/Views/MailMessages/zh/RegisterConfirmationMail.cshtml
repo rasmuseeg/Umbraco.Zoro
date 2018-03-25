@@ -1,0 +1,9 @@
+﻿@inherits UmbracoViewPage<NordicCreativeLeadership.Web.Models.RegisterConfirmationEmailModel>
+
+<p>
+    We have received a account creation request for the following email: @Model.Member.Email<br />
+    <a href="@Model.ConfirmationUrl">Confirm you e-mail</a>
+</p>
+<p>
+    If you did not request for a account creation, follow the link, and click "Delete account".
+</p>
