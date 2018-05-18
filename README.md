@@ -31,6 +31,6 @@ Password:   AdminAdmin
 3. Run the site
 4. During installation select custom, and Custom Connection String, paste the following:
 ```
-Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=UmbracoBootstrap;AttachDbFilename=|DataDirectory|UmbracoBootstrap.mdf;InitialCatalogIntegrated Security=True
+Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=UmbracoBootstrap;AttachDbFilename=|DataDirectory|UmbracoBootstrap.mdf;Integrated Security=True;
 ```
 
