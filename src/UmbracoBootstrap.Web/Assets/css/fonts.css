@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "VattenfallHall";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/assets/fonts/VattenfallHall-Bold.eot?") format("eot"), url("/assets/fonts/VattenfallHall-Bold.woff2") format("woff2"), url("/assets/fonts/VattenfallHall-Bold.woff") format("woff"), url("/assets/fonts/VattenfallHall-Bold.ttf") format("truetype"), url("/assets/fonts/VattenfallHall-Bold.svg#VattenfallHall") format("svg"); }
+
+@font-face {
+  font-family: "VattenfallHall";
+  font-style: normal;
+  font-weight: 300;
+  src: url("/assets/fonts/VattenfallHall-Light.eot?") format("eot"), url("/assets/fonts/VattenfallHall-Light.woff2") format("woff2"), url("/assets/fonts/VattenfallHall-Light.woff") format("woff"), url("/assets/fonts/VattenfallHall-Light.ttf") format("truetype"), url("/assets/fonts/VattenfallHall-Light.svg#VattenfallHall") format("svg"); }
+
+@font-face {
+  font-family: "VattenfallHall";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/assets/fonts/VattenfallHall-Medium.eot?") format("eot"), url("/assets/fonts/VattenfallHall-Medium.woff2") format("woff2"), url("/assets/fonts/VattenfallHall-Medium.woff") format("woff"), url("/assets/fonts/VattenfallHall-Medium.ttf") format("truetype"), url("/assets/fonts/VattenfallHall-Medium.svg#VattenfallHall") format("svg"); }
+
+@font-face {
+  font-family: "VattenfallHall";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/assets/fonts/VattenfallHall-Regular.eot?") format("eot"), url("/assets/fonts/VattenfallHall-Regular.woff2") format("woff2"), url("/assets/fonts/VattenfallHall-Regular.woff") format("woff"), url("/assets/fonts/VattenfallHall-Regular.ttf") format("truetype"), url("/assets/fonts/VattenfallHall-Regular.svg#VattenfallHall") format("svg"); }
+
+@font-face {
+  font-family: "VattenfallHallDisplay";
+  font-style: normal;
+  font-weight: 800;
+  src: url("/assets/fonts/VattenfallHallDisplay-Bold.eot?") format("eot"), url("/assets/fonts/VattenfallHallDisplay-Bold.woff2") format("woff2"), url("/assets/fonts/VattenfallHallDisplay-Bold.woff") format("woff"), url("/assets/fonts/VattenfallHallDisplay-Bold.ttf") format("truetype"), url("/assets/fonts/VattenfallHallDisplay-Bold.svg#VattenfallHallDisplay") format("svg"); }
+
+/*# sourceMappingURL=fonts.css.map */
