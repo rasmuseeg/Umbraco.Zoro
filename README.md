@@ -17,3 +17,11 @@ Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|UmbracoBootst
 2. Umbraco Backoffice Login
 Username:   admin@example.com
 Password    AdminAdmin
+
+## Getting started
+
+* Rename Project files
+* Rename Project database, if not starting from scratch
+* Change machineKey in web.config
+* Change localhost port 
+* Enable or disable SSL support
