@@ -1,0 +1,70 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using UmbracoBootstrap.Web.Models;
+@using UmbracoBootstrap.Web.Controllers;
+@{ 
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+
+    var termsOfUsePageId = Model.MacroParameters.GetValue<string>("termsOfUsePageId");
+    var privacyPolicyPageId = Model.MacroParameters.GetValue<string>("privacyPolicyPageId");
+
+    var termsOfUsePage = Umbraco.TypedContent(termsOfUsePageId);
+    var privacyPolicyPage = Umbraco.TypedContent(privacyPolicyPageId);
+
+    var registerProfileModel = new RegisterProfileModel();
+}
+
+@using(Html.BeginUmbracoForm<MemberController>("HandleRegisterProfile", FormMethod.Post))
+{
+    @Html.ValidationSummary("profileModel", true)
+
+    <div class="form-group">
+        @Html.LabelFor(m=> registerProfileModel.FirstName, new { @class="control-label" })
+        @Html.TextBoxFor(m => registerProfileModel.FirstName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => registerProfileModel.FirstName)
+    </div>
+
+     <div class="form-group">
+        @Html.LabelFor(m=> registerProfileModel.LastName, new { @class="control-label" })
+        @Html.TextBoxFor(m => registerProfileModel.LastName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => registerProfileModel.LastName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m=> registerProfileModel.PhoneNumber, new { @class="control-label" })
+        @Html.TextBoxFor(m => registerProfileModel.PhoneNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => registerProfileModel.PhoneNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => registerProfileModel.Email, new { @class = "control-label" })
+        @Html.PasswordFor(m => registerProfileModel.Email, new { @class = "form-control", @autocomplete = "off" })
+        @Html.ValidationMessageFor(m => registerProfileModel.Email)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => registerProfileModel.Password, new { @class = "control-label" })
+        @Html.PasswordFor(m => registerProfileModel.Password, new { @class = "form-control", @autocomplete = "off" })
+        @Html.ValidationMessageFor(m => registerProfileModel.Password)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => registerProfileModel.ConfirmPassword, new { @class = "control-label" })
+        @Html.PasswordFor(m => registerProfileModel.ConfirmPassword, new { @class = "form-control", @autocomplete = "off" })
+        @Html.ValidationMessageFor(m => registerProfileModel.ConfirmPassword)
+    </div>
+
+    <div class="form-check">
+        
+        <label class="form-check-label"
+                id="@Html.IdFor(x => registerProfileModel.AcceptTermsAndPrivacy)" 
+                for="@Html.IdFor(x=> registerProfileModel.AcceptTermsAndPrivacy)">
+        @Html.CheckBoxFor(x=> registerProfileModel.AcceptTermsAndPrivacy, new { @class="form-check-input" })
+        @Html.Raw(string.Format(Umbraco.GetDictionaryValue("AcceptTermsAndPrivacy", "I agree to your <a href='{0}'>{1}</a> and <a href='{2}'>{3}</a>"), termsOfUsePage.Url, termsOfUsePage.Name, privacyPolicyPage.Url, privacyPolicyPage.Name))</label>
+        @Html.ValidationMessageFor(x => registerProfileModel.AcceptTermsAndPrivacy)
+    </div>
+
+    @Html.HiddenFor(m=> registerProfileModel.RedirectUrl)
+
+    <button class="btn btn-default">@Umbraco.GetDictionaryValue("CreateProfileSubmit", "CreateProfileSubmit")</button>
+}

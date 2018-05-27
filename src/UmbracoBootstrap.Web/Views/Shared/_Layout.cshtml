@@ -7,13 +7,13 @@
 <html lang="@Model.CurrentCulture.TwoLetterISOLanguageName" prefix="og: http://ogp.me/ns#">
 <head>
     <!-- TODO: Remember to remove on live environment-->
-    <meta NAME="robots" content="noindex, nofollow">
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    @Html.CachedPartial("_Favicons", Model, 3600, false)
+    @Html.CachedPartial("_SEO", Model, 700, false)
     @Html.CachedPartial("_OpenGraph", Model, 300, true)
-    
+    @Html.CachedPartial("_Favicons", Model, 3600, false)
 </head>
 <body>
     <header class="mb-5">

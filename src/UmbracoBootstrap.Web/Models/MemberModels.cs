@@ -79,10 +79,10 @@ namespace UmbracoBootstrap.Web.Models
         public string Password { get; set; }
 
         [Required]
-        [UmbracoDisplayName(nameof(ComparePassword))]
+        [UmbracoDisplayName(nameof(ConfirmPassword))]
         [UmbracoCompare(nameof(Password))]
         [DataType(DataType.Password)]
-        public string ComparePassword { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 
     public class ProfileModel
@@ -117,12 +117,12 @@ namespace UmbracoBootstrap.Web.Models
         public string Username { get; internal set; }
     }
 
-    public class RegisterModel
+    public class RegisterProfileModel
     {
-        [UmbracoDisplayName(nameof(Photo))]
-        public HttpPostedFileBase Photo { get; set; }
+        //[UmbracoDisplayName(nameof(Photo))]
+        //public HttpPostedFileBase Photo { get; set; }
 
-        public string PhotoUrl { get; set; }
+        //public string PhotoUrl { get; set; }
 
         [UmbracoDisplayName(nameof(FirstName))]
         [UmbracoRequired()]
@@ -131,6 +131,10 @@ namespace UmbracoBootstrap.Web.Models
         [UmbracoDisplayName(nameof(LastName))]
         [UmbracoRequired()]
         public string LastName { get; set; }
+
+        [UmbracoDisplayName(nameof(PhoneNumber))]
+        [UmbracoRequired()]
+        public string PhoneNumber { get; set; }
 
         private string _email;
         [UmbracoDisplayName(nameof(Email))]
@@ -153,8 +157,8 @@ namespace UmbracoBootstrap.Web.Models
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
-        [UmbracoDisplayName(nameof(TermsAndConditions))]
-        public bool TermsAndConditions { get; set; }
+        [UmbracoDisplayName(nameof(AcceptTermsAndPrivacy))]
+        public bool AcceptTermsAndPrivacy { get; set; }
 
         public string FullName
         {

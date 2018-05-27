@@ -1,0 +1,21 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using ContentModels = UmbracoBootstrap.Web.PublishedContentModels;
+@{ 
+    var page = (ContentModels.ISearchEngineOptimization)Model.Content;
+
+    string metaRobotsFollow = "follow";
+    if(page.MetaRobotsFollow > 0)
+    {
+        metaRobotsFollow = Umbraco.GetPreValueAsString(page.MetaRobotsFollow);
+    }
+
+     string metaRobotsIndex = "index";
+    if(page.MetaRobotsIndex > 0)
+    {
+        metaRobotsIndex = Umbraco.GetPreValueAsString(page.MetaRobotsIndex);
+    }
+}
+<title>@Umbraco.Coalesce(page.SeoTitle, page.Name)</title>
+<meta name="description" content="@page.SeoDescription" />
+<meta name="keywords" content="@page.SeoKeywords" />
+<meta name="robots" content="@metaRobotsIndex, @metaRobotsFollow">

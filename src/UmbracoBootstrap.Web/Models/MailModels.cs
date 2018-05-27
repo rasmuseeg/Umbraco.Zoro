@@ -14,12 +14,14 @@ namespace UmbracoBootstrap.Web.Models
         public string Permalink { get; set; }
     }
 
-    public class ConfirmAccountMailModel
+    public class ApproveEmailMailModel
     {
         public ContentModels.Member Member { get; set; }
-        public string Permalink { get; set; }
 
-        public string SecurityCode { get; set; }
+        /// <summary>
+        /// Permanent link to where member can confirm their email.
+        /// </summary>
+        public Uri Permalink { get; set; }
     }
 
     public class DeleteAccountMailModel

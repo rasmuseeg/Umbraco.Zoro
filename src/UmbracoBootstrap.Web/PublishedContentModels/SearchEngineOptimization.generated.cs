@@ -27,8 +27,14 @@ namespace UmbracoBootstrap.Web.PublishedContentModels
 		/// <summary>Meta Robots Follow</summary>
 		int MetaRobotsFollow { get; }
 
+		/// <summary>Meta Robots Index</summary>
+		int MetaRobotsIndex { get; }
+
 		/// <summary>Description</summary>
 		string SeoDescription { get; }
+
+		/// <summary>Keywords</summary>
+		string SeoKeywords { get; }
 
 		/// <summary>Title</summary>
 		string SeoTitle { get; }
@@ -75,6 +81,18 @@ namespace UmbracoBootstrap.Web.PublishedContentModels
 		public static int GetMetaRobotsFollow(ISearchEngineOptimization that) { return that.GetPropertyValue<int>("metaRobotsFollow"); }
 
 		///<summary>
+		/// Meta Robots Index
+		///</summary>
+		[ImplementPropertyType("metaRobotsIndex")]
+		public int MetaRobotsIndex
+		{
+			get { return GetMetaRobotsIndex(this); }
+		}
+
+		/// <summary>Static getter for Meta Robots Index</summary>
+		public static int GetMetaRobotsIndex(ISearchEngineOptimization that) { return that.GetPropertyValue<int>("metaRobotsIndex"); }
+
+		///<summary>
 		/// Description: Short description about this page. Should include key word
 		///</summary>
 		[ImplementPropertyType("seoDescription")]
@@ -85,6 +103,18 @@ namespace UmbracoBootstrap.Web.PublishedContentModels
 
 		/// <summary>Static getter for Description</summary>
 		public static string GetSeoDescription(ISearchEngineOptimization that) { return that.GetPropertyValue<string>("seoDescription"); }
+
+		///<summary>
+		/// Keywords: Words separate by comma
+		///</summary>
+		[ImplementPropertyType("seoKeywords")]
+		public string SeoKeywords
+		{
+			get { return GetSeoKeywords(this); }
+		}
+
+		/// <summary>Static getter for Keywords</summary>
+		public static string GetSeoKeywords(ISearchEngineOptimization that) { return that.GetPropertyValue<string>("seoKeywords"); }
 
 		///<summary>
 		/// Title: Short title about this page. Should include key word

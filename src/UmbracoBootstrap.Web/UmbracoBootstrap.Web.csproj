@@ -326,6 +326,8 @@
     <Content Include="config\BackOfficeTours\getting-started.json" />
     <Content Include="config\applications.config" />
     <Content Include="config\404handlers.config" />
+    <Content Include="Assets\scss\_fonts.scss" />
+    <Content Include="Assets\scss\mixins\_font-face.scss" />
     <None Include="gulpfile.js" />
     <Content Include="css\Headings.css" />
     <Content Include="default.aspx" />
@@ -343,7 +345,9 @@
     <Compile Include="Extensions\ExamineExtensions.cs" />
     <Compile Include="Extensions\TemplateUtillitiesExtensions.cs" />
     <Compile Include="Extensions\UmbracoHelperExtensions.cs" />
+    <Compile Include="Helpers\CookieHelper.cs" />
     <Compile Include="Helpers\MailMessageHelper.cs" />
+    <Compile Include="Helpers\MemberTempDataHelper.cs" />
     <Compile Include="Helpers\ViewHelper.cs" />
     <Compile Include="Models\MailModels.cs" />
     <Compile Include="Models\MemberModels.cs" />
@@ -446,6 +450,9 @@
     <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2-Fluid.cshtml" />
+    <Content Include="Views\MacroPartials\_EditProfile.cshtml" />
+    <Content Include="Views\MacroPartials\_RegisterProfileMacro.cshtml" />
+    <Content Include="Views\Partials\_SEO.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

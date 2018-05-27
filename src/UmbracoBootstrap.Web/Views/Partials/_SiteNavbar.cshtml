@@ -1,30 +1,80 @@
 ﻿@inherits UmbracoViewPage
-@{ 
-    var site = Model.Site();
+@using ContentModels = UmbracoBootstrap.Web.PublishedContentModels;
+@using UmbracoBootstrap.Web.Controllers;
+@using UmbracoBootstrap.Web.Models;
+@{
+    var site = (ContentModels.Website)Model.Site();
     var children = site.Children().Where(x => x.IsVisible());
 }
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="#">@site.GetPropertyValue("siteName", site.Name)</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                @foreach (var item in children)
+    @*<a class="navbar-brand" href="#">@site.GetPropertyValue("siteName", site.Name)</a>*@
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav m-auto">
+            @foreach (var item in children)
+            {
+                if (item.IsAncestorOrSelf(Model))
                 {
-                    if (item.IsAncestorOrSelf(Model))
-                    {
-                        <li class="nav-item active">
+                    <li class="nav-item active">
                         <a class="nav-link" href="@item.Url">@item.Name <span class="sr-only">(current)</span></a>
-                      </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" href="@item.Url">@item.Name</a>
-                        </li>
-                    }
+                    </li>
                 }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@item.Url">@item.Name</a>
+                    </li>
+                }
+            }
+        </ul>
+        @if (Members.IsLoggedIn())
+        {
+            var memberPages = site.MemberPages;
+            var member = (ContentModels.Member)Members.GetCurrentMember();
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @member.Name
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @foreach (var memberPage in memberPages)
+                        {
+                            <a class="dropdown-item" href="@memberPage.Url">@memberPage.Name</a>
+                        }
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" onclick="signout()">Log out</a>
+                        
+                    </div>
+                </li>
             </ul>
-          </div>
-        </nav>
+
+            // Render logout form
+            var logoutModel = new LogoutModel();
+            logoutModel.RedirectUrl = "/";
+            using (Html.BeginUmbracoForm<MemberController>("HandleLogout", null, new { id="logoutForm", @class="hidden" }, FormMethod.Post))
+            {
+                @Html.HiddenFor(m => logoutModel.RedirectUrl)
+            }
+            <script>
+                function signout() {
+                    document.getElementById("logoutForm").submit();
+                }
+            </script>
+        }
+        else
+        {
+            var registerPage = site.RegisterPage;
+            var loginPage = site.LoginPage;
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="@registerPage.Url">@registerPage.Name</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="@loginPage.Url">@loginPage.Name</a>
+                </li>
+            </ul>
+        }
+    </div>
+</nav>

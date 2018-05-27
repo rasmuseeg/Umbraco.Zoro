@@ -21,8 +21,11 @@ namespace UmbracoBootstrap.Web.Controllers
         private const string SECURITY_KEY_ALIAS = "umbracoMemberSecurityKey";
         private const string SECURITY_CODE_ALIAS = "umbracoMemberSecurityCode";
 
+        public MemberTempDataHelper TempDataHelper { get; }
+
         public MemberController()
         {
+            TempDataHelper = new MemberTempDataHelper(TempData);
         }
 
         [HttpPost]
@@ -58,7 +61,7 @@ namespace UmbracoBootstrap.Web.Controllers
                 }
 
                 // TODO: Implement remember me / persistence functionality
-
+                // TODO: Ensure user has given cookie consent
                 if (Members.Login(member.Username, model.Password))
                 {
                     if (!string.IsNullOrEmpty(model.RedirectUrl))
@@ -151,6 +154,11 @@ namespace UmbracoBootstrap.Web.Controllers
             return RedirectToCurrentUmbracoPage();
         }
 
+        /// <summary>
+        /// Change password after being logged in
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [MemberAuthorize]
         public ActionResult HandleChangePassword([Bind(Prefix = "changePasswordModel")]ChangePasswordModel model)
@@ -169,19 +177,27 @@ namespace UmbracoBootstrap.Web.Controllers
             var member = Services.MemberService.GetById(memberId);
             Services.MemberService.SavePassword(member, model.Password);
 
-            TempData["PasswordUpdatedSuccces"] = true;
+            TempData["PasswordChangedSuccess"] = true;
 
             return RedirectToCurrentUmbracoPage();
         }
 
         [HttpPost]
         [NotChildAction]
-        public async Task<ActionResult> HandleRegister([Bind(Prefix = "registerModel")]RegisterModel model)
+        public async Task<ActionResult> HandleRegisterProfile([Bind(Prefix = "registerProfileModel")]RegisterProfileModel model)
         {
             if (!ModelState.IsValid)
                 return CurrentUmbracoPage();
 
-            // Check if a member exist with that email
+            if(model.AcceptTermsAndPrivacy == false)
+            {
+                var message = Umbraco.GetDictionaryValue("AcceptTermsAndPrivacyDisagreement", "AcceptTermsAndPrivacyDisagreement");
+                ModelState.AddModelError(nameof(model.AcceptTermsAndPrivacy), new Exception(message));
+                return CurrentUmbracoPage();
+            }
+
+            // Check if a member exist with that email,
+            // TODO: This is bad, because hackers might exploit this function.
             if (Services.MemberService.Exists(model.Email))
             {
                 var message = Umbraco.GetDictionaryValue("RegisterMemberExistError", "RegisterMemberExistError");
@@ -191,14 +207,14 @@ namespace UmbracoBootstrap.Web.Controllers
             // Create the new member
             var member = Services.MemberService.CreateMember(model.Email, model.Email, model.FullName, "member");
 
-            // Upload photo if any
-            if (model.Photo != null && model.Photo.ContentLength > 0)
-            {
-                member.SetValue("photo", model.Photo);
-            }
+            //// Upload photo if any
+            //if (model.Photo != null && model.Photo.ContentLength > 0)
+            //{
+            //    member.SetValue("photo", model.Photo);
+            //}
 
             // Save as unapproved
-            member.IsApproved = false;
+            member.IsApproved = false; // TODO: Member must approve email address
             member.SetValue("firstName", model.FirstName.Trim());
             member.SetValue("lastName", model.LastName.Trim());
             Services.MemberService.Save(member);
@@ -208,37 +224,35 @@ namespace UmbracoBootstrap.Web.Controllers
             {
                 Services.MemberService.SavePassword(member, model.Password);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Propperly a validation error
-                ModelState.AddModelError(nameof(model.Password), ex);
-                return CurrentUmbracoPage();
+                throw new Exception("UmbracoMembershipProvider does not allow manually chaing password. Change 'allowManuallyChangingPassword' to true.");
             }
 
             // Send confirmation email
 
             //var redirectPage = CurrentPage.Parent.FirstChild<ContentModels.Activate>();
             //string redirectUrl = redirectPage.UrlAbsolute();
-            string redirectUrl = await SendConfirmAccountMail(member, model.RedirectUrl);
+            Uri redirectUrl = await SendApproveEmailMail(member, model.RedirectUrl);
 
             TempData["RegisterSuccess"] = member.Email;
 
-            return Redirect(redirectUrl);
+            return RedirectToCurrentUmbracoPage();
         }
 
         [HttpPost]
-        public async Task<ActionResult> HandleResendConfirmAccountMail(string email)
+        public async Task<ActionResult> SendApproveEmailMail(string email)
         {
             var member = Services.MemberService.GetByEmail(email);
             if (member == null)
             {
                 ModelState.AddModelError("", Umbraco.GetDictionaryValue("AccountNotFound", "AccountNotFound"));
-                TempData["ResendConfirmAccountMailError"] = Umbraco.GetDictionaryValue("AccountNotFound", "AccountNotFound");
+                TempData["AccountNotFound"] = Umbraco.GetDictionaryValue("AccountNotFound", "AccountNotFound");
                 return CurrentUmbracoPage();
             }
 
             string redirectUrl = CurrentPage.UrlAbsolute(); // CurrentPage should be AccountActivatePage
-            await SendConfirmAccountMail(member, redirectUrl);
+            await SendApproveEmailMail(member, redirectUrl);
 
             TempData["ResendConfirmAccountMailSuccess"] = member.Email;
 
@@ -249,25 +263,26 @@ namespace UmbracoBootstrap.Web.Controllers
         /// 
         /// </summary>
         /// <param name="member"></param>
-        /// <param name="redirectUrl"></param>
+        /// <param name="hostAndScheme"></param>
         /// <returns>{redirectUrl}?email={Url.Encode(member.Email)}&key={securityKey}</returns>
-        private async Task<string> SendConfirmAccountMail(Umbraco.Core.Models.IMember member, string redirectUrl)
+        private async Task<Uri> SendApproveEmailMail(Umbraco.Core.Models.IMember member, string hostAndScheme)
         {
             try
             {
                 string securityKey = GenerateSecurityKeyOnMember(member);
-                string securityCode = GenerateSecurityCodeOnMember(member);
+                //string securityCode = GenerateSecurityCodeOnMember(member);
 
-                var model = new ConfirmAccountMailModel()
+                var model = new ApproveEmailMailModel()
                 {
                     Member = (ContentModels.Member)Umbraco.TypedMember(member.Id),
-                    Permalink = $"{redirectUrl}?email={Url.Encode(member.Email)}&key={securityKey}",
-                    SecurityCode = securityCode
+                    Permalink = new Uri($"{hostAndScheme}?email={Url.Encode(member.Email)}&key={securityKey}"),
                 };
 
                 await MailMessageHelper.Current.SendMailMessageAsync(member.Email, "ConfirmAccountMail", model, this.ControllerContext);
 
                 LogHelper.Info<MemberController>("Register Confirmation Email sent to: {0}", () => member.Email);
+
+                TempData["ApproveEmailMailSent"] = member.Email;
 
                 return model.Permalink;
             }

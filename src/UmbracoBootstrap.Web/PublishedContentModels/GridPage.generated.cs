@@ -100,12 +100,30 @@ namespace UmbracoBootstrap.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Meta Robots Index
+		///</summary>
+		[ImplementPropertyType("metaRobotsIndex")]
+		public int MetaRobotsIndex
+		{
+			get { return UmbracoBootstrap.Web.PublishedContentModels.SearchEngineOptimization.GetMetaRobotsIndex(this); }
+		}
+
+		///<summary>
 		/// Description: Short description about this page. Should include key word
 		///</summary>
 		[ImplementPropertyType("seoDescription")]
 		public string SeoDescription
 		{
 			get { return UmbracoBootstrap.Web.PublishedContentModels.SearchEngineOptimization.GetSeoDescription(this); }
+		}
+
+		///<summary>
+		/// Keywords: Words separate by comma
+		///</summary>
+		[ImplementPropertyType("seoKeywords")]
+		public string SeoKeywords
+		{
+			get { return UmbracoBootstrap.Web.PublishedContentModels.SearchEngineOptimization.GetSeoKeywords(this); }
 		}
 
 		///<summary>

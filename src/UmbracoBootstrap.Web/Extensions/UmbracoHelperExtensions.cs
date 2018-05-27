@@ -137,6 +137,19 @@ namespace Umbraco.Web
             return fallback;
         }
 
+        public static bool HasQueryString(this UmbracoHelper helper, string key)
+        {
+            var request = HttpContext.Current.Request;
+            var nameValues = HttpUtility.ParseQueryString(request.QueryString.ToString());
+            if (nameValues.AllKeys.Contains(key))
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+
         public static IEnumerable<T> GetPagedResult<T>(this UmbracoHelper helper, IEnumerable<T> items, int currentPage, int pageSize)
         {
             currentPage = currentPage <= 0 ? 1 : currentPage;

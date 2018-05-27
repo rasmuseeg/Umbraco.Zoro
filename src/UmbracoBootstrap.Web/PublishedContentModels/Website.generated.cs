@@ -46,12 +46,57 @@ namespace UmbracoBootstrap.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Google Analytics Tracking ID: The tracking ID is a string like UA-000000-2. It must be included in your tracking code to tell Analytics which account and property to send data to.
+		/// Cookie Disclairmer
+		///</summary>
+		[ImplementPropertyType("cookieDisclairmer")]
+		public IHtmlString CookieDisclairmer
+		{
+			get { return this.GetPropertyValue<IHtmlString>("cookieDisclairmer"); }
+		}
+
+		///<summary>
+		/// Google Analytics Tracking ID: The tracking ID is a string like UA-000000-2. It must be included in your tracking code to tell Analytics which account and property to send data to. Remember to make your Anylytics Account Complaint with GDPR
 		///</summary>
 		[ImplementPropertyType("gaTrackingID")]
 		public string GaTrackingID
 		{
 			get { return this.GetPropertyValue<string>("gaTrackingID"); }
+		}
+
+		///<summary>
+		/// Login Page: Select the page where members are able to login.
+		///</summary>
+		[ImplementPropertyType("loginPage")]
+		public IPublishedContent LoginPage
+		{
+			get { return this.GetPropertyValue<IPublishedContent>("loginPage"); }
+		}
+
+		///<summary>
+		/// Member Pages: Select the pages which should appear in the authorized menu.
+		///</summary>
+		[ImplementPropertyType("memberPages")]
+		public IEnumerable<IPublishedContent> MemberPages
+		{
+			get { return this.GetPropertyValue<IEnumerable<IPublishedContent>>("memberPages"); }
+		}
+
+		///<summary>
+		/// Privacy Policy Page: Select the page which contains privacy policy information.
+		///</summary>
+		[ImplementPropertyType("privacyPolicyPage")]
+		public IPublishedContent PrivacyPolicyPage
+		{
+			get { return this.GetPropertyValue<IPublishedContent>("privacyPolicyPage"); }
+		}
+
+		///<summary>
+		/// Register Page: Select the page that handles registration of new members.
+		///</summary>
+		[ImplementPropertyType("registerPage")]
+		public IPublishedContent RegisterPage
+		{
+			get { return this.GetPropertyValue<IPublishedContent>("registerPage"); }
 		}
 
 		///<summary>
