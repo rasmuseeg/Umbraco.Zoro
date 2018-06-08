@@ -11,7 +11,7 @@ var svgmin = require('gulp-svgmin');
 var path = require('path');
 
 var autoprefixerOptions = {
-    browsers: ['last 2 versions', '> 5%', 'Firefox ESR']
+    browsers: ['last 2 versions', '> 5%']
 };
 
 gulp.task('svgstore', function () {
@@ -36,11 +36,11 @@ gulp.task('scss', function () {
     return gulp.src(['assets/scss/**/*.scss'])
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
+        .pipe(autoprefixer(autoprefixerOptions))
         .pipe(sourcemaps.write('.', {
             includeContent: false,
             sourceRoot: '/assets/scss'
         }))
-        //.pipe(autoprefixer(autoprefixerOptions))
         .pipe(gulp.dest('assets/css'));
 });
 

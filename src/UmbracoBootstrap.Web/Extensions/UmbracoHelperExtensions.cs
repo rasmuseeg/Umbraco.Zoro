@@ -137,6 +137,29 @@ namespace Umbraco.Web
             return fallback;
         }
 
+        /// <summary>
+        /// Gets the querystring key value with fallback.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="helper"></param>
+        /// <param name="key">The key of the QueryString</param>
+        /// <param name="fallback">If empty or null</param>
+        /// <returns></returns>
+        public static T GetQueryString<T>(this UmbracoHelper helper, string key)
+        {
+            var request = HttpContext.Current.Request;
+            var nameValues = HttpUtility.ParseQueryString(request.QueryString.ToString());
+            if (nameValues.AllKeys.Contains(key))
+            {
+                try
+                {
+                    return (T)Convert.ChangeType(nameValues.Get(key), typeof(T));
+                }
+                catch (Exception) { }
+            }
+            return default(T);
+        }
+
         public static bool HasQueryString(this UmbracoHelper helper, string key)
         {
             var request = HttpContext.Current.Request;

@@ -1,0 +1,7 @@
+﻿.field-validation-error{
+  @extend .invalid-feedback;
+}
+
+.field-validation-valid{
+  @extend .valid-feedback;
+}

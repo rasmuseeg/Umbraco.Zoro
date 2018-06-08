@@ -1,8 +1,9 @@
 ﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
 @using System.Web.Mvc.Html
 @using Umbraco.Web
-@using UmbracoBootstrap.Web.Models
-@using UmbracoBootstrap.Web.Controllers
+@using UmbracoBootstrap.Web.Models;
+@using UmbracoBootstrap.Web.Controllers;
+@using UmbracoBootstrap.Web.Helpers;
 
 @{
     var loginStatusModel = Members.GetCurrentLoginStatus();
@@ -12,6 +13,15 @@
     Html.EnableUnobtrusiveJavaScript();
     //Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.min.js");
     //Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.unobtrusive.min.js");
+
+    var tempDataHelper = new MemberTempDataHelper(TempData);
+}
+
+@if (tempDataHelper.AccountHasBeenApproved)
+{
+    <div class="alert alert-success">
+
+    </div>
 }
 
 @if (loginStatusModel.IsLoggedIn)
@@ -58,6 +68,6 @@ else
 
         @Html.HiddenFor(m=> loginModel.RedirectUrl)
 
-        <button class="btn btn-default">Log på</button>
+        <button class="btn btn-primary">@Umbraco.GetDictionaryValue("Next", "Next")</button>
     }
 }

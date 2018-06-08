@@ -11,6 +11,7 @@
             $(element)
                 .removeClass(errorClass)
                 .addClass(validClass);
+
         }
     };
 

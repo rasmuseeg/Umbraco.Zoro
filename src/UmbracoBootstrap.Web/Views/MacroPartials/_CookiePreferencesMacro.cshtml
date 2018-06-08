@@ -1,0 +1,49 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using UmbracoBootstrap.Web;
+@using UmbracoBootstrap.Web.Controllers;
+@{ 
+    var saved = CookiePolicy.GetSaved();
+}
+<div class="mb-4">
+    @if (saved !=null && (
+                    saved.Marketing
+                    || saved.Preferences
+                    || saved.Statistics))
+    {
+        using (Html.BeginUmbracoForm<PrivacyController>("HandleCookieConsent", FormMethod.Post))
+        {
+            <div class="alert alert-info">
+                @Umbraco.GetDictionaryValue("CookieConsentSavedAlert", "We have saved cookies on your computer, because you accepted them earlier.")
+            </div>
+    
+            <button type="submit"
+                    class="btn btn-link" 
+                    name="All" 
+                    value="false">
+                Remove all cookies &arr
+            </button>
+        }
+    }
+    else
+    {
+        using (Html.BeginUmbracoForm<PrivacyController>("HandleCookieConsent", FormMethod.Post))
+        {
+            @*var cookieConsentModel = CookieConsent.GetSavedOrDefault();
+            cookieConsentModel.Preferences = true;
+            cookieConsentModel.Marketing = true;
+            cookieConsentModel.Statistics = true;
+
+            @Html.HiddenFor(x=> cookieConsentModel.Preferences)
+            @Html.HiddenFor(x=> cookieConsentModel.Statistics)
+            @Html.HiddenFor(x=> cookieConsentModel.Marketing)
+            @Html.HiddenFor(x=> cookieConsentModel.Nescesary)*@
+    
+            <button type="submit"
+                    class="btn btn-success" 
+                    name="All" 
+                    value="true">
+                <div class="btn-text">Accept cookies</div>
+            </button>
+        }
+    }
+</div>

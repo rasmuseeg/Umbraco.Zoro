@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html lang="@Model.CurrentCulture.TwoLetterISOLanguageName" prefix="og: http://ogp.me/ns#">
 <head>
-    <!-- TODO: Remember to remove on live environment-->
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="format-detection" content="telephone=no"/>
@@ -16,6 +15,7 @@
     @Html.CachedPartial("_Favicons", Model, 3600, false)
 </head>
 <body>
+    @Html.Partial("_CookieConsent")
     <header class="mb-5">
         @Html.Partial("_SiteNavbar")
     </header>
@@ -24,9 +24,9 @@
     </main>
 
     <!-- Deferred Styles --> 
-    <noscript id="deferred-styles">
-      @Html.RenderCssHere()
-    </noscript>
+    @*<noscript id="deferred-styles">*@
+    @Html.RenderCssHere()
+    @*</noscript>
     <script>
       var loadDeferredStyles = function() {
         var addStylesNode = document.getElementById("deferred-styles");
@@ -39,18 +39,19 @@
           window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
       if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
       else window.addEventListener('load', loadDeferredStyles);
-    </script>
+    </script>*@
 
     <!-- ANALYTICS -->
     @*@Html.Raw(model.Analytics)*@
-    <script src="~/assets/lib/jquery/dist/jquery.slim.min.js" type="text/javascript"></script>
-    <script src="~/assets/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/assets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    <script src="~/assets/lib/jquery-validation-unobtrusive-bootstrap/dist/unobtrusive-bootstrap.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
-    <script src="~/assets/lib/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-    
     <!-- Deferred Scripts -->
     @Html.RenderJsHere()
 </body>
 </html>
+
+@{ 
+    Html.RequiresJsBundle("jquery");
+    Html.RequiresJsBundle("bootstrap");
+
+    //Html.RequiresJsBundle("globalize");
+    Html.RequiresJsBundle("jquery.validation");
+}

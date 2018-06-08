@@ -18,6 +18,12 @@ Username:   admin@example.com
 Password:   AdminAdmin
 ```
 
+### TODO
+- [ ] Rename Project files
+- [ ] Rename Project database, if not starting from scratch
+- [ ] Change machineKey in web.config
+- [ ] Change localhost port 
+
 
 ## Starting from scratch 
 1. Install the following umbraco packages
@@ -34,10 +40,7 @@ Password:   AdminAdmin
 Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=UmbracoBootstrap;AttachDbFilename=|DataDirectory|UmbracoBootstrap.mdf;Integrated Security=True;
 ```
 
-## TODO
+## TODO ROADMAP
 
-* Rename Project files
-* Rename Project database, if not starting from scratch
-* Change machineKey in web.config
-* Change localhost port 
-* Enable or disable SSL support
+- [ ] When a member reaches invalid attempts, the member must be notified.
+ - [] Upgrade to Gulp 4.0

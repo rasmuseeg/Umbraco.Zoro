@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Umbraco.Web.DataAnnotations;
+using UmbracoBootstrap.Web.DataAnnotations;
 
 namespace UmbracoBootstrap.Web.Models
 {
@@ -73,7 +74,8 @@ namespace UmbracoBootstrap.Web.Models
 
     public class ChangePasswordModel
     {
-        [UmbracoRequired]
+        [UmbracoRequired,
+            UmbracoPassword()]
         [UmbracoDisplayName(nameof(Password))]
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -98,23 +100,28 @@ namespace UmbracoBootstrap.Web.Models
         public string LastName { get; set; }
 
         [UmbracoRequired]
+        [UmbracoDisplayName(nameof(PhoneNumber))]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
+
+        [UmbracoRequired]
+        [UmbracoEmailAddress()]
         [UmbracoDisplayName(nameof(Email))]
         [DataType(DataType.EmailAddress)]
-        [EmailAddress()]
         public string Email { get; set; }
 
-        [UmbracoDisplayName(nameof(Photo))]
-        [DataType(DataType.Upload)]
-        public HttpPostedFileBase Photo { get; set; }
+        //[UmbracoDisplayName(nameof(Photo))]
+        //[DataType(DataType.Upload)]
+        //public HttpPostedFileBase Photo { get; set; }
 
-        public string PhotoUrl { get; set; }
+        //public string PhotoUrl { get; set; }
 
         public string FullName
         {
             get { return this.FirstName.Trim() + " " + this.LastName.Trim(); }
         }
 
-        public string Username { get; internal set; }
+        public string Username { get; set; }
     }
 
     public class RegisterProfileModel
@@ -124,16 +131,17 @@ namespace UmbracoBootstrap.Web.Models
 
         //public string PhotoUrl { get; set; }
 
+        [UmbracoRequired]
         [UmbracoDisplayName(nameof(FirstName))]
-        [UmbracoRequired()]
         public string FirstName { get; set; }
 
+        [UmbracoRequired]
         [UmbracoDisplayName(nameof(LastName))]
-        [UmbracoRequired()]
         public string LastName { get; set; }
 
+        [UmbracoRequired]
         [UmbracoDisplayName(nameof(PhoneNumber))]
-        [UmbracoRequired()]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
         private string _email;
@@ -142,29 +150,56 @@ namespace UmbracoBootstrap.Web.Models
         [UmbracoEmailAddress]
         public string Email
         {
+            // This ensures email does not contain spaces
             get { return _email; }
             set { _email = value.ToLower().Trim(); }
         }
 
         [UmbracoDisplayName(nameof(Password)),
-            // Validation must be equal to whats defined the the web.config under the MembersMembershipProvider
-            UmbracoStringLength(MemberConsts.PasswordMaxLength, MinimumLength = MemberConsts.PasswordMinLength),
+            UmbracoPassword(),
+            UmbracoRequired(),
             DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [UmbracoDisplayName(nameof(ConfirmPassword))]
-        [UmbracoCompare(nameof(Password))]
-        [DataType(DataType.Password)]
+        [UmbracoDisplayName(nameof(ConfirmPassword)),
+            UmbracoPassword(),
+            UmbracoRequired(),
+            UmbracoCompare(nameof(Password)),
+            DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
-        [UmbracoDisplayName(nameof(AcceptTermsAndPrivacy))]
+        [UmbracoDisplayName(nameof(AcceptTermsAndPrivacy)),
+            UmbracoMustBeTrue]
         public bool AcceptTermsAndPrivacy { get; set; }
 
         public string FullName
         {
             get { return this.FirstName.Trim() + " " + this.LastName.Trim(); }
         }
+    }
 
-        public string RedirectUrl { get; set; }
+    public class ApproveMemberModel
+    {
+        [UmbracoRequired]
+        public string SecurityKey { get; set; }
+
+        [UmbracoRequired]
+        public string Email { get; set; }
+
+        [UmbracoRequired]
+        public string LoginPageUrl { get; set; }
+    }
+
+    public enum ApproveMemberResult
+    {
+        Approved,
+        InvalidModelState,
+        EmailNotFound,
+        InvalidSecurityKey,
+    }
+
+    public class DeleteAccountModel
+    {
+        public string Email { get; set; }
     }
 }

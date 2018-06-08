@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
+using System.Web.Security;
+using Umbraco.Web.Security;
+using System.Web.Util;
+using Umbraco.Web.Security.Providers;
 
 //Helping reference: https://github.com/mono/aspnetwebstack/blob/master/src/System.Web.Mvc/CompareAttribute.cs
 
@@ -23,11 +29,14 @@ namespace Umbraco.Web.DataAnnotations
         {
             get
             {
-                return UmbracoDictionary.GetDictionaryValue(resourceName);
+                return UmbracoDictionary.Value(resourceName);
             }
         }
     }
 
+    /// <summary>
+    /// Specifies that a data field value is required.
+    /// </summary>
     public class UmbracoRequiredAttribute : RequiredAttribute, IClientValidatable
     {
         public string ResourceName { get; set; } = "RequiredError";
@@ -39,28 +48,24 @@ namespace Umbraco.Web.DataAnnotations
 
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
-            ErrorMessage = UmbracoDictionary.GetDictionaryValue(ResourceName);
+            ErrorMessage = UmbracoDictionary.Value(ResourceName);
             yield return new ModelClientValidationRequiredRule(FormatErrorMessage(metadata.GetDisplayName()));
         }
     }
 
+    /// <summary>
+    /// Specifies the minimum and maximum length of charactors that are allowed in a data field. 
+    /// </summary>
     public class UmbracoStringLengthAttribute : StringLengthAttribute, IClientValidatable
     {
         public UmbracoStringLengthAttribute(int maximumLength)
             : base(maximumLength)
         {
+            ErrorMessage = UmbracoDictionary.Value("MinMaxLengthError");
         }
 
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
-            if (MinimumLength > 0)
-            {
-                ErrorMessage = UmbracoDictionary.GetDictionaryValue("MinMaxLengthError");
-            }
-            else
-            {
-                ErrorMessage = UmbracoDictionary.GetDictionaryValue("MaxLengthError");
-            }
 
             yield return
                 new ModelClientValidationStringLengthRule(FormatErrorMessage(metadata.GetDisplayName()), MinimumLength, MaximumLength);
@@ -69,31 +74,17 @@ namespace Umbraco.Web.DataAnnotations
         public UmbracoStringLengthAttribute(int maximumLength, string resourceName)
             : base(maximumLength)
         {
-            ErrorMessage = UmbracoDictionary.GetDictionaryValue(resourceName);
+            ErrorMessage = UmbracoDictionary.Value(resourceName);
         }
     }
 
-    public class UmbracoMaxLengthAttribute : MaxLengthAttribute, IClientValidatable
-    {
-        public UmbracoMaxLengthAttribute(int length)
-            : base(length)
-        {
-        }
+    
 
-        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
-        {
-            ErrorMessage = UmbracoDictionary.GetDictionaryValue("MaxLengthError");
-            yield return
-                new ModelClientValidationMaxLengthRule(FormatErrorMessage(metadata.GetDisplayName()), Length);
-        }
+    
 
-        public UmbracoMaxLengthAttribute(int length, string resourceName)
-            : base(length)
-        {
-            ErrorMessage = UmbracoDictionary.GetDictionaryValue(resourceName);
-        }
-    }
-
+    /// <summary>
+    /// Specifies the minimum length of array or string data allowed in a property.
+    /// </summary>
     public class UmbracoMinLengthAttribute : MinLengthAttribute, IClientValidatable
     {
         public UmbracoMinLengthAttribute(int length)
@@ -103,7 +94,7 @@ namespace Umbraco.Web.DataAnnotations
 
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
-            ErrorMessage = UmbracoDictionary.GetDictionaryValue("MinLengthError");
+            ErrorMessage = UmbracoDictionary.Value("MinLengthError");
             yield return
                 new ModelClientValidationMinLengthRule(FormatErrorMessage(metadata.GetDisplayName()), Length);
         }
@@ -111,73 +102,52 @@ namespace Umbraco.Web.DataAnnotations
         public UmbracoMinLengthAttribute(int length, string resourceName)
             : base(length)
         {
-            ErrorMessage = UmbracoDictionary.GetDictionaryValue(resourceName);
+            ErrorMessage = UmbracoDictionary.Value(resourceName);
         }
     }
 
-
+    /// <summary>
+    /// Specifies that a data field value in ASP.net Dynamic Data must match the specified regular expression.
+    /// </summary>
     public class UmbracoRegularExpressionAttribute : RegularExpressionAttribute, IClientValidatable
     {
+        public new string ErrorMessageString { get; internal set; }
         public string ResourceName { get; set; } = "RegexError";
 
         public UmbracoRegularExpressionAttribute(string pattern)
             : base(pattern)
         {
+            ErrorMessageString = UmbracoDictionary.Value(ResourceName);
         }
 
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
-            ErrorMessage = UmbracoDictionary.GetDictionaryValue(ResourceName);
             yield return new ModelClientValidationRegexRule(FormatErrorMessage(metadata.GetDisplayName()), Pattern);
         }
     }
 
-    public class UmbracoCompareAttribute : System.ComponentModel.DataAnnotations.CompareAttribute, IClientValidatable
-    {
-        public new string OtherPropertyDisplayName { get; internal set; }
-
-        public UmbracoCompareAttribute(string otherProperty)
-            : base(otherProperty)
-        {
-        }
-
-        public override string FormatErrorMessage(string name)
-        {
-            return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, OtherPropertyDisplayName ?? OtherProperty);
-        }
-
-        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
-        {
-            if (metadata.ContainerType != null)
-            {
-                if (OtherPropertyDisplayName == null)
-                {
-                    OtherPropertyDisplayName = ModelMetadataProviders.Current.GetMetadataForProperty(() => metadata.Model, metadata.ContainerType, OtherProperty).GetDisplayName();
-                }
-            }
-
-            ErrorMessage = UmbracoDictionary.GetDictionaryValue("CompareError");
-            yield return new ModelClientValidationEqualToRule(FormatErrorMessage(metadata.GetDisplayName()), OtherProperty);
-        }
-    }
-
-    public class UmbracoEmailAddress : RegularExpressionAttribute, IClientValidatable
+    /// <summary>
+    /// Specifies that a data field value must be a valid Email Address
+    /// </summary>
+    public class UmbracoEmailAddressAttribute : RegularExpressionAttribute, IClientValidatable
     {
         public string ResourceName { get; set; } = "EmailError";
 
         private static new string Pattern { get; set; } = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
 
-        public UmbracoEmailAddress()
+        public UmbracoEmailAddressAttribute()
             : base(Pattern)
         {
         }
 
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
-            ErrorMessage = UmbracoDictionary.GetDictionaryValue(ResourceName);
+            ErrorMessage = UmbracoDictionary.Value(ResourceName);
             yield return new ModelClientValidationRegexRule(FormatErrorMessage(metadata.GetDisplayName()), Pattern);
         }
     }
+
+    
 
     public class UmbracoDictionary
     {
@@ -195,7 +165,7 @@ namespace Umbraco.Web.DataAnnotations
             }
         }
 
-        public static string GetDictionaryValue(string resourceKey)
+        public static string Value(string resourceKey)
         {
             string key = Helper.GetDictionaryValue(resourceKey);
             if (!string.IsNullOrEmpty(key))

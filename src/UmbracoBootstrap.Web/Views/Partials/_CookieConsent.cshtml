@@ -1,27 +1,70 @@
-﻿@inherits UmbracoTemplatePage
+﻿@inherits UmbracoViewPage
+@using UmbracoBootstrap.Web.Controllers;
+@using UmbracoBootstrap.Web;
 @{
-    string COOKIE_NAME = "CookieConcent";
-    if (Request.HttpMethod == WebRequestMethods.Http.Post)
+    var site = Model.Site();
+
+    var cookiePolicyModel = CookiePolicy.GetSavedOrDefault();
+    cookiePolicyModel.Preferences = true;
+    cookiePolicyModel.Marketing = true;
+    cookiePolicyModel.Statistics = true;
+}
+@if (!CookiePolicy.Exist())
+{
+    /// Continued usage
+    string CONSENT_BY_CONTINUED_USAGE = "ConsentByContinueUsage";
+    if (TempData[CONSENT_BY_CONTINUED_USAGE] != null)
     {
-        if (Request.Form[COOKIE_NAME] != null)
+        if (!HttpContext.Current.IsDebuggingEnabled)
         {
-            Response.Cookies.Add(new HttpCookie(COOKIE_NAME, "1")
-            {
-                Expires = DateTime.Now.AddDays(30),
-                Domain = Request.Url.Host,
-                Path = "/",
-                Secure = Request.Url.Scheme == "http",
-                HttpOnly = false
-            });
+            cookiePolicyModel.Save();
+            Response.Redirect(Request.Url.ToString());
         }
     }
-    if (Request.Cookies[COOKIE_NAME] == null)
+    else
     {
-        <div class="alert alert-info" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+        TempData[CONSENT_BY_CONTINUED_USAGE] = true;
+    }
+
+    using (Html.BeginUmbracoForm<PrivacyController>("HandleCookieConsent", FormMethod.Post))
+    {
+        <div class="alert alert-info alert-cookies mb-0" role="alert">
+            @site.GetPropertyValue("cookieDisclaimerText")
+            @Html.HiddenFor(x=> cookiePolicyModel.Preferences)
+            @Html.HiddenFor(x=> cookiePolicyModel.Statistics)
+            @Html.HiddenFor(x=> cookiePolicyModel.Marketing)
+            @Html.HiddenFor(x=> cookiePolicyModel.Nescesary)
+
+            @*<div>
+                @Html.HiddenFor(x=> cookieConsentModel.Nescesary)
+                <div class="form-check form-check-inline">
+                    @Html.CheckBoxFor(x => cookieConsentModel.Nescesary, new { @class="form-check-input", @disabled="disabled" })
+                    @Html.LabelFor(x => cookieConsentModel.Nescesary, new { @class="form-check-label" })
+                </div>
+                    
+
+                <div class="form-check form-check-inline">
+                    @Html.CheckBoxFor(x => cookieConsentModel.Preferences, new { @class="form-check-input" })
+                    @Html.LabelFor(x => cookieConsentModel.Preferences, new { @class="form-check-label" })
+                </div>
+
+                <div class="form-check form-check-inline">
+                    @Html.CheckBoxFor(x => cookieConsentModel.Marketing, new { @class="form-check-input" })
+                    @Html.LabelFor(x => cookieConsentModel.Marketing, new { @class="form-check-label" })
+                </div>
+
+                <div class="form-check form-check-inline">
+                    @Html.CheckBoxFor(x => cookieConsentModel.Statistics, new { @class="form-check-input" })
+                    @Html.LabelFor(x => cookieConsentModel.Statistics, new { @class="form-check-label" })
+                </div>
+            </div>*@
+
+            <button name="AcceptAll" class="btn btn-outline-primary" value="true" type="submit">
+                <div>@Umbraco.GetDictionaryValue("BtnAccept", "Accept")</div>
             </button>
-            <strong>Vi bruger cookies!</strong> Vi bruger cookies for at forbedre bruger oplevelsen. <a href="#" class="alert-link">Læs mere her</a>
+            <button name="AcceptAll" class="btn btn-outline-warning" value="false" type="submit">
+                <div>@Umbraco.GetDictionaryValue("BtnDoNotAccept", "Do not accept")</div>
+            </button>
         </div>
     }
 }
