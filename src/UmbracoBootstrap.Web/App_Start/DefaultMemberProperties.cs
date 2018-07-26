@@ -20,21 +20,27 @@ namespace UmbracoBootstrap.Web.App_Start
         {
             foreach(var entity in e.SavedEntities)
             {
-                if (!entity.PropertyTypeExists("umbracoMemberSecurityKey"))
+                string securityKeyAlias = OurConstants.Member.SecurityKey;
+                if (!entity.PropertyTypeExists(securityKeyAlias))
                 {
-                    var propType = new PropertyType("Umbraco.NoEdit", DataTypeDatabaseType.Nvarchar, "umbracoMemberSecurityKey")
+                    var propType = new PropertyType(Constants.PropertyEditors.NoEditAlias, 
+                        DataTypeDatabaseType.Nvarchar,
+                        securityKeyAlias)
                     {
-                        Name = "Security Key",
+                        Name = OurConstants.Member.SecurityKeyLabel,
                         Description = ""
                     };
                     entity.AddPropertyType(propType);
                 }
 
-                if (!entity.PropertyTypeExists("umbracoMemberSecurityKeyTimestamp"))
+                string securityKeyTimestampAlias = OurConstants.Member.SecurityKeyTimestamp;
+                if (!entity.PropertyTypeExists(securityKeyTimestampAlias))
                 {
-                    var propType = new PropertyType("Umbraco.NoEdit", DataTypeDatabaseType.Date, "umbracoMemberSecurityKeyTimestamp")
+                    var propType = new PropertyType(Constants.PropertyEditors.NoEditAlias, 
+                        DataTypeDatabaseType.Date,
+                        securityKeyTimestampAlias)
                     {
-                        Name = "Security Key Timestamp",
+                        Name = OurConstants.Member.SecurityKeyTimestampLabel,
                         Description = ""
                     };
                     entity.AddPropertyType(propType);
