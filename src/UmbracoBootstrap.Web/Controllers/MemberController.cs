@@ -17,8 +17,8 @@ namespace UmbracoBootstrap.Web.Controllers
 {
     public class MemberController : SurfaceController
     {
-        private const string SECURITYKEY_EXPIRATION_DATE_ALIAS = "umbracoMemberSecurityKeyTimestamp";
-        private const string SECURITY_KEY_ALIAS = "umbracoMemberSecurityKey";
+        private const string SECURITYKEY_EXPIRATION_DATE_ALIAS = OurConstants.Member.SecurityKeyTimestamp;
+        private const string SECURITY_KEY_ALIAS = OurConstants.Member.SecurityKey;
 
         public MemberTempDataHelper TempDataHelper { get; }
 
@@ -205,7 +205,12 @@ namespace UmbracoBootstrap.Web.Controllers
             }
 
             // Create the new member
-            var member = Services.MemberService.CreateMember(model.Email, model.Email, model.FullName, "member");
+            var member = Services.MemberService.CreateMember(
+                model.Email, 
+                model.Email, 
+                model.FullName, 
+                Constants.Conventions.MemberTypes.DefaultAlias
+            );
 
             //// Upload photo if any
             //if (model.Photo != null && model.Photo.ContentLength > 0)
@@ -218,6 +223,8 @@ namespace UmbracoBootstrap.Web.Controllers
             member.SetValue("firstName", model.FirstName.Trim());
             member.SetValue("lastName", model.LastName.Trim());
             member.SetValue("phoneNumber", model.PhoneNumber.Trim());
+            member.SetValue(Constants.Conventions.Member.PasswordQuestion, model.PasswordQuestion);
+            member.SetValue(Constants.Conventions.Member.PasswordAnswer, model.PasswordAnswer);
             Services.MemberService.Save(member);
 
             // Try save password
@@ -323,7 +330,7 @@ namespace UmbracoBootstrap.Web.Controllers
 
             member.IsApproved = true;
             Services.MemberService.Save(member);
-            Services.MemberService.AssignRole(member.Id, MemberGroups.Default);
+            Services.MemberService.AssignRole(member.Id, OurConstants.MemberGroups.Default);
 
             TempDataHelper.AccountHasBeenApproved = true;
 

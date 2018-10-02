@@ -1,1 +1,9 @@
 ﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using UmbracoBootstrap.Web.Controllers;
+@{ 
+    var currentMember = Members.GetCurrentMember();
+    var key = currentMember.GetKey();
+}
+
+<a class="btn btn-outline-primary" target="_blank" 
+   href="@Url.SurfaceAction("ExportData", "Privacy", new { @id=key })">Download Data</a>

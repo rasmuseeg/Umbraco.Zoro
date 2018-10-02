@@ -21,8 +21,13 @@
             form.submit();
         },
         invalidHandler: function (event, validator) {
-            debugger;
             $(form).addClass('was-validated');
+        },
+        error: function (label, element) {
+            debugger;
+        },
+        success: function (label) {
+            debugger;
         }
     };
 
@@ -35,5 +40,6 @@
 
     $("form").each(function () {
         $(this).addClass('needs-validation');
+        var validator = $(this).validator(defaultOptions);
     });
 })(jQuery);

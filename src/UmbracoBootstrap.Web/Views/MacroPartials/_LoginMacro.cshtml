@@ -8,6 +8,7 @@
 @{
     var loginStatusModel = Members.GetCurrentLoginStatus();
     var redirectPage = Umbraco.TypedContent(Model.MacroParameters.GetValue<string>("redirectUrl", null));
+    var forgotPasswordPage = Umbraco.TypedContent(Model.MacroParameters.GetValue<string>("forgotPasswordPage", null));
 
     Html.EnableClientValidation();
     Html.EnableUnobtrusiveJavaScript();
@@ -50,7 +51,7 @@ else
         }
     }
 
-    using (Html.BeginUmbracoForm<MemberController>("HandleLogin"))
+    using (Html.BeginUmbracoForm<MemberController>("HandleLogin", null, new { @class="" }, FormMethod.Post))
     {
         @Html.ValidationSummary("loginModel", true)
 
@@ -61,13 +62,36 @@ else
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m=> loginModel.Password, new { @class="control-label" })
-            @Html.PasswordFor(m => loginModel.Password, new { @class = "form-control" })
+            <div class="row">
+                <div class="col">
+                    @Html.LabelFor(m=> loginModel.Password, new { @class="control-label" })
+                </div>
+                <div class="col-auto">
+                    @if(forgotPasswordPage != null)
+                    {
+                      <!-- Help text -->
+                      <a href="@forgotPasswordPage.Url" class="form-text small text-muted">
+                        @Umbraco.GetDictionaryValue("ForgotPassword", "Forgot password?")
+                      </a>
+                    }
+                </div>
+            </div>
+            <div class="input-group input-group-merge">
+                @Html.PasswordFor(m => loginModel.Password, new {
+                    @class = "form-control form-control-appended",
+                    @placeholder =Umbraco.GetDictionaryValue("EnterYourPassword", "Enter your password")
+                })
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                    <i class="fe fe-eye"></i>
+                  </span>
+                </div>
+            </div>
             @Html.ValidationMessageFor(m => loginModel.Password)
         </div>
 
         @Html.HiddenFor(m=> loginModel.RedirectUrl)
 
-        <button class="btn btn-primary">@Umbraco.GetDictionaryValue("Next", "Next")</button>
+        <button class="btn btn-primary btn-block mb-3">@Umbraco.GetDictionaryValue("SignIn", "Sign in")</button>
     }
 }

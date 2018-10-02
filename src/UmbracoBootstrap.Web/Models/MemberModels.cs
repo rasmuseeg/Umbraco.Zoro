@@ -10,7 +10,8 @@ using UmbracoBootstrap.Web.DataAnnotations;
 
 namespace UmbracoBootstrap.Web.Models
 {
-    public class MemberConsts {
+    public class MemberConsts
+    {
         public const int PasswordMinLength = 4;
         public const int PasswordMaxLength = 32;
     }
@@ -168,6 +169,16 @@ namespace UmbracoBootstrap.Web.Models
             DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
+        [UmbracoDisplayName(nameof(PasswordQuestion)),
+            UmbracoRequired(),
+            UmbracoMinLength(4)]
+        public string PasswordQuestion { get; set; }
+
+        [UmbracoDisplayName(nameof(PasswordAnswer)),
+            UmbracoRequired(),
+            UmbracoMinLength(4)]
+        public string PasswordAnswer { get; set; }
+
         [UmbracoDisplayName(nameof(AcceptTermsAndPrivacy)),
             UmbracoMustBeTrue]
         public bool AcceptTermsAndPrivacy { get; set; }
@@ -176,6 +187,7 @@ namespace UmbracoBootstrap.Web.Models
         {
             get { return this.FirstName.Trim() + " " + this.LastName.Trim(); }
         }
+
     }
 
     public class ApproveMemberModel

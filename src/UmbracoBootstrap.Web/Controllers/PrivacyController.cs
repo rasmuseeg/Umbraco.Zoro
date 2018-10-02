@@ -40,5 +40,12 @@ namespace UmbracoBootstrap.Web.Controllers
 
             return RedirectToCurrentUmbracoUrl();
         }
+
+        [HttpGet]
+        public ActionResult ExportData(Guid id)
+        {
+            var member = Services.MemberService.GetByKey(id);
+            return Json(member, JsonRequestBehavior.AllowGet);
+        }
     }
 }
