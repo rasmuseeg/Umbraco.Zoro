@@ -1,19 +1,17 @@
 {
-    "compilerOptions": {
-      "lib": [ "dom", "es2015" ],
-      "outDir": "scripts/build/",
-      "target": "es5",
-      "module": "commonjs",
-      "sourceMap": true,
-      "removeComments": true,
-      "suppressImplicitAnyIndexErrors": true,
-      "alwaysStrict": true,
-      "jsx": "react"
-    },
-    "compileOnSave": true,
-    "exclude": [
-      "node_modules"
-    ]
-  }
-  
-  
+  "compileOnSave": true,
+  "compilerOptions": {
+    "lib": [ "dom", "es2015" ],
+    "target": "es5",
+    "module": "commonjs",
+    "sourceMap": true,
+    "removeComments": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "preserveConstEnums": true,
+    "alwaysStrict": true,
+    "jsx": "react"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
