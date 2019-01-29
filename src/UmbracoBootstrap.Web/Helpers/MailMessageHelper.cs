@@ -43,10 +43,11 @@ namespace UmbracoBootstrap.Web.Helpers
         {
             using (var message = new MailMessage())
             {
-                message.Body = bodyText;
                 message.To.Add(to);
                 message.IsBodyHtml = true;
-                message.BodyEncoding = System.Text.Encoding.UTF8;
+                message.BodyEncoding = Encoding.UTF8;
+                message.Body = bodyText;
+                message.SubjectEncoding = Encoding.UTF8;
                 message.Subject = subject;
 
                 SendMail(message);
@@ -88,8 +89,10 @@ namespace UmbracoBootstrap.Web.Helpers
             var mailMessage = new MailMessage(NotificationsEmailAddress, to)
             {
                 Subject = subject,
+                SubjectEncoding = Encoding.UTF8,
                 Body = html,
-                IsBodyHtml = true
+                BodyEncoding = Encoding.UTF8,
+                IsBodyHtml = true,
             };
             return mailMessage;
         }
@@ -109,51 +112,5 @@ namespace UmbracoBootstrap.Web.Helpers
                 await SendMailAsync(mailMessage);
             }
         }
-
-        //public string ParseTemplate<T>(string viewPath, T model)
-        //{
-        //    string templateKey = viewPath;
-        //    string relativePath = viewPath;
-        //    if (viewPath.StartsWith("~/"))
-        //        relativePath = relativePath.Substring(2);
-
-        //    Type modelType = model.GetType();
-
-        //    string templateAbsolutePath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, relativePath);
-
-        //    if (Engine.Razor.IsTemplateCached(templateKey, modelType) == false)
-        //    {
-        //        string templateSource = System.IO.File.ReadAllText(templateAbsolutePath);
-        //        return Engine.Razor.RunCompile(templateSource, templateKey, modelType, model);
-        //    }
-        //    else
-        //    {
-        //        return Engine.Razor.Run(templateKey, modelType, model);
-        //    }
-        //}
-
-        //public string GetAbsolutePath(string relativePath, string basePath)
-        //{
-        //    if (relativePath == null)
-        //        return null;
-        //    if (basePath == null)
-        //        basePath = Path.GetFullPath("."); // quick way of getting current working directory
-        //    else
-        //        basePath = GetAbsolutePath(basePath, null); // to be REALLY sure ;)
-        //    string path;
-        //    // specific for windows paths starting on \ - they need the drive added to them.
-        //    // I constructed this piece like this for possible Mono support.
-        //    if (!Path.IsPathRooted(relativePath) || "\\".Equals(Path.GetPathRoot(relativePath)))
-        //    {
-        //        if (relativePath.StartsWith(Path.DirectorySeparatorChar.ToString()))
-        //            path = Path.Combine(Path.GetPathRoot(basePath), relativePath.TrimStart(Path.DirectorySeparatorChar));
-        //        else
-        //            path = Path.Combine(basePath, relativePath);
-        //    }
-        //    else
-        //        path = relativePath;
-        //    // resolves any internal "..\" to get the true full path.
-        //    return Path.GetFullPath(path);
-        //}
     }
 }
