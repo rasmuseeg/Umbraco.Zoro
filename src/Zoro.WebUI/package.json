@@ -1,0 +1,29 @@
+{
+    "private": true,
+    "scripts": {
+        "build": "webpack --mode production",
+        "start": "webpack --watch --mode development"
+    },
+    "devDependencies": {
+        "@types/jquery": "^3.3.0",
+        "@types/jquery-validation-unobtrusive": "^3.2.31",
+        "@types/jquery.validation": "^1.16.2",
+        "@types/umbraco": "^7.2.33",
+        "autoprefixer": "^9.4.7",
+        "css-loader": "^2.1.0",
+        "es6-promise": "^4.2.4",
+        "extract-text-webpack-plugin": "4.0.0-beta.0",
+        "globalize": "^1.2.3",
+        "mini-css-extract-plugin": "^0.5.0",
+        "node-sass": "^4.11.0",
+        "postcss": "^6.0.19",
+        "postcss-loader": "^3.0.0",
+        "sass-loader": "^7.1.0",
+        "style-loader": "^0.20.3",
+        "tailwindcss": ">=0.6.5",
+        "webpack": "^4.27.1",
+        "webpack-cli": "^3.1.2",
+        "webpack-dev-server": "^3.1.1",
+        "postcss-import": "^12.0.1"
+    }
+}
