@@ -1,8 +1,10 @@
-﻿module.exports = {
+﻿const tailwindcss = require('tailwindcss');
+module.exports = {
     sourceMaps: true,
     plugins: [
-        require('tailwindcss')('./tailwind.config.js'),
-        require('postcss-import')(),
+        tailwindcss('./tailwind.config.js'),
+        require('postcss-import'),
+        require('postcss-preset-env'),
         require('autoprefixer')
-    ],
-}
+    ]
+};

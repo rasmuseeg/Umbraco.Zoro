@@ -1,28 +1,46 @@
-﻿const path = require('path');
-const tailwindcss = require('tailwindcss');
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+/// <binding ProjectOpened='Watch - Development' />
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: './assets/scss/styles.scss',
+    entry: __dirname + '/assets/scss/styles.scss',
+    output: {
+        filename: '[name].js',
+        chunkFilename: "[id].js",
+        path: __dirname + '/assets/dist'
+    },
     mode: process.env.NODE_ENV,
     devtool: "source-map",
     module: {
-        rules: [{
-            test: /\.scss$/,
-            use: [
-                    { loader: 'style-loader', options: { sourceMap: true } },
-                    { loader: 'css-loader', options: { sourceMap: true } },
-                    {
-                        loader: 'postcss-loader'
-                    },
+        rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "postcss-loader"
+                ]
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    { loader: 'css-loader', options: { importLoaders: 1, sourceMap: true } },
+                    { loader: 'postcss-loader' },
                     { loader: "sass-loader", options: { sourceMap: true } }
-            ]
-        }]
+                ]
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader"
+                }
+            }]
     },
     plugins: [
-        new ExtractTextPlugin('styles.scss', {
-            disable: process.env.NODE_ENV === 'development',
+        new ExtractTextPlugin('styles.css', {
+            disable: process.env.NODE_ENV === 'development'
         }),
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output

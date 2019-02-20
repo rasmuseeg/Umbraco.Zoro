@@ -1,0 +1,14 @@
+﻿@inherits UmbracoViewPage<IConfirmAccountMailMessage>
+@using UmbracoBootstrap.Web.Models;
+@{
+    ViewBag.Title = "Confirm Account";
+    ViewBag.Preheader = "We have received a account creation request";
+}
+<p>Hi @Model.FullName,</p>
+<p>
+    We have received a account creation request for the following email: @Model.Email<br />
+</p>
+@Html.Partial("MailMessages/Shared/_Button", new EmailButton() { Url = Model.Permalink.ToString(), Label = "Confirm your account" })
+<p>
+    If you did not request for a account creation, follow the link, and click "Delete account".
+</p>

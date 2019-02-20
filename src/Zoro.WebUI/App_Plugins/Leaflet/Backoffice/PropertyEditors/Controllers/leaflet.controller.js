@@ -1,4 +1,6 @@
-﻿angular.module("umbraco").controller("Leaflet.MapController", ["$scope", "$element", "assetsService", "$timeout", function ($scope, $element, assetsService, $timeout) {
+﻿"use strict";
+
+angular.module("umbraco").controller("Leaflet.MapController", ["$scope", "$element", "assetsService", "$timeout", function ($scope, $element, assetsService, $timeout) {
     var defaults = {
         minZoom: 0,
         maxZoom: 18,

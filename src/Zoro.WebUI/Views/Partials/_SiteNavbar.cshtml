@@ -1,7 +1,7 @@
 ﻿@inherits UmbracoViewPage
-@using ContentModels = UmbracoBootstrap.Web.PublishedContentModels;
-@using UmbracoBootstrap.Web.Controllers;
-@using UmbracoBootstrap.Web.Models;
+@using ContentModels = Zoro.WebUI.PublishedContentModels;
+@using Zoro.WebUI.Controllers;
+@using Zoro.WebUI.Models;
 @{
     var site = (ContentModels.Website)Model.Site();
     var children = site.Children().Where(x => x.IsVisible());

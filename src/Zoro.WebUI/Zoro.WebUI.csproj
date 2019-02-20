@@ -175,7 +175,6 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.1, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.7.10.4\lib\net45\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
@@ -198,7 +197,6 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -229,7 +227,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="TidyNet, Version=1.0.0.0, Culture=neutral">
       <HintPath>..\packages\UmbracoCms.Core.7.10.4\lib\net45\TidyNet.dll</HintPath>
     </Reference>
@@ -457,12 +454,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".babelrc" />
     <None Include="package.json" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="README.md" />
     <None Include="tsconfig.json" />
-    <Content Include="UmbracoZoro.WebUI.wpp.targets" />
+    <Content Include="Views\MailMessages\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\FluidPage.cshtml" />
+    <Content Include="Views\MailMessages\en-GB\RegistrationConfirmationMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\da-DK\PasswordChangeMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\da-DK\DeleteAccountMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\da-DK\ConfirmAccountMailMessage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -470,18 +475,14 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="Media\Web.config" />
-    <Content Include="Views\MailMessages\da-DK\RegisterConfirmationMail.cshtml" />
-    <Content Include="Views\MailMessages\DeleteAccountMail.cshtml" />
-    <Content Include="Views\MailMessages\en-GB\ConfirmAccountMail.cshtml" />
-    <Content Include="Views\MailMessages\en-GB\DeleteAccountMail.cshtml" />
-    <Content Include="Views\MailMessages\en-GB\PasswordChangeMail.cshtml" />
-    <Content Include="Views\MailMessages\en-GB\PasswordResetConfirmationMail.cshtml" />
-    <Content Include="Views\MailMessages\en-US\RegisterConfirmationMail.cshtml" />
-    <Content Include="Views\MailMessages\PasswordResetConfirmationMail.cshtml" />
-    <Content Include="Views\MailMessages\RegisterConfirmationMail.cshtml" />
-    <Content Include="Views\MailMessages\zh\RegisterConfirmationMail.cshtml" />
-    <Content Include="Views\MailMessages\_CallToAction.cshtml" />
-    <Content Include="Views\MailMessages\_EmailLayout.cshtml" />
+    <Content Include="Views\MailMessages\da-DK\RegistrationConfirmationMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\en-GB\ConfirmAccountMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\en-GB\DeleteAccountMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\en-GB\PasswordChangeMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\en-GB\PasswordResetConfirmationMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\da-DK\PasswordResetConfirmationMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\Shared\_Button.cshtml" />
+    <Content Include="Views\MailMessages\Shared\_EmailLayout.cshtml" />
     <Content Include="Views\MailMessages\_ViewStart.cshtml" />
     <Content Include="Views\Partials\Forms\FieldTypes\FieldType.CheckBox.cshtml" />
     <Content Include="Views\Partials\Forms\FieldTypes\FieldType.CheckBoxList.cshtml" />
@@ -529,6 +530,7 @@
     <Content Include="Views\MacroPartials\_DeleteProfileMacro.cshtml" />
     <Content Include="Views\MacroPartials\_ExportProfileDataMacro.cshtml" />
     <Content Include="Views\Partials\_Breadcrumb.cshtml" />
+    <Content Include="Zoro.WebUI.wpp.targets" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
@@ -541,7 +543,16 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Zoro.Application\Zoro.Application.csproj">
+      <Project>{7341b8c5-5acb-4af3-af07-4560d07547ae}</Project>
+      <Name>Zoro.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zoro.Domain\Zoro.Domain.csproj">
+      <Project>{4c719390-9019-4c5d-bdfa-b392d51c18c8}</Project>
+      <Name>Zoro.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="UmbracoCms" Version="7.13.2" />
   </ItemGroup>
