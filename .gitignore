@@ -14,3 +14,6 @@ bin/
 
 # NPM
 **/node_modules/
+
+# Umbraco CMS
+Zoro.WebUI/Umbraco/
