@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Umbraco.Web.Mvc;
 
-namespace UmbracoBootstrap.Web.Controllers
+namespace Zoro.WebUI.Controllers
 {
     public class PrivacyController : SurfaceController
     {

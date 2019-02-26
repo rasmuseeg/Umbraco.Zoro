@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UmbracoBootstrap.Web.Models
+namespace Zoro.WebUI.Models
 {
     public class CookieModels
     {

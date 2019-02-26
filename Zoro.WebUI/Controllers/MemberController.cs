@@ -1,6 +1,4 @@
-﻿using UmbracoBootstrap.Web.Helpers;
-using UmbracoBootstrap.Web.Models;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -10,10 +8,11 @@ using Umbraco.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Web;
 using Umbraco.Web.Mvc;
-using Umbraco.Web.PublishedCache;
-using ContentModels = UmbracoBootstrap.Web.PublishedContentModels;
+using Zoro.WebUI.Helpers;
+using Zoro.WebUI.Models;
+using ContentModels = Zoro.WebUI.PublishedContentModels;
 
-namespace UmbracoBootstrap.Web.Controllers
+namespace Zoro.WebUI.Controllers
 {
     public class MemberController : SurfaceController
     {
@@ -49,14 +48,14 @@ namespace UmbracoBootstrap.Web.Controllers
                 {
                     message = string.Format(Umbraco.GetDictionaryValue("AccountLockoutError", "AccountNotApprovedError"), Membership.MaxInvalidPasswordAttempts);
                     ModelState.AddModelError("loginModel", message);
-                    LogHelper.Info<MemberController>(message);
+                    Logger.Info<MemberController>(message);
                     return CurrentUmbracoPage();
                 }
                 if (member.IsApproved == false)
                 {
                     message = Umbraco.GetDictionaryValue("AccountNotApprovedError", "AccountNotApprovedError");
                     ModelState.AddModelError("loginModel", message);
-                    LogHelper.Info<MemberController>(message);
+                    Logger.Info<MemberController>(message);
                     return CurrentUmbracoPage();
                 }
 
@@ -75,7 +74,7 @@ namespace UmbracoBootstrap.Web.Controllers
 
             message = Umbraco.GetDictionaryValue("AccountCredentialsError", "AccountCredentialsError");
             ModelState.AddModelError("loginModel", message);
-            LogHelper.Info<MemberController>(message);
+            Logger.Info<MemberController>(message);
 
             return CurrentUmbracoPage();
         }
@@ -234,7 +233,7 @@ namespace UmbracoBootstrap.Web.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("UmbracoMembershipProvider does not allow manually chaing password. Change 'allowManuallyChangingPassword' to true.");
+                throw new Exception("UmbracoMembershipProvider does not allow manually chaing password. Change 'allowManuallyChangingPassword' to true.", ex);
             }
 
             // Send confirmation email
@@ -282,13 +281,13 @@ namespace UmbracoBootstrap.Web.Controllers
 
                 var model = new ApproveEmailMailModel()
                 {
-                    Member = (ContentModels.Member)Umbraco.TypedMember(member.Id),
+                    Member = (ContentModels.Member)Umbraco.Member(member.Id),
                     Permalink = new Uri($"{hostAndScheme}?email={Url.Encode(member.Email)}&key={Url.Encode(securityKey)}"),
                 };
 
                 await MailMessageHelper.Current.SendMailMessageAsync(member.Email, "ConfirmAccountMail", model, this.ControllerContext);
 
-                LogHelper.Info<MemberController>("Register Confirmation Email sent to: {0}", () => member.Email);
+                Logger.Info<MemberController>("Register Confirmation Email sent to: {0}", member.Email);
 
                 TempDataHelper.ApprovalRequestMailSent = true;
 
@@ -296,7 +295,7 @@ namespace UmbracoBootstrap.Web.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Error<MemberController>("Register Confirmation Email was not sent to: " + member.Email, ex);
+                Logger.Error<MemberController>("Register Confirmation Email was not sent to: " + member.Email, ex);
                 throw ex;
             }
         }
@@ -315,7 +314,7 @@ namespace UmbracoBootstrap.Web.Controllers
             var member = Services.MemberService.GetByEmail(model.Email);
             if (member == null)
             {
-                LogHelper.Error<MemberController>("Email not found.", new NullReferenceException("member"));
+                Logger.Error<MemberController>("Email not found.", new NullReferenceException("member"));
                 TempDataHelper.EmailNotFound = true;
                 return CurrentUmbracoPage();
             }
@@ -324,7 +323,7 @@ namespace UmbracoBootstrap.Web.Controllers
             if (!member.GetValue<string>(SECURITY_KEY_ALIAS).Equals(model.SecurityKey))
             {
                 ModelState.AddModelError(nameof(model.SecurityKey), Umbraco.GetDictionaryValue("InvalidSecurityKey", "InvalidSecurityKey"));
-                LogHelper.Info<MemberController>("InvalidSecurityKey");
+                Logger.Info<MemberController>("InvalidSecurityKey");
                 return CurrentUmbracoPage();
             }
 
@@ -334,7 +333,7 @@ namespace UmbracoBootstrap.Web.Controllers
 
             TempDataHelper.AccountHasBeenApproved = true;
 
-            LogHelper.Info<MemberController>("Member has been approved: {0}", () => member.Email);
+            Logger.Debug<MemberController>("Member has been approved: {0}", member.Email);
             return Redirect(model.LoginPageUrl);
         }
 

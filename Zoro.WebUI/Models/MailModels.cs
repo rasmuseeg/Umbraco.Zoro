@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentModels = UmbracoBootstrap.Web.PublishedContentModels;
+using ContentModels = Zoro.WebUI.PublishedContentModels;
 
-namespace UmbracoBootstrap.Web.Models
+namespace Zoro.WebUI.Models
 {
     public class RecoverAccountConfirmationMailModel
     {

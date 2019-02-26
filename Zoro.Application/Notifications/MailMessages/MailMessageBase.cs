@@ -1,8 +1,8 @@
-﻿using HtmlAgilityPack;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Net.Mail;
 using System.Text;
 using System.Web;
+using System.Xml.Linq;
 using Zoro.Application.Helpers;
 using Zoro.Domain.Notifications;
 
@@ -43,10 +43,10 @@ namespace Zoro.Application.Notifications.MailMessages
             }
         }
 
-        public virtual MailMessage GetMailMessage(string to, System.Web.Mvc.ControllerContext controllerContext = null)
+        public virtual MailMessage GetMailMessage(string to)
         {
-            HtmlDocument doc = ReadAsHtmlDocument();
-            string subject = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//title").InnerText);
+            XDocument doc = ReadAsHtmlDocument();
+            string subject = HttpUtility.HtmlDecode(doc.Element("title").Value);
             string from = MailMessageHelper.Current.NotificationsEmailAddress;
 
             var mailMessage = new MailMessage(from, to)
@@ -65,9 +65,9 @@ namespace Zoro.Application.Notifications.MailMessages
         /// Send the mail message
         /// </summary>
         /// <param name="to">Receipents mail address</param>
-        public virtual void Send(string to, System.Web.Mvc.ControllerContext controllerContext = null)
+        public virtual void Send(string to)
         {
-            var message = GetMailMessage(to, controllerContext);
+            var message = GetMailMessage(to);
             MailMessageHelper.Current.SendMail(message);
         }
 
@@ -76,16 +76,14 @@ namespace Zoro.Application.Notifications.MailMessages
         /// </summary>
         /// <param name="controllerContext">The current controller context.</param>
         /// <returns>The view as string </returns>
-        public virtual string ReadAsString(System.Web.Mvc.ControllerContext controllerContext = null)
+        public virtual string ReadAsString()
         {
-            return ViewHelper.RenderView(ViewPath, this, controllerContext);
+            return ViewHelper.RenderView(ViewPath, this);
         }
 
-        public virtual HtmlDocument ReadAsHtmlDocument(System.Web.Mvc.ControllerContext controllerContext = null)
+        public virtual XDocument ReadAsHtmlDocument()
         {
-            HtmlDocument doc = new HtmlDocument();
-            doc.Load(ViewHelper.RenderView(ViewPath, this, controllerContext));
-            return doc;
+            return XDocument.Parse(ViewHelper.RenderView(ViewPath, this));
         }
     }
 }

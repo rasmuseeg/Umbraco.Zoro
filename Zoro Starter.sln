@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoro.WebUI", "Zoro.WebUI\Zoro.WebUI.csproj", "{646E25F3-8F31-4539-BAAF-C9C1613FE6E9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".git", ".git", "{B84F96ED-EEC6-41EA-AC58-3FAF0FB88733}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitattributes = ..\.gitattributes
@@ -24,9 +22,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".vs", ".vs", "{23C90262-CFC
 		.vs\config\applicationhost.config = .vs\config\applicationhost.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoro.Domain", "Zoro.Domain\Zoro.Domain.csproj", "{4C719390-9019-4C5D-BDFA-B392D51C18C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoro.WebUI", "Zoro.WebUI\Zoro.WebUI.csproj", "{98F66BB1-29B3-4B62-987C-20DA5D0E2D05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoro.Application", "Zoro.Application\Zoro.Application.csproj", "{7341B8C5-5ACB-4AF3-AF07-4560D07547AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoro.Domain", "Zoro.Domain\Zoro.Domain.csproj", "{E8E0441C-B53E-4D5A-AF6A-5BF6A7CC4AF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoro.Application", "Zoro.Application\Zoro.Application.csproj", "{6854C789-7F03-4898-8373-AD055CF860BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,18 +34,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{646E25F3-8F31-4539-BAAF-C9C1613FE6E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{646E25F3-8F31-4539-BAAF-C9C1613FE6E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{646E25F3-8F31-4539-BAAF-C9C1613FE6E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{646E25F3-8F31-4539-BAAF-C9C1613FE6E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C719390-9019-4C5D-BDFA-B392D51C18C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C719390-9019-4C5D-BDFA-B392D51C18C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C719390-9019-4C5D-BDFA-B392D51C18C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C719390-9019-4C5D-BDFA-B392D51C18C8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7341B8C5-5ACB-4AF3-AF07-4560D07547AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7341B8C5-5ACB-4AF3-AF07-4560D07547AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7341B8C5-5ACB-4AF3-AF07-4560D07547AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7341B8C5-5ACB-4AF3-AF07-4560D07547AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98F66BB1-29B3-4B62-987C-20DA5D0E2D05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98F66BB1-29B3-4B62-987C-20DA5D0E2D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98F66BB1-29B3-4B62-987C-20DA5D0E2D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98F66BB1-29B3-4B62-987C-20DA5D0E2D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8E0441C-B53E-4D5A-AF6A-5BF6A7CC4AF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8E0441C-B53E-4D5A-AF6A-5BF6A7CC4AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8E0441C-B53E-4D5A-AF6A-5BF6A7CC4AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8E0441C-B53E-4D5A-AF6A-5BF6A7CC4AF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6854C789-7F03-4898-8373-AD055CF860BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6854C789-7F03-4898-8373-AD055CF860BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6854C789-7F03-4898-8373-AD055CF860BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6854C789-7F03-4898-8373-AD055CF860BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

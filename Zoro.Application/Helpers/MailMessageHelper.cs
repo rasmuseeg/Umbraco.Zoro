@@ -1,13 +1,7 @@
-﻿using HtmlAgilityPack;
-using System.Globalization;
-using System.IO;
-using System.Net.Mail;
-using System.Text;
+﻿using System.Net.Mail;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Hosting;
 using Umbraco.Core.Configuration;
-using Umbraco.Core.Logging;
+using Umbraco.Core.Configuration.UmbracoSettings;
 
 namespace Zoro.Application.Helpers
 {
@@ -33,7 +27,11 @@ namespace Zoro.Application.Helpers
             get
             {
                 if (string.IsNullOrEmpty(_notificationsEmailAddress))
-                    _notificationsEmailAddress = UmbracoConfig.For.UmbracoSettings().Content.NotificationEmailAddress;
+                {
+                    var settingsSection = new Configs().GetConfig<IUmbracoSettingsSection>();
+                    _notificationsEmailAddress = settingsSection.Content.NotificationEmailAddress;
+                }
+
                 return _notificationsEmailAddress;
             }
         }

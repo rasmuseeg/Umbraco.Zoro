@@ -1,20 +1,16 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\UmbracoCms.7.10.4\build\UmbracoCms.props" Condition="Exists('..\packages\UmbracoCms.7.10.4\build\UmbracoCms.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\UmbracoCms.8.0.0\build\UmbracoCms.props" Condition="Exists('..\packages\UmbracoCms.8.0.0\build\UmbracoCms.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
-  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
-  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
-  <Import Project="..\packages\UmbracoCms.7.10.4\build\UmbracoCms.targets" Condition="Exists('..\packages\UmbracoCms.7.10.4\build\UmbracoCms.targets')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{646E25F3-8F31-4539-BAAF-C9C1613FE6E9}</ProjectGuid>
+    <ProjectGuid>{98F66BB1-29B3-4B62-987C-20DA5D0E2D05}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -23,15 +19,14 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44318</IISExpressSSLPort>
+    <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
-    <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,41 +36,379 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="App_Data\UmbracoBootstrap.mdf" />
-    <Content Include="App_Data\UmbracoBootstrap_log.ldf">
-      <DependentUpon>UmbracoBootstrap.mdf</DependentUpon>
-    </Content>
-    <Content Include="App_Plugins\Leaflet\Assets\images\layers-2x.png" />
-    <Content Include="App_Plugins\Leaflet\Assets\images\layers.png" />
-    <Content Include="App_Plugins\Leaflet\Assets\images\marker-icon-2x.png" />
-    <Content Include="App_Plugins\Leaflet\Assets\images\marker-icon.png" />
-    <Content Include="App_Plugins\Leaflet\Assets\images\marker-shadow.png" />
+    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="ClientDependency.Core, Version=1.9.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClientDependency.1.9.7\lib\net45\ClientDependency.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ClientDependency.Core.Mvc, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClientDependency-Mvc5.1.8.0.0\lib\net45\ClientDependency.Core.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="CSharpTest.Net.Collections, Version=14.906.1403.1082, Culture=neutral, PublicKeyToken=06aee00cce822474, processorArchitecture=MSIL">
+      <HintPath>..\packages\CSharpTest.Net.Collections.14.906.1403.1082\lib\net40\CSharpTest.Net.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Examine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Examine.1.0.0\lib\net452\Examine.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.8.14.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.14\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageProcessor, Version=2.7.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageProcessor.2.7.0.100\lib\net452\ImageProcessor.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageProcessor.Web, Version=4.10.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageProcessor.Web.4.10.0.100\lib\net452\ImageProcessor.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="LightInject, Version=5.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.5.4.0\lib\net46\LightInject.dll</HintPath>
+    </Reference>
+    <Reference Include="LightInject.Annotation, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.Annotation.1.1.0\lib\net46\LightInject.Annotation.dll</HintPath>
+    </Reference>
+    <Reference Include="LightInject.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.Mvc.2.0.0\lib\net46\LightInject.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="LightInject.Web, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.Web.2.0.0\lib\net46\LightInject.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="LightInject.WebApi, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.WebApi.2.0.0\lib\net46\LightInject.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Markdown, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1b320cc08ad5aa89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdown.2.2.1\lib\net451\Markdown.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.2\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis, Version=2.10.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.2.10.0\lib\netstandard1.3\Microsoft.CodeAnalysis.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.2.10.0\lib\netstandard1.3\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.2.2\lib\net45\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <HintPath>..\packages\MiniProfiler.4.0.138\lib\net461\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler.Shared, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <HintPath>..\packages\MiniProfiler.Shared.4.0.138\lib\net461\MiniProfiler.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.12.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.12\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPoco, Version=3.9.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPoco.3.9.4\lib\net45\NPoco.dll</HintPath>
+    </Reference>
+    <Reference Include="Our.Umbraco.DataAnnotations, Version=1.1.29.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Our.Umbraco.DataAnnotations.1.1.29\lib\net45\Our.Umbraco.DataAnnotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Semver, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Semver.2.0.4\lib\net452\Semver.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.8.0\lib\net46\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Enrichers.Process, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Enrichers.Process.2.0.1\lib\net45\Serilog.Enrichers.Process.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Enrichers.Thread, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Enrichers.Thread.3.0.0\lib\net45\Serilog.Enrichers.Thread.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Filters.Expressions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Filters.Expressions.2.0.0\lib\net45\Serilog.Filters.Expressions.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Formatting.Compact, Version=1.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Formatting.Compact.1.0.0\lib\net45\Serilog.Formatting.Compact.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Formatting.Compact.Reader, Version=1.0.3.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Formatting.Compact.Reader.1.0.3\lib\net45\Serilog.Formatting.Compact.Reader.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Settings.AppSettings, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Settings.AppSettings.2.2.2\lib\net45\Serilog.Settings.AppSettings.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+    </Reference>
+    <Reference Include="Superpower, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Superpower.2.0.0\lib\net45\Superpower.dll</HintPath>
+    </Reference>
+    <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.AppContext.4.3.0\lib\net463\System.AppContext.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.1, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Umbraco.SqlServerCE.4.0.0.1\lib\net472\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe.Entity, Version=4.0.0.1, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Umbraco.SqlServerCE.4.0.0.1\lib\net472\System.Data.SqlServerCe.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.FileVersionInfo, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.FileVersionInfo.4.3.0\lib\net46\System.Diagnostics.FileVersionInfo.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Diagnostics.StackTrace, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.StackTrace.4.3.0\lib\net46\System.Diagnostics.StackTrace.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Linq, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Linq.Expressions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Expressions.4.3.0\lib\net463\System.Linq.Expressions.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Reflection, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.4.3.0\lib\net462\System.Reflection.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata, Version=1.4.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.1.6.0\lib\netstandard2.0\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.Extensions.4.3.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.4.3.0\lib\net463\System.Runtime.InteropServices.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.4.3.0\lib\net46\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Dataflow.4.9.0\lib\netstandard2.0\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Thread, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Thread.4.3.0\lib\net46\System.Threading.Thread.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XmlDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XmlDocument.4.3.0\lib\net46\System.Xml.XmlDocument.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XPath, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XPath.4.3.0\lib\net46\System.Xml.XPath.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.XPath.XDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.XPath.XDocument.4.3.0\lib\net46\System.Xml.XPath.XDocument.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Umbraco.Core, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Core.8.0.0\lib\net472\Umbraco.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Examine, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Web.8.0.0\lib\net472\Umbraco.Examine.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.ModelsBuilder, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Umbraco.ModelsBuilder.8.0.1\lib\net472\Umbraco.ModelsBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.ModelsBuilder.Api, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Umbraco.ModelsBuilder.Api.8.0.1\lib\net472\Umbraco.ModelsBuilder.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Web, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Web.8.0.0\lib\net472\Umbraco.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Web.UI, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UmbracoCms.Web.8.0.0\lib\net472\Umbraco.Web.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="App_Plugins\Leaflet\Assets\leaflet.css" />
     <Content Include="App_Plugins\Leaflet\Assets\leaflet.js" />
     <Content Include="App_Plugins\Leaflet\Assets\plugins\L.GeoSearch\css\l.geosearch.css" />
-    <Content Include="App_Plugins\Leaflet\Assets\plugins\L.GeoSearch\img\alert.png" />
-    <Content Include="App_Plugins\Leaflet\Assets\plugins\L.GeoSearch\img\geosearch.png" />
-    <Content Include="App_Plugins\Leaflet\Assets\plugins\L.GeoSearch\img\spinner.gif" />
     <Content Include="App_Plugins\Leaflet\Assets\plugins\L.GeoSearch\js\l.control.geosearch.js" />
     <Content Include="App_Plugins\Leaflet\Assets\plugins\L.GeoSearch\js\l.geosearch.provider.bing.js" />
     <Content Include="App_Plugins\Leaflet\Assets\plugins\L.GeoSearch\js\l.geosearch.provider.esri.js" />
@@ -108,26 +441,510 @@
     <Content Include="App_Plugins\LeBlender\views_samples\sample_styles.css" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.controller.js" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.htm" />
+    <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.html" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.resource.js" />
+    <Content Include="Assets\dist\main.css" />
+    <Content Include="Assets\dist\main.js" />
+    <Content Include="Assets\js\components\CookieConsent.js" />
     <Content Include="Assets\js\validation\jquery.cldr.js" />
     <Content Include="Assets\js\validation\jquery.validate.unobtrusive.js" />
-    <Content Include="Assets\js\validation\jquery.validation.bootstrap.js" />
     <Content Include="Assets\js\validation\jquery.validation.conditional.js">
-      <DependentUpon>jquery.validation.conditional.ts</DependentUpon>
-    </Content>
-    <Content Include="Assets\js\validation\jquery.validation.conditional.js.map">
       <DependentUpon>jquery.validation.conditional.ts</DependentUpon>
     </Content>
     <Content Include="Assets\js\validation\jquery.validation.custom.js" />
     <Content Include="Assets\js\validation\jquery.validation.globalize.js" />
+    <Content Include="Assets\lib\cldrjs\dist\cldr.js" />
+    <Content Include="Assets\lib\cldrjs\dist\cldr\event.js" />
+    <Content Include="Assets\lib\cldrjs\dist\cldr\supplemental.js" />
+    <Content Include="Assets\lib\cldrjs\dist\cldr\unresolved.js" />
+    <Content Include="Assets\lib\cldrjs\dist\node_main.js" />
+    <Content Include="Assets\lib\cldrjs\Gruntfile.js" />
+    <Content Include="Assets\lib\cldrjs\src\build\intro.min.js" />
+    <Content Include="Assets\lib\cldrjs\src\build\intro_core.js" />
+    <Content Include="Assets\lib\cldrjs\src\build\intro_event.js" />
+    <Content Include="Assets\lib\cldrjs\src\build\intro_supplemental.js" />
+    <Content Include="Assets\lib\cldrjs\src\build\intro_unresolved.js" />
+    <Content Include="Assets\lib\cldrjs\src\build\node_main.js" />
+    <Content Include="Assets\lib\cldrjs\src\build\outro.js" />
+    <Content Include="Assets\lib\cldrjs\src\bundle\lookup.js" />
+    <Content Include="Assets\lib\cldrjs\src\bundle\parent_lookup.js" />
+    <Content Include="Assets\lib\cldrjs\src\common\create_error.js" />
+    <Content Include="Assets\lib\cldrjs\src\common\validate.js" />
+    <Content Include="Assets\lib\cldrjs\src\common\validate\presence.js" />
+    <Content Include="Assets\lib\cldrjs\src\common\validate\type.js" />
+    <Content Include="Assets\lib\cldrjs\src\common\validate\type\function.js" />
+    <Content Include="Assets\lib\cldrjs\src\common\validate\type\path.js" />
+    <Content Include="Assets\lib\cldrjs\src\common\validate\type\plain_object.js" />
+    <Content Include="Assets\lib\cldrjs\src\common\validate\type\string.js" />
+    <Content Include="Assets\lib\cldrjs\src\core.js" />
+    <Content Include="Assets\lib\cldrjs\src\core\likely_subtags.js" />
+    <Content Include="Assets\lib\cldrjs\src\core\load.js" />
+    <Content Include="Assets\lib\cldrjs\src\core\remove_likely_subtags.js" />
+    <Content Include="Assets\lib\cldrjs\src\core\set_available_bundles.js" />
+    <Content Include="Assets\lib\cldrjs\src\core\subtags.js" />
+    <Content Include="Assets\lib\cldrjs\src\event.js" />
+    <Content Include="Assets\lib\cldrjs\src\item\get_resolved.js" />
+    <Content Include="Assets\lib\cldrjs\src\item\lookup.js" />
+    <Content Include="Assets\lib\cldrjs\src\path\normalize.js" />
+    <Content Include="Assets\lib\cldrjs\src\resource\get.js" />
+    <Content Include="Assets\lib\cldrjs\src\resource\set.js" />
+    <Content Include="Assets\lib\cldrjs\src\supplemental.js" />
+    <Content Include="Assets\lib\cldrjs\src\supplemental\main.js" />
+    <Content Include="Assets\lib\cldrjs\src\unresolved.js" />
+    <Content Include="Assets\lib\cldrjs\src\util\always_array.js" />
+    <Content Include="Assets\lib\cldrjs\src\util\array\for_each.js" />
+    <Content Include="Assets\lib\cldrjs\src\util\array\is_array.js" />
+    <Content Include="Assets\lib\cldrjs\src\util\array\some.js" />
+    <Content Include="Assets\lib\cldrjs\src\util\is_plain_object.js" />
+    <Content Include="Assets\lib\cldrjs\src\util\json\merge.js" />
+    <Content Include="Assets\lib\cldrjs\src\util\object\keys.js" />
+    <Content Include="Assets\lib\cldrjs\test\functional.html" />
+    <Content Include="Assets\lib\cldrjs\test\functional.js" />
+    <Content Include="Assets\lib\cldrjs\test\functional\core.js" />
+    <Content Include="Assets\lib\cldrjs\test\functional\event.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit.html" />
+    <Content Include="Assets\lib\cldrjs\test\unit.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\bundle\lookup.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\bundle\parent_lookup.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\core.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\core\likely_subtags.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\core\load.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\core\remove_likely_subtags.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\core\set_available_bundles.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\core\subtags.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\item\lookup.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\path\normalize.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\resource\get.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\resource\set.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\supplemental.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit\util\json\merge.js" />
+    <Content Include="Assets\lib\cldrjs\test\unit_unresolved.html" />
+    <Content Include="Assets\lib\cldrjs\test\unit_unresolved.js" />
+    <Content Include="Assets\lib\cldrjs\test\util.js" />
+    <Content Include="Assets\lib\globalize\AUTHORS.txt" />
+    <Content Include="Assets\lib\globalize\dist\globalize-runtime.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize-runtime\currency.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize-runtime\date.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize-runtime\message.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize-runtime\number.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize-runtime\plural.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize-runtime\relative-time.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize-runtime\unit.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize\currency.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize\date.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize\message.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize\number.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize\plural.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize\relative-time.js" />
+    <Content Include="Assets\lib\globalize\dist\globalize\unit.js" />
+    <Content Include="Assets\lib\globalize\dist\node-main.js" />
+    <Content Include="Assets\lib\globalize\examples\amd-bower\index.html" />
+    <Content Include="Assets\lib\globalize\examples\amd-bower\main.js" />
+    <Content Include="Assets\lib\globalize\examples\app-npm-webpack\app\index.js" />
+    <Content Include="Assets\lib\globalize\examples\app-npm-webpack\index-template.html" />
+    <Content Include="Assets\lib\globalize\examples\app-npm-webpack\webpack-config.js" />
+    <Content Include="Assets\lib\globalize\examples\globalize-compiler\app.js" />
+    <Content Include="Assets\lib\globalize\examples\globalize-compiler\development.html" />
+    <Content Include="Assets\lib\globalize\examples\globalize-compiler\production.html" />
+    <Content Include="Assets\lib\globalize\examples\node-npm\main.js" />
+    <Content Include="Assets\lib\globalize\examples\plain-javascript\index.html" />
+    <Content Include="Assets\lib\globalize\Gruntfile.js" />
+    <Content Include="Assets\lib\globalize\LICENSE.txt" />
+    <Content Include="Assets\lib\globalize\script\lib\version_inc.js" />
+    <Content Include="Assets\lib\globalize\script\lib\version_update.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-core-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-core.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-currency-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-currency.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-date-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-date.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-message-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-message.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-number-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-number.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-plural-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-plural.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-relative-time-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-relative-time.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-unit-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro-unit.js" />
+    <Content Include="Assets\lib\globalize\src\build\intro.min.js" />
+    <Content Include="Assets\lib\globalize\src\build\node-main.js" />
+    <Content Include="Assets\lib\globalize\src\build\outro.js" />
+    <Content Include="Assets\lib\globalize\src\common\create-error.js" />
+    <Content Include="Assets\lib\globalize\src\common\create-error\invalid-parameter-value.js" />
+    <Content Include="Assets\lib\globalize\src\common\create-error\plural-module-presence.js" />
+    <Content Include="Assets\lib\globalize\src\common\create-error\unsupported-feature.js" />
+    <Content Include="Assets\lib\globalize\src\common\format-message.js" />
+    <Content Include="Assets\lib\globalize\src\common\runtime-bind.js" />
+    <Content Include="Assets\lib\globalize\src\common\runtime-cache-data-bind.js" />
+    <Content Include="Assets\lib\globalize\src\common\runtime-key.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\cldr.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\default-locale.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\message-bundle.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\message-presence.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\message-type.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\parameter-presence.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\parameter-range.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\parameter-type.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\parameter-type\array.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\parameter-type\currency.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\parameter-type\date.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\parameter-type\locale.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\parameter-type\message-variables.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\parameter-type\number.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\parameter-type\plain-object.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\parameter-type\plural-type.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\parameter-type\string.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\skeleton.js" />
+    <Content Include="Assets\lib\globalize\src\common\validate\skeleton\fields-pos-map.js" />
+    <Content Include="Assets\lib\globalize\src\core-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\core.js" />
+    <Content Include="Assets\lib\globalize\src\currency-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\currency.js" />
+    <Content Include="Assets\lib\globalize\src\currency\code-properties.js" />
+    <Content Include="Assets\lib\globalize\src\currency\formatter-fn.js" />
+    <Content Include="Assets\lib\globalize\src\currency\name-format.js" />
+    <Content Include="Assets\lib\globalize\src\currency\name-properties.js" />
+    <Content Include="Assets\lib\globalize\src\currency\supplemental-override.js" />
+    <Content Include="Assets\lib\globalize\src\currency\symbol-properties.js" />
+    <Content Include="Assets\lib\globalize\src\currency\unit-patterns.js" />
+    <Content Include="Assets\lib\globalize\src\date-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\date.js" />
+    <Content Include="Assets\lib\globalize\src\date\day-of-week.js" />
+    <Content Include="Assets\lib\globalize\src\date\day-of-year.js" />
+    <Content Include="Assets\lib\globalize\src\date\distance-in-days.js" />
+    <Content Include="Assets\lib\globalize\src\date\expand-pattern.js" />
+    <Content Include="Assets\lib\globalize\src\date\expand-pattern\augment-format.js" />
+    <Content Include="Assets\lib\globalize\src\date\expand-pattern\compare-formats.js" />
+    <Content Include="Assets\lib\globalize\src\date\expand-pattern\get-best-match-pattern.js" />
+    <Content Include="Assets\lib\globalize\src\date\expand-pattern\normalize-pattern-type.js" />
+    <Content Include="Assets\lib\globalize\src\date\expand-pattern\similar-fields-map.js" />
+    <Content Include="Assets\lib\globalize\src\date\fields-map.js" />
+    <Content Include="Assets\lib\globalize\src\date\first-day-of-week.js" />
+    <Content Include="Assets\lib\globalize\src\date\format-properties.js" />
+    <Content Include="Assets\lib\globalize\src\date\format.js" />
+    <Content Include="Assets\lib\globalize\src\date\formatter-fn.js" />
+    <Content Include="Assets\lib\globalize\src\date\get-time-zone-name.js" />
+    <Content Include="Assets\lib\globalize\src\date\is-leap-year.js" />
+    <Content Include="Assets\lib\globalize\src\date\last-day-of-month.js" />
+    <Content Include="Assets\lib\globalize\src\date\milliseconds-in-day.js" />
+    <Content Include="Assets\lib\globalize\src\date\parse-properties.js" />
+    <Content Include="Assets\lib\globalize\src\date\parse.js" />
+    <Content Include="Assets\lib\globalize\src\date\parser-fn.js" />
+    <Content Include="Assets\lib\globalize\src\date\pattern-re.js" />
+    <Content Include="Assets\lib\globalize\src\date\start-of.js" />
+    <Content Include="Assets\lib\globalize\src\date\timezone-hour-format.js" />
+    <Content Include="Assets\lib\globalize\src\date\timezone-hour-format\h.js" />
+    <Content Include="Assets\lib\globalize\src\date\timezone-hour-format\hm.js" />
+    <Content Include="Assets\lib\globalize\src\date\to-parts-formatter-fn.js" />
+    <Content Include="Assets\lib\globalize\src\date\tokenizer-properties.js" />
+    <Content Include="Assets\lib\globalize\src\date\tokenizer.js" />
+    <Content Include="Assets\lib\globalize\src\date\week-days.js" />
+    <Content Include="Assets\lib\globalize\src\message-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\message.js" />
+    <Content Include="Assets\lib\globalize\src\message\formatter-fn.js" />
+    <Content Include="Assets\lib\globalize\src\message\formatter-runtime-bind.js" />
+    <Content Include="Assets\lib\globalize\src\number-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\number.js" />
+    <Content Include="Assets\lib\globalize\src\number\format-properties.js" />
+    <Content Include="Assets\lib\globalize\src\number\format.js" />
+    <Content Include="Assets\lib\globalize\src\number\formatter-fn.js" />
+    <Content Include="Assets\lib\globalize\src\number\format\grouping-separator.js" />
+    <Content Include="Assets\lib\globalize\src\number\format\integer-fraction-digits.js" />
+    <Content Include="Assets\lib\globalize\src\number\format\significant-digits.js" />
+    <Content Include="Assets\lib\globalize\src\number\numbering-system-digits-map.js" />
+    <Content Include="Assets\lib\globalize\src\number\numbering-system.js" />
+    <Content Include="Assets\lib\globalize\src\number\parse-properties.js" />
+    <Content Include="Assets\lib\globalize\src\number\parse.js" />
+    <Content Include="Assets\lib\globalize\src\number\parser-fn.js" />
+    <Content Include="Assets\lib\globalize\src\number\pattern-properties.js" />
+    <Content Include="Assets\lib\globalize\src\number\pattern-re.js" />
+    <Content Include="Assets\lib\globalize\src\number\pattern.js" />
+    <Content Include="Assets\lib\globalize\src\number\symbol.js" />
+    <Content Include="Assets\lib\globalize\src\number\symbol\inverted-map.js" />
+    <Content Include="Assets\lib\globalize\src\number\symbol\map.js" />
+    <Content Include="Assets\lib\globalize\src\number\symbol\name.js" />
+    <Content Include="Assets\lib\globalize\src\plural-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\plural.js" />
+    <Content Include="Assets\lib\globalize\src\plural\generator-fn.js" />
+    <Content Include="Assets\lib\globalize\src\relative-time-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\relative-time.js" />
+    <Content Include="Assets\lib\globalize\src\relative-time\format.js" />
+    <Content Include="Assets\lib\globalize\src\relative-time\formatter-fn.js" />
+    <Content Include="Assets\lib\globalize\src\relative-time\properties.js" />
+    <Content Include="Assets\lib\globalize\src\unit-runtime.js" />
+    <Content Include="Assets\lib\globalize\src\unit.js" />
+    <Content Include="Assets\lib\globalize\src\unit\categories.js" />
+    <Content Include="Assets\lib\globalize\src\unit\format.js" />
+    <Content Include="Assets\lib\globalize\src\unit\formatter-fn.js" />
+    <Content Include="Assets\lib\globalize\src\unit\get.js" />
+    <Content Include="Assets\lib\globalize\src\unit\properties.js" />
+    <Content Include="Assets\lib\globalize\src\util\always-array.js" />
+    <Content Include="Assets\lib\globalize\src\util\always-cldr.js" />
+    <Content Include="Assets\lib\globalize\src\util\date\set-date.js" />
+    <Content Include="Assets\lib\globalize\src\util\date\set-month.js" />
+    <Content Include="Assets\lib\globalize\src\util\function-name.js" />
+    <Content Include="Assets\lib\globalize\src\util\is-plain-object.js" />
+    <Content Include="Assets\lib\globalize\src\util\loose-matching.js" />
+    <Content Include="Assets\lib\globalize\src\util\number\round.js" />
+    <Content Include="Assets\lib\globalize\src\util\number\to-precision.js" />
+    <Content Include="Assets\lib\globalize\src\util\number\truncate.js" />
+    <Content Include="Assets\lib\globalize\src\util\object\extend.js" />
+    <Content Include="Assets\lib\globalize\src\util\object\filter.js" />
+    <Content Include="Assets\lib\globalize\src\util\object\invert.js" />
+    <Content Include="Assets\lib\globalize\src\util\object\map.js" />
+    <Content Include="Assets\lib\globalize\src\util\object\omit.js" />
+    <Content Include="Assets\lib\globalize\src\util\object\values.js" />
+    <Content Include="Assets\lib\globalize\src\util\out-of-range.js" />
+    <Content Include="Assets\lib\globalize\src\util\regexp\cf-g.js" />
+    <Content Include="Assets\lib\globalize\src\util\regexp\dash-g.js" />
+    <Content Include="Assets\lib\globalize\src\util\regexp\escape.js" />
+    <Content Include="Assets\lib\globalize\src\util\regexp\not-s.js" />
+    <Content Include="Assets\lib\globalize\src\util\regexp\zs-g.js" />
+    <Content Include="Assets\lib\globalize\src\util\remove-literal-quotes.js" />
+    <Content Include="Assets\lib\globalize\src\util\string\hash.js" />
+    <Content Include="Assets\lib\globalize\src\util\string\pad.js" />
+    <Content Include="Assets\lib\globalize\src\util\string\repeat.js" />
+    <Content Include="Assets\lib\globalize\src\util\to-string.js" />
     <Content Include="Assets\lib\jquery-validation-unobtrusive-bootstrap\dist\unobtrusive-bootstrap.js" />
     <Content Include="Assets\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
-    <Content Include="postcss.config.js" />
+    <Content Include="Assets\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Assets\lib\jquery-validation-unobtrusive\LICENSE.txt" />
+    <Content Include="Assets\lib\jquery-validation\build\release.js" />
+    <Content Include="Assets\lib\jquery-validation\dist\additional-methods.js" />
+    <Content Include="Assets\lib\jquery-validation\dist\additional-methods.min.js" />
+    <Content Include="Assets\lib\jquery-validation\dist\jquery.validate.js" />
+    <Content Include="Assets\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <Content Include="Assets\lib\jquery-validation\Gruntfile.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\accept.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\additional.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\alphanumeric.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\bankaccountNL.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\bankorgiroaccountNL.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\bic.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\cifES.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\cpfBR.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\creditcard.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\creditcardtypes.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\currency.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\dateFA.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\dateITA.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\dateNL.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\extension.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\giroaccountNL.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\iban.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\integer.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\ipv4.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\ipv6.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\lettersonly.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\letterswithbasicpunc.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\mobileNL.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\mobileUK.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\netmask.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\nieES.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\nifES.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\nipPL.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\notEqualTo.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\nowhitespace.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\pattern.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\phoneNL.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\phonesUK.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\phoneUK.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\phoneUS.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\postalcodeBR.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\postalCodeCA.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\postalcodeIT.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\postalcodeNL.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\postcodeUK.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\require_from_group.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\skip_or_fill_minimum.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\statesUS.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\strippedminlength.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\time.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\time12h.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\url2.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\vinUS.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\zipcodeUS.js" />
+    <Content Include="Assets\lib\jquery-validation\src\additional\ziprange.js" />
+    <Content Include="Assets\lib\jquery-validation\src\ajax.js" />
+    <Content Include="Assets\lib\jquery-validation\src\core.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_ar.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_az.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_bg.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_bn_BD.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_ca.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_cs.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_da.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_de.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_el.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_es.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_es_AR.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_es_PE.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_et.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_eu.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_fa.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_fi.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_fr.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_ge.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_gl.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_he.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_hr.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_hu.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_hy_AM.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_id.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_is.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_it.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_ja.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_ka.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_kk.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_ko.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_lt.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_lv.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_mk.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_my.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_nl.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_no.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_pl.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_pt_BR.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_pt_PT.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_ro.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_ru.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_sd.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_si.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_sk.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_sl.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_sr.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_sr_lat.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_sv.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_th.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_tj.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_tr.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_uk.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_ur.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_vi.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_zh.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\messages_zh_TW.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\methods_de.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\methods_es_CL.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\methods_fi.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\methods_nl.js" />
+    <Content Include="Assets\lib\jquery-validation\src\localization\methods_pt.js" />
+    <Content Include="Assets\lib\jquery\AUTHORS.txt" />
+    <Content Include="Assets\lib\jquery\dist\core.js" />
+    <Content Include="Assets\lib\jquery\dist\jquery.js" />
+    <Content Include="Assets\lib\jquery\dist\jquery.min.js" />
+    <Content Include="Assets\lib\jquery\dist\jquery.slim.js" />
+    <Content Include="Assets\lib\jquery\dist\jquery.slim.min.js" />
+    <Content Include="Assets\lib\jquery\external\sizzle\dist\sizzle.js" />
+    <Content Include="Assets\lib\jquery\external\sizzle\dist\sizzle.min.js" />
+    <Content Include="Assets\lib\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="Assets\lib\jquery\LICENSE.txt" />
+    <Content Include="Assets\lib\jquery\src\ajax.js" />
+    <Content Include="Assets\lib\jquery\src\ajax\jsonp.js" />
+    <Content Include="Assets\lib\jquery\src\ajax\load.js" />
+    <Content Include="Assets\lib\jquery\src\ajax\parseXML.js" />
+    <Content Include="Assets\lib\jquery\src\ajax\script.js" />
+    <Content Include="Assets\lib\jquery\src\ajax\var\location.js" />
+    <Content Include="Assets\lib\jquery\src\ajax\var\nonce.js" />
+    <Content Include="Assets\lib\jquery\src\ajax\var\rquery.js" />
+    <Content Include="Assets\lib\jquery\src\ajax\xhr.js" />
+    <Content Include="Assets\lib\jquery\src\attributes.js" />
+    <Content Include="Assets\lib\jquery\src\attributes\attr.js" />
+    <Content Include="Assets\lib\jquery\src\attributes\classes.js" />
+    <Content Include="Assets\lib\jquery\src\attributes\prop.js" />
+    <Content Include="Assets\lib\jquery\src\attributes\support.js" />
+    <Content Include="Assets\lib\jquery\src\attributes\val.js" />
+    <Content Include="Assets\lib\jquery\src\callbacks.js" />
+    <Content Include="Assets\lib\jquery\src\core.js" />
+    <Content Include="Assets\lib\jquery\src\core\access.js" />
+    <Content Include="Assets\lib\jquery\src\core\DOMEval.js" />
+    <Content Include="Assets\lib\jquery\src\core\init.js" />
+    <Content Include="Assets\lib\jquery\src\core\nodeName.js" />
+    <Content Include="Assets\lib\jquery\src\core\parseHTML.js" />
+    <Content Include="Assets\lib\jquery\src\core\ready-no-deferred.js" />
+    <Content Include="Assets\lib\jquery\src\core\ready.js" />
+    <Content Include="Assets\lib\jquery\src\core\readyException.js" />
+    <Content Include="Assets\lib\jquery\src\core\stripAndCollapse.js" />
+    <Content Include="Assets\lib\jquery\src\core\support.js" />
+    <Content Include="Assets\lib\jquery\src\core\var\rsingleTag.js" />
+    <Content Include="Assets\lib\jquery\src\css.js" />
+    <Content Include="Assets\lib\jquery\src\css\addGetHookIf.js" />
+    <Content Include="Assets\lib\jquery\src\css\adjustCSS.js" />
+    <Content Include="Assets\lib\jquery\src\css\curCSS.js" />
+    <Content Include="Assets\lib\jquery\src\css\hiddenVisibleSelectors.js" />
+    <Content Include="Assets\lib\jquery\src\css\showHide.js" />
+    <Content Include="Assets\lib\jquery\src\css\support.js" />
+    <Content Include="Assets\lib\jquery\src\css\var\cssExpand.js" />
+    <Content Include="Assets\lib\jquery\src\css\var\getStyles.js" />
+    <Content Include="Assets\lib\jquery\src\css\var\isHiddenWithinTree.js" />
+    <Content Include="Assets\lib\jquery\src\css\var\rmargin.js" />
+    <Content Include="Assets\lib\jquery\src\css\var\rnumnonpx.js" />
+    <Content Include="Assets\lib\jquery\src\css\var\swap.js" />
+    <Content Include="Assets\lib\jquery\src\data.js" />
+    <Content Include="Assets\lib\jquery\src\data\Data.js" />
+    <Content Include="Assets\lib\jquery\src\data\var\acceptData.js" />
+    <Content Include="Assets\lib\jquery\src\data\var\dataPriv.js" />
+    <Content Include="Assets\lib\jquery\src\data\var\dataUser.js" />
+    <Content Include="Assets\lib\jquery\src\deferred.js" />
+    <Content Include="Assets\lib\jquery\src\deferred\exceptionHook.js" />
+    <Content Include="Assets\lib\jquery\src\deprecated.js" />
+    <Content Include="Assets\lib\jquery\src\dimensions.js" />
+    <Content Include="Assets\lib\jquery\src\effects.js" />
+    <Content Include="Assets\lib\jquery\src\effects\animatedSelector.js" />
+    <Content Include="Assets\lib\jquery\src\effects\Tween.js" />
+    <Content Include="Assets\lib\jquery\src\event.js" />
+    <Content Include="Assets\lib\jquery\src\event\ajax.js" />
+    <Content Include="Assets\lib\jquery\src\event\alias.js" />
+    <Content Include="Assets\lib\jquery\src\event\focusin.js" />
+    <Content Include="Assets\lib\jquery\src\event\support.js" />
+    <Content Include="Assets\lib\jquery\src\event\trigger.js" />
+    <Content Include="Assets\lib\jquery\src\exports\amd.js" />
+    <Content Include="Assets\lib\jquery\src\exports\global.js" />
+    <Content Include="Assets\lib\jquery\src\jquery.js" />
+    <Content Include="Assets\lib\jquery\src\manipulation.js" />
+    <Content Include="Assets\lib\jquery\src\manipulation\buildFragment.js" />
+    <Content Include="Assets\lib\jquery\src\manipulation\getAll.js" />
+    <Content Include="Assets\lib\jquery\src\manipulation\setGlobalEval.js" />
+    <Content Include="Assets\lib\jquery\src\manipulation\support.js" />
+    <Content Include="Assets\lib\jquery\src\manipulation\var\rcheckableType.js" />
+    <Content Include="Assets\lib\jquery\src\manipulation\var\rscriptType.js" />
+    <Content Include="Assets\lib\jquery\src\manipulation\var\rtagName.js" />
+    <Content Include="Assets\lib\jquery\src\manipulation\wrapMap.js" />
+    <Content Include="Assets\lib\jquery\src\manipulation\_evalUrl.js" />
+    <Content Include="Assets\lib\jquery\src\offset.js" />
+    <Content Include="Assets\lib\jquery\src\queue.js" />
+    <Content Include="Assets\lib\jquery\src\queue\delay.js" />
+    <Content Include="Assets\lib\jquery\src\selector-native.js" />
+    <Content Include="Assets\lib\jquery\src\selector-sizzle.js" />
+    <Content Include="Assets\lib\jquery\src\selector.js" />
+    <Content Include="Assets\lib\jquery\src\serialize.js" />
+    <Content Include="Assets\lib\jquery\src\traversing.js" />
+    <Content Include="Assets\lib\jquery\src\traversing\findFilter.js" />
+    <Content Include="Assets\lib\jquery\src\traversing\var\dir.js" />
+    <Content Include="Assets\lib\jquery\src\traversing\var\rneedsContext.js" />
+    <Content Include="Assets\lib\jquery\src\traversing\var\siblings.js" />
+    <Content Include="Assets\lib\jquery\src\var\arr.js" />
+    <Content Include="Assets\lib\jquery\src\var\class2type.js" />
+    <Content Include="Assets\lib\jquery\src\var\concat.js" />
+    <Content Include="Assets\lib\jquery\src\var\document.js" />
+    <Content Include="Assets\lib\jquery\src\var\documentElement.js" />
+    <Content Include="Assets\lib\jquery\src\var\fnToString.js" />
+    <Content Include="Assets\lib\jquery\src\var\getProto.js" />
+    <Content Include="Assets\lib\jquery\src\var\hasOwn.js" />
+    <Content Include="Assets\lib\jquery\src\var\indexOf.js" />
+    <Content Include="Assets\lib\jquery\src\var\ObjectFunctionString.js" />
+    <Content Include="Assets\lib\jquery\src\var\pnum.js" />
+    <Content Include="Assets\lib\jquery\src\var\push.js" />
+    <Content Include="Assets\lib\jquery\src\var\rcssNum.js" />
+    <Content Include="Assets\lib\jquery\src\var\rnothtmlwhite.js" />
+    <Content Include="Assets\lib\jquery\src\var\slice.js" />
+    <Content Include="Assets\lib\jquery\src\var\support.js" />
+    <Content Include="Assets\lib\jquery\src\var\toString.js" />
+    <Content Include="Assets\lib\jquery\src\wrap.js" />
     <Content Include="config\grid.editors.config.js" />
-    <Content Include="config\imageprocessor\security.config" />
-    <Content Include="config\imageprocessor\processing.config" />
-    <Content Include="config\imageprocessor\cache.config" />
-    <Content Include="App_Plugins\ModelsBuilder\package.manifest" />
     <Content Include="config\Lang\cs-CZ.user.xml" />
     <Content Include="config\Lang\da-DK.user.xml" />
     <Content Include="config\Lang\de-DE.user.xml" />
@@ -146,44 +963,10 @@
     <Content Include="config\Lang\ru-RU.user.xml" />
     <Content Include="config\Lang\sv-SE.user.xml" />
     <Content Include="config\Lang\zh-CN.user.xml" />
-    <Content Include="config\trees.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Assets\icons\.gitkeep" />
-    <Content Include="Assets\scss\styles.scss" />
-    <Content Include="App_Plugins\Leaflet\package.manifest" />
-    <Content Include="config\umbracoSettings.config" />
-    <Content Include="config\tinyMceConfig.config" />
-    <Content Include="config\scripting.config" />
-    <Content Include="config\metablogConfig.config" />
-    <Content Include="config\log4net.config" />
-    <Content Include="config\HealthChecks.config" />
-    <Content Include="config\FileSystemProviders.config" />
-    <Content Include="config\feedProxy.config" />
-    <Content Include="config\ExamineSettings.config" />
-    <Content Include="config\ExamineIndex.config" />
-    <Content Include="config\EmbeddedMedia.config" />
-    <Content Include="config\Dashboard.config" />
-    <Content Include="config\ClientDependency.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="config\BaseRestExtensions.config" />
-    <Content Include="config\BackOfficeTours\getting-started.json" />
-    <Content Include="config\applications.config" />
-    <Content Include="config\404handlers.config" />
-    <Content Include="Assets\scss\_fonts.scss" />
-    <Content Include="Assets\scss\mixins\_font-face.scss" />
-    <Content Include="Assets\scss\_policy.scss" />
-    <Content Include="Assets\scss\_validation.scss" />
-    <Content Include="App_Plugins\LeBlender\Web.config" />
-    <Content Include="App_Plugins\LeBlender\views_samples\Tabs.cshtml" />
-    <Content Include="App_Plugins\LeBlender\views_samples\Highlight.cshtml" />
-    <Content Include="App_Plugins\LeBlender\views_samples\Carousel.cshtml" />
-    <Content Include="App_Plugins\LeBlender\package.manifest" />
-    <Content Include="App_Plugins\LeBlender\editors\leblendereditor\views\LeBlender.cshtml" />
-    <Content Include="App_Plugins\LeBlender\editors\leblendereditor\views\Base.cshtml" />
+    <Content Include="config\logviewer.searches.config.js" />
+    <Content Include="css\Display.css" />
     <Content Include="css\Headings.css" />
-    <Content Include="default.aspx" />
+    <Content Include="css\Types.css" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
     <Content Include="SmtpDebug.aspx" />
@@ -192,11 +975,6 @@
     <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundlesConfig.cs" />
-    <Compile Include="App_Start\DefaultMemberProperties.cs" />
-    <Compile Include="App_Start\RegisterContentFinder.cs" />
-    <Compile Include="App_Start\Startup.cs" />
-    <Compile Include="OurConstants.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\PrivacyController.cs" />
     <Compile Include="CookiePolicy.cs" />
@@ -213,77 +991,192 @@
     <Compile Include="Models\CookieModels.cs" />
     <Compile Include="Models\MailModels.cs" />
     <Compile Include="Models\MemberModels.cs" />
+    <Compile Include="OurConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PublishedContentModels\BehaviorComposition.generated.cs">
-      <DependentUpon>Builder.cs</DependentUpon>
-    </Compile>
     <Compile Include="PublishedContentModels\Builder.cs">
       <Generator>UmbracoModelsBuilder</Generator>
-      <LastGenOutput>Builder.generated.cs</LastGenOutput>
-    </Compile>
-    <Compile Include="PublishedContentModels\Builder.generated.cs">
-      <DependentUpon>Builder.cs</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="PublishedContentModels\File.generated.cs">
-      <DependentUpon>Builder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PublishedContentModels\Folder.generated.cs">
-      <DependentUpon>Builder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PublishedContentModels\GridPage.generated.cs">
-      <DependentUpon>Builder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PublishedContentModels\Image.generated.cs">
-      <DependentUpon>Builder.cs</DependentUpon>
     </Compile>
     <Compile Include="PublishedContentModels\Member.cs" />
-    <Compile Include="PublishedContentModels\Member.generated.cs">
-      <DependentUpon>Builder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PublishedContentModels\SearchEngineOptimization.generated.cs">
-      <DependentUpon>Builder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PublishedContentModels\SocialMedia.generated.cs">
-      <DependentUpon>Builder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PublishedContentModels\Website.generated.cs">
-      <DependentUpon>Builder.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include=".babelrc" />
-    <None Include="package.json" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
-    <Content Include="README.md" />
-    <None Include="tsconfig.json" />
-    <Content Include="Views\MailMessages\Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Views\FluidPage.cshtml" />
-    <Content Include="Views\MailMessages\en-GB\RegistrationConfirmationMailMessage.cshtml" />
-    <Content Include="Views\MailMessages\da-DK\PasswordChangeMailMessage.cshtml" />
-    <Content Include="Views\MailMessages\da-DK\DeleteAccountMailMessage.cshtml" />
-    <Content Include="Views\MailMessages\da-DK\ConfirmAccountMailMessage.cshtml" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
+    <Content Include="config\imageprocessor\security.config" />
+    <Content Include="config\imageprocessor\processing.config" />
+    <Content Include="config\imageprocessor\cache.config" />
+    <Content Include="App_Plugins\ModelsBuilder\package.manifest" />
     <Content Include="Media\Web.config" />
+    <Content Include="config\umbracoSettings.config" />
+    <Content Include="config\tinyMceConfig.config" />
+    <Content Include="config\serilog.user.config" />
+    <Content Include="config\serilog.config" />
+    <Content Include="config\HealthChecks.config" />
+    <Content Include="config\ClientDependency.config" />
+    <Content Include="config\BackOfficeTours\getting-started.json" />
+    <Content Include=".babelrc" />
+    <Content Include="App_Plugins\Leaflet\package.manifest" />
+    <Content Include="App_Plugins\LeBlender\editors\leblendereditor\views\Base.cshtml" />
+    <Content Include="App_Plugins\LeBlender\editors\leblendereditor\views\LeBlender.cshtml" />
+    <Content Include="App_Plugins\LeBlender\package.manifest" />
+    <Content Include="App_Plugins\LeBlender\views_samples\Carousel.cshtml" />
+    <Content Include="App_Plugins\LeBlender\views_samples\Highlight.cshtml" />
+    <Content Include="App_Plugins\LeBlender\views_samples\Tabs.cshtml" />
+    <Content Include="App_Plugins\LeBlender\Web.config" />
+    <Content Include="Assets\dist\main.css.map" />
+    <Content Include="Assets\dist\main.js.map" />
+    <Content Include="Assets\icons\.gitkeep" />
+    <Content Include="Assets\js\components\CookieConsent.js.map" />
+    <Content Include="Assets\lib\cldr-data\.bower.json" />
+    <Content Include="Assets\lib\cldr-data\bower.json" />
+    <Content Include="Assets\lib\cldr-data\DCO.md" />
+    <Content Include="Assets\lib\cldr-data\index.json" />
+    <Content Include="Assets\lib\cldr-data\LICENSE-MIT" />
+    <Content Include="Assets\lib\cldr-data\README.md" />
+    <Content Include="Assets\lib\cldrjs\.bower.json" />
+    <Content Include="Assets\lib\cldrjs\.bowerrc" />
+    <Content Include="Assets\lib\cldrjs\.gitignore" />
+    <Content Include="Assets\lib\cldrjs\.jshintrc" />
+    <Content Include="Assets\lib\cldrjs\bower.json" />
+    <Content Include="Assets\lib\cldrjs\CHANGELOG.md" />
+    <Content Include="Assets\lib\cldrjs\chore\release.sh" />
+    <Content Include="Assets\lib\cldrjs\DCO.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\core\attributes.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\core\constructor.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\core\get.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\core\load.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\core\main.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\event\event_get.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\event\global_off.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\event\global_on.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\event\global_once.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\event\off.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\event\on.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\event\once.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\supplemental.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\supplemental\time_data_allowed.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\supplemental\time_data_preferred.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\supplemental\week_data_first_day.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\supplemental\week_data_min_days.md" />
+    <Content Include="Assets\lib\cldrjs\doc\api\unresolved\get.md" />
+    <Content Include="Assets\lib\cldrjs\doc\bundle_lookup_matcher.md" />
+    <Content Include="Assets\lib\cldrjs\LICENSE-MIT" />
+    <Content Include="Assets\lib\cldrjs\package.json" />
+    <Content Include="Assets\lib\cldrjs\README.md" />
+    <Content Include="Assets\lib\cldrjs\src\.dist_jshintrc" />
+    <Content Include="Assets\lib\cldrjs\src\.jshintrc" />
+    <Content Include="Assets\lib\cldrjs\test\.jshintrc" />
+    <Content Include="Assets\lib\globalize\.bower.json" />
+    <Content Include="Assets\lib\globalize\bower.json" />
+    <Content Include="Assets\lib\globalize\browserstack.json" />
+    <Content Include="Assets\lib\globalize\doc\api\core\constructor.md" />
+    <Content Include="Assets\lib\globalize\doc\api\core\load.md" />
+    <Content Include="Assets\lib\globalize\doc\api\core\locale.md" />
+    <Content Include="Assets\lib\globalize\doc\api\currency\currency-formatter.md" />
+    <Content Include="Assets\lib\globalize\doc\api\date\date-formatter.md" />
+    <Content Include="Assets\lib\globalize\doc\api\date\date-parser.md" />
+    <Content Include="Assets\lib\globalize\doc\api\date\date-to-parts-formatter.md" />
+    <Content Include="Assets\lib\globalize\doc\api\date\load-iana-time-zone.md" />
+    <Content Include="Assets\lib\globalize\doc\api\message\load-messages.md" />
+    <Content Include="Assets\lib\globalize\doc\api\message\message-formatter.md" />
+    <Content Include="Assets\lib\globalize\doc\api\number\number-formatter.md" />
+    <Content Include="Assets\lib\globalize\doc\api\number\number-parser.md" />
+    <Content Include="Assets\lib\globalize\doc\api\plural\plural-generator.md" />
+    <Content Include="Assets\lib\globalize\doc\api\relative-time\relative-time-formatter.md" />
+    <Content Include="Assets\lib\globalize\doc\api\unit\unit-formatter.md" />
+    <Content Include="Assets\lib\globalize\doc\cldr.md" />
+    <Content Include="Assets\lib\globalize\doc\error\e-default-locale-not-defined.md" />
+    <Content Include="Assets\lib\globalize\doc\error\e-invalid-cldr.md" />
+    <Content Include="Assets\lib\globalize\doc\error\e-invalid-par-type.md" />
+    <Content Include="Assets\lib\globalize\doc\error\e-invalid-par-value.md" />
+    <Content Include="Assets\lib\globalize\doc\error\e-missing-cldr.md" />
+    <Content Include="Assets\lib\globalize\doc\error\e-missing-parameter.md" />
+    <Content Include="Assets\lib\globalize\doc\error\e-missing-plural-module.md" />
+    <Content Include="Assets\lib\globalize\doc\error\e-par-missing-key.md" />
+    <Content Include="Assets\lib\globalize\doc\error\e-par-out-of-range.md" />
+    <Content Include="Assets\lib\globalize\doc\error\e-unsupported.md" />
+    <Content Include="Assets\lib\globalize\doc\migrating-from-0.x.md" />
+    <Content Include="Assets\lib\globalize\examples\amd-bower\messages\en.json" />
+    <Content Include="Assets\lib\globalize\examples\amd-bower\package.json" />
+    <Content Include="Assets\lib\globalize\examples\amd-bower\README.md" />
+    <Content Include="Assets\lib\globalize\examples\app-npm-webpack\messages\ar.json" />
+    <Content Include="Assets\lib\globalize\examples\app-npm-webpack\messages\de.json" />
+    <Content Include="Assets\lib\globalize\examples\app-npm-webpack\messages\en.json" />
+    <Content Include="Assets\lib\globalize\examples\app-npm-webpack\messages\es.json" />
+    <Content Include="Assets\lib\globalize\examples\app-npm-webpack\messages\pt.json" />
+    <Content Include="Assets\lib\globalize\examples\app-npm-webpack\messages\ru.json" />
+    <Content Include="Assets\lib\globalize\examples\app-npm-webpack\messages\zh.json" />
+    <Content Include="Assets\lib\globalize\examples\app-npm-webpack\package.json" />
+    <Content Include="Assets\lib\globalize\examples\app-npm-webpack\README.md" />
+    <Content Include="Assets\lib\globalize\examples\globalize-compiler\messages.json" />
+    <Content Include="Assets\lib\globalize\examples\globalize-compiler\package.json" />
+    <Content Include="Assets\lib\globalize\examples\globalize-compiler\README.md" />
+    <Content Include="Assets\lib\globalize\examples\node-npm\messages\en.json" />
+    <Content Include="Assets\lib\globalize\examples\node-npm\package.json" />
+    <Content Include="Assets\lib\globalize\examples\node-npm\README.md" />
+    <Content Include="Assets\lib\globalize\examples\plain-javascript\README.md" />
+    <Content Include="Assets\lib\globalize\package.json" />
+    <Content Include="Assets\lib\globalize\README.md" />
+    <Content Include="Assets\lib\globalize\script\release.sh" />
+    <Content Include="Assets\lib\jquery-validation-unobtrusive-bootstrap\.bower.json" />
+    <Content Include="Assets\lib\jquery-validation-unobtrusive-bootstrap\bower.json" />
+    <Content Include="Assets\lib\jquery-validation-unobtrusive-bootstrap\LICENSE" />
+    <Content Include="Assets\lib\jquery-validation-unobtrusive\.bower.json" />
+    <Content Include="Assets\lib\jquery-validation-unobtrusive\bower.json" />
+    <Content Include="Assets\lib\jquery-validation\.bower.json" />
+    <Content Include="Assets\lib\jquery-validation\bower.json" />
+    <Content Include="Assets\lib\jquery-validation\changelog.md" />
+    <Content Include="Assets\lib\jquery-validation\CONTRIBUTING.md" />
+    <Content Include="Assets\lib\jquery-validation\LICENSE.md" />
+    <Content Include="Assets\lib\jquery-validation\package.json" />
+    <Content Include="Assets\lib\jquery-validation\README.md" />
+    <Content Include="Assets\lib\jquery-validation\validation.jquery.json" />
+    <Content Include="Assets\lib\jquery\.bower.json" />
+    <Content Include="Assets\lib\jquery\bower.json" />
+    <Content Include="Assets\lib\jquery\dist\jquery.min.map" />
+    <Content Include="Assets\lib\jquery\dist\jquery.slim.min.map" />
+    <Content Include="Assets\lib\jquery\external\sizzle\dist\sizzle.min.map" />
+    <Content Include="Assets\lib\jquery\README.md" />
+    <Content Include="Assets\lib\jquery\src\.eslintrc.json" />
+    <Content Include="Assets\scss\mixins\_font-face.scss" />
+    <Content Include="Assets\scss\styles.scss" />
+    <Content Include="Assets\scss\_fonts.scss" />
+    <Content Include="Assets\scss\_policy.scss" />
+    <Content Include="Assets\scss\_validation.scss" />
+    <Content Include="package.json" />
+    <None Include="packages.config" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Partials\Grid\Editors\Textstring.cshtml" />
+    <Content Include="Views\Partials\Grid\Editors\Rte.cshtml" />
+    <Content Include="Views\Partials\Grid\Editors\Media.cshtml" />
+    <Content Include="Views\Partials\Grid\Editors\Macro.cshtml" />
+    <Content Include="Views\Partials\Grid\Editors\Embed.cshtml" />
+    <Content Include="Views\Partials\Grid\Editors\Base.cshtml" />
+    <Content Include="Views\Partials\Grid\Bootstrap3.cshtml" />
+    <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
+    <Content Include="README.md" />
+    <Content Include="tsconfig.json" />
+    <Content Include="Views\FluidPage.cshtml" />
+    <Content Include="Views\GridPage.cshtml" />
+    <Content Include="Views\MacroPartials\_AnchorJumplinksMacro.cshtml" />
+    <Content Include="Views\MacroPartials\_ChangePasswordMacro.cshtml" />
+    <Content Include="Views\MacroPartials\_CookiePreferencesMacro.cshtml" />
+    <Content Include="Views\MacroPartials\_DeleteProfileMacro.cshtml" />
+    <Content Include="Views\MacroPartials\_EditProfileMacro.cshtml" />
+    <Content Include="Views\MacroPartials\_ExportProfileDataMacro.cshtml" />
+    <Content Include="Views\MacroPartials\_ForgotPasswordMacro.cshtml" />
+    <Content Include="Views\MacroPartials\_LoginMacro.cshtml" />
+    <Content Include="Views\MacroPartials\_RegisterProfileMacro.cshtml" />
+    <Content Include="Views\MailMessages\da-DK\ConfirmAccountMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\da-DK\DeleteAccountMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\da-DK\PasswordChangeMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\da-DK\PasswordResetConfirmationMailMessage.cshtml" />
     <Content Include="Views\MailMessages\da-DK\RegistrationConfirmationMailMessage.cshtml" />
     <Content Include="Views\MailMessages\en-GB\ConfirmAccountMailMessage.cshtml" />
     <Content Include="Views\MailMessages\en-GB\DeleteAccountMailMessage.cshtml" />
     <Content Include="Views\MailMessages\en-GB\PasswordChangeMailMessage.cshtml" />
     <Content Include="Views\MailMessages\en-GB\PasswordResetConfirmationMailMessage.cshtml" />
-    <Content Include="Views\MailMessages\da-DK\PasswordResetConfirmationMailMessage.cshtml" />
+    <Content Include="Views\MailMessages\en-GB\RegistrationConfirmationMailMessage.cshtml" />
     <Content Include="Views\MailMessages\Shared\_Button.cshtml" />
     <Content Include="Views\MailMessages\Shared\_EmailLayout.cshtml" />
+    <Content Include="Views\MailMessages\Web.config" />
     <Content Include="Views\MailMessages\_ViewStart.cshtml" />
     <Content Include="Views\Partials\Forms\FieldTypes\FieldType.CheckBox.cshtml" />
     <Content Include="Views\Partials\Forms\FieldTypes\FieldType.CheckBoxList.cshtml" />
@@ -298,44 +1191,31 @@
     <Content Include="Views\Partials\Forms\FieldTypes\FieldType.Textarea.cshtml" />
     <Content Include="Views\Partials\Forms\FieldTypes\FieldType.Textfield.cshtml" />
     <Content Include="Views\Partials\Forms\Form.cshtml" />
+    <Content Include="Views\Partials\Grid\Bootstrap2-Fluid.cshtml" />
+    <Content Include="Views\Partials\Grid\Bootstrap2.cshtml" />
+    <Content Include="Views\Partials\_Breadcrumb.cshtml" />
     <Content Include="Views\Partials\_CookieConsent.cshtml" />
     <Content Include="Views\Partials\_Favicons.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Partials\_OpenGraph.cshtml" />
     <Content Include="Views\Partials\_Pagination.cshtml" />
+    <Content Include="Views\Partials\_SEO.cshtml" />
+    <Content Include="Views\Partials\_SiteNavbar.cshtml" />
     <Content Include="Views\PDFExample.cshtml" />
     <Content Include="Views\RSS.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Sitemap.cshtml" />
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\GridPage.cshtml" />
-    <Content Include="Views\MacroPartials\_ChangePasswordMacro.cshtml" />
-    <Content Include="Views\MacroPartials\_ForgotPasswordMacro.cshtml" />
-    <Content Include="Views\MacroPartials\_LoginMacro.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Partials\_SiteNavbar.cshtml" />
-    <Content Include="Views\Partials\Grid\Editors\Textstring.cshtml" />
-    <Content Include="Views\Partials\Grid\Editors\Rte.cshtml" />
-    <Content Include="Views\Partials\Grid\Editors\Media.cshtml" />
-    <Content Include="Views\Partials\Grid\Editors\Macro.cshtml" />
-    <Content Include="Views\Partials\Grid\Editors\Embed.cshtml" />
-    <Content Include="Views\Partials\Grid\Editors\Base.cshtml" />
-    <Content Include="Views\Partials\Grid\Bootstrap3.cshtml" />
-    <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
-    <Content Include="Views\Partials\Grid\Bootstrap2.cshtml" />
-    <Content Include="Views\Partials\Grid\Bootstrap2-Fluid.cshtml" />
-    <Content Include="Views\MacroPartials\_RegisterProfileMacro.cshtml" />
-    <Content Include="Views\Partials\_SEO.cshtml" />
-    <Content Include="Views\MacroPartials\_EditProfileMacro.cshtml" />
-    <Content Include="Views\MacroPartials\_CookiePreferencesMacro.cshtml" />
-    <Content Include="Views\MacroPartials\_AnchorJumplinksMacro.cshtml" />
-    <Content Include="Views\MacroPartials\_DeleteProfileMacro.cshtml" />
-    <Content Include="Views\MacroPartials\_ExportProfileDataMacro.cshtml" />
-    <Content Include="Views\Partials\_Breadcrumb.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
     <Content Include="Zoro.WebUI.wpp.targets" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
-    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.1\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.1\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Assets\js\components\CookieConsent.ts" />
@@ -345,15 +1225,32 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="UmbracoCms" Version="7.13.2" />
+    <Folder Include="App_Plugins\Leaflet\Assets\images\" />
+    <Folder Include="App_Plugins\Leaflet\Assets\plugins\L.GeoSearch\img\" />
+    <Folder Include="Assets\lib\cldrjs\doc\asset\" />
+    <Folder Include="dist\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zoro.Application\Zoro.Application.csproj">
+      <Project>{6854c789-7f03-4898-8373-ad055cf860ba}</Project>
+      <Name>Zoro.Application</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49857</DevelopmentServerPort>
+          <DevelopmentServerPort>60262</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:49858/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
@@ -369,7 +1266,19 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\UmbracoCms.7.10.4\build\UmbracoCms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\UmbracoCms.7.10.4\build\UmbracoCms.props'))" />
-    <Error Condition="!Exists('..\packages\UmbracoCms.7.10.4\build\UmbracoCms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\UmbracoCms.7.10.4\build\UmbracoCms.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets'))" />
+    <Error Condition="!Exists('..\packages\UmbracoCms.8.0.0\build\UmbracoCms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\UmbracoCms.8.0.0\build\UmbracoCms.props'))" />
+    <Error Condition="!Exists('..\packages\UmbracoCms.8.0.0\build\UmbracoCms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\UmbracoCms.8.0.0\build\UmbracoCms.targets'))" />
   </Target>
+  <Import Project="..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets" Condition="Exists('..\packages\Umbraco.SqlServerCE.4.0.0.1\build\Umbraco.SqlServerCE.targets')" />
+  <Import Project="..\packages\UmbracoCms.8.0.0\build\UmbracoCms.targets" Condition="Exists('..\packages\UmbracoCms.8.0.0\build\UmbracoCms.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

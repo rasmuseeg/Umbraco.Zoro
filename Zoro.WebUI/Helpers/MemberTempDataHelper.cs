@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace UmbracoBootstrap.Web.Helpers
+namespace Zoro.WebUI.Helpers
 {
     public class MemberTempDataHelper
     {

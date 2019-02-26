@@ -8,7 +8,7 @@ using System.Web;
 
 //{stamp:'yPe34YH8yaKBV4dFyhqdIvLlfUOJ9sq77ebghnDKWx4BVYzjeH2AuQ=='%2Cnecessary:true%2Cpreferences:true%2Cstatistics:true%2Cmarketing:true%2Cver:1}
 
-namespace UmbracoBootstrap.Web.Helpers
+namespace Zoro.WebUI.Helpers
 {
     public static class PrivacyHelper
     {

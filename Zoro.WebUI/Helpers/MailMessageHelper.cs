@@ -1,18 +1,14 @@
 ﻿using HtmlAgilityPack;
-using System;
-using System.Web;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Hosting;
-using Umbraco.Core.Configuration;
 using Umbraco.Core.Logging;
 
-namespace UmbracoZoro.WebUI.Helpers
+namespace Zoro.WebUI.Helpers
 {
     public class MailMessageHelper
     {

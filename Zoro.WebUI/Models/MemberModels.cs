@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Our.Umbraco.DataAnnotations;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using Umbraco.Web.DataAnnotations;
-using UmbracoBootstrap.Web.DataAnnotations;
 
-namespace UmbracoBootstrap.Web.Models
+namespace Zoro.WebUI.Models
 {
     public class MemberConsts
     {

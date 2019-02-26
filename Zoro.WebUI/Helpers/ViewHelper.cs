@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using System.IO;
 using System.Web.Routing;
 
-namespace UmbracoBootstrap.Web
+namespace Zoro.WebUI
 {
 
     /// <summary>

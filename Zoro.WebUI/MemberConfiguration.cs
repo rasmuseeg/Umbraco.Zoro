@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UmbracoBootstrap.Web
+namespace Zoro.WebUI
 {
     public class MemberConfiguration
     {
