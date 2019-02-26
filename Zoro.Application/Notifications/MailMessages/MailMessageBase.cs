@@ -1,12 +1,7 @@
-﻿using Zoro.Application.Helpers;
-using HtmlAgilityPack;
-using System;
-using System.Collections.Generic;
+﻿using HtmlAgilityPack;
 using System.Globalization;
-using System.Linq;
 using System.Net.Mail;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using Zoro.Application.Helpers;
 using Zoro.Domain.Notifications;

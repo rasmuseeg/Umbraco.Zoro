@@ -1,20 +1,33 @@
-# editorconfig.org
+# EditorConfig is awesome: https://EditorConfig.org
 
 # top-most EditorConfig file
 root = true
 
-# Default settings:
-# A newline ending every file
-# Use 4 spaces as indentation
 [*]
-insert_final_newline = true
-indent_style = space
-indent_size = 4
+charset = utf-8
 end_of_line = crlf
-
-[*.xml]
 indent_style = space
-
-# Trim trailing whitespace, limited support.
-# https://github.com/editorconfig/editorconfig/wiki/Property-research:-Trim-trailing-spaces
 trim_trailing_whitespace = true
+indent_size = 4
+
+# Web config style settings:
+[*.config]
+indent_size = 2
+
+# Razor encoding must be with bom
+[*.cshtml]
+charset = utf-8-bom
+
+# CSharp code style settings:
+[*.cs]
+charset = utf-8-bom
+csharp_prefer_braces = true:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_new_line_before_open_brace = methods, properties, control_blocks, types
+csharp_new_line_before_else = true:warning
+csharp_new_line_before_catch = true:warning
+csharp_new_line_before_finally = true:warning
+csharp_new_line_before_members_in_object_initializers = true:warning
+csharp_new_line_before_members_in_anonymous_types = true:warning
+csharp_new_line_between_query_expression_clauses = true:warning
