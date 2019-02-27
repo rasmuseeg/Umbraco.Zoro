@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -9,14 +9,6 @@ namespace Umbraco.Web
     public static class UmbracoHelperExtensions
     {
         #region Search Extensions
-        /// <summary>
-        /// Strips html from string
-        /// </summary>
-        public static string CleanseSearchTerm(this UmbracoHelper helper, string s)
-        {
-            return helper.StripHtml(s).ToString();
-        }
-
         /// <summary>
         /// Splits a string on whitespace, except where enclosed in quotes
         /// </summary>
@@ -57,6 +49,11 @@ namespace Umbraco.Web
             return s;
         }
 
+        public static string Truncate(this UmbracoHelper helper, string s, int maxLength, bool? ellipsis = false)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Truncates a string on word breaks
         /// </summary>
@@ -70,10 +67,10 @@ namespace Umbraco.Web
         /// </summary>
         public static string TruncateWordBreak(this UmbracoHelper helper, string s, int maxLength)
         {
-            var truncated = helper.Truncate(s, maxLength, true).ToString();
+            string truncated = helper.Truncate(s, maxLength, true).ToString();
             if (truncated.EndsWith("&hellip;"))
             {
-                var lastSpaceIndex = truncated.LastIndexOf(' ');
+                int lastSpaceIndex = truncated.LastIndexOf(' ');
                 if (lastSpaceIndex > 0)
                 {
                     truncated = truncated.Substring(0, lastSpaceIndex) + "&hellip;";

@@ -6,12 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
+using Umbraco.Core.Configuration.UmbracoSettings;
 using Umbraco.Core.Logging;
 
 namespace Zoro.WebUI.Helpers
 {
     public class MailMessageHelper
     {
+        //private static ILogger Logger = 
+
         private static MailMessageHelper _current;
         public static MailMessageHelper Current
         {
@@ -31,7 +34,9 @@ namespace Zoro.WebUI.Helpers
             get
             {
                 if (string.IsNullOrEmpty(_notificationsEmailAddress))
-                    _notificationsEmailAddress = UmbracoConfig.For.UmbracoSettings().Content.NotificationEmailAddress;
+                {
+                    _notificationsEmailAddress = Umbraco.Web.Composing.Current.Configs.GetConfig<IUmbracoSettingsSection>().Content.NotificationEmailAddress;
+                }
                 return _notificationsEmailAddress;
             }
         }
@@ -71,7 +76,7 @@ namespace Zoro.WebUI.Helpers
             string absoluteViewPath = HostingEnvironment.MapPath(viewPath);
             var file = new FileInfo(absoluteViewPath);
             if (!file.Exists) {
-                LogHelper.Warn<MailMessageHelper>("Unable to find view: {0}", () => viewPath);
+                //TODO: Logger.Warn<MailMessageHelper>("Unable to find view: {0}", () => viewPath);
                 culture = CultureInfo.InvariantCulture.Name;
                 viewPath = "~/Views/MailMessages/" + culture + "/" + templateKey + ".cshtml";
             }
