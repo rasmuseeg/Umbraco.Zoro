@@ -1,0 +1,32 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using System.Text;
+@{
+    Layout = null;
+
+    string authority = Request.Url.GetLeftPart(UriPartial.Authority);
+
+    var sb = new StringBuilder();
+    if (Model.Content.HasValue("robotsText"))
+    {
+        // Custom robots.txt
+        sb.Append(Model.Content.GetPropertyValue<string>("robotsText"));
+    }
+    else
+    {
+        // Default robots.txt
+        sb.AppendLine("User-agent: *");
+        sb.AppendLine("Allow: DependencyHandler.axd");
+        sb.AppendLine("Disallow: /bin/");
+        sb.AppendLine("Disallow: /config/");
+        sb.AppendLine("Disallow: /umbraco/");
+        sb.AppendLine("Disallow: /umbraco_client/");
+        sb.AppendLine("Disallow: *.pdf");
+        sb.AppendLine();
+        sb.AppendLine(string.Format("Sitemap: {0}/sitemap.xml", authority));
+    }
+
+    Response.AddHeader("Content-Type", "text/plain; charset=utf-8");
+    Response.AddHeader("Content-Disposition", "filename=robots.txt");
+
+    @Html.Raw(sb.ToString())
+}
