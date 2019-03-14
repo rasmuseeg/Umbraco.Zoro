@@ -8,8 +8,8 @@
     Layout = null;
 
     List<string> contentTypes = new List<string>() { };
-    string[] titleFields = new[] { "teaserHeading", "heading" };
-    string[] descriptionFields = new[] { "teaserDescription", "subheading" };
+    string[] titleFields = new[] { "heading", "metaTitle" };
+    string[] descriptionFields = new[] { "shortDescription", "metaDescription" };
 
     // QueryString
     DateTime? dateFrom = Umbraco.GetQueryString<DateTime?>("from", null);
@@ -47,11 +47,12 @@
     Response.AddHeader("Content-Type", "application/rss+xml, application/rdf+xml, application/atom+xml, application/xml, text/xml; charset=utf-8");
     Response.AddHeader("Content-Disposition", "filename=rss.xml");
 
-    // write the xml document to respons
+    // write the xml document to response
     @Html.Raw("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
     @Html.Raw(doc.ToString())
 }
-@functions{
+@functions
+{
     /// <summary>
     /// Convert a DateTime to RFC-822 format
     /// </summary>
@@ -59,8 +60,7 @@
     /// <returns>RFC-822 date-time</returns>
     public string GetRFCTime(DateTime date)
     {
-        String rfc822 = date.ToString("r");
-        return rfc822;
+        return date.ToString("r");
     }
 
     /// <summary>

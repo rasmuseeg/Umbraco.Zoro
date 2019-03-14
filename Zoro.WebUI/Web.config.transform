@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+
+    <appSettings>
+        <add key="Umbraco.Core.DefaultUILanguage" value="en-GB" xdt:Transform="SetAttributes" xdt:Locator="Match(key)" />
+        <add key="Umbraco.Core.UseHttps" value="true" xdt:Transform="SetAttributes" xdt:Locator="Match(key)" />
+
+        <add key="Umbraco.ModelsBuilder.Enable" value="true" xdt:Transform="InsertIfMising" />
+        <add key="Umbraco.ModelsBuilder.ModelsMode" value="PureLive" xdt:Transform="InsertIfMising" />
+        <add key="Umbraco.ModelsBuilder.EnableApi" value="true" xdt:Transform="InsertIfMising" />
+    </appSettings>
+
+    <system.net>
+        <mailSettings>
+            <smtp from="noreply@example.com" xdt:Transform="Replace">
+                <network host="127.0.0.1" />
+            </smtp>
+        </mailSettings>
+    </system.net>
+
+    <system.web>
+        <customErrors mode="RemoteOnly" />
+    </system.web>
+
+    <system.webServer>
+
+        <staticContent>
+            <remove fileExtension=".webmanifest"/>
+            <mimeMap fileExtension=".webmanifest" mimeType="application/manifest+json"/>
+            <remove fileExtension=".svg" />
+            <mimeMap fileExtension=".svg" mimeType="image/svg+xml" />
+        </staticContent>
+
+        <!-- Ensure the powered by header is not returned -->
+        <httpProtocol>
+            <customHeaders>
+                <!-- Ensure the powered by header is not returned -->
+                <remove name="X-Powered-By"/>
+                <remove name="X-Frame-Options"/>
+                <add name="X-Frame-Options" value="sameorigin"/>
+                <!--
+                1; mode=block
+                Enables XSS filtering.
+                Rather than sanitizing the page, the browser will prevent rendering of the page if an attack is detected.
+                -->
+                <remove name="X-Xss-Protection"/>
+                <add name="X-Xss-Protection" value="1; mode=block"/>
+                <!--
+                Blocks a request if the requested type is
+                * "style" and the MIME type is not "text/css", or
+                * "script" and the MIME type is not a JavaScript MIME type.
+                -->
+                <remove name="X-Content-Type-Options"/>
+                <add name="X-Content-Type-Options" value="nosniff"/>
+            </customHeaders>
+        </httpProtocol>
+
+        <!-- Increase the default upload file size limit -->
+        <security>
+            <requestFiltering>
+                <requestLimits maxAllowedContentLength="52428800" />
+            </requestFiltering>
+        </security>
+
+        <!--
+        If you wish to use IIS rewrite rules, see the documentation here:
+            https://our.umbraco.com/documentation/Reference/Routing/IISRewriteRules
+        -->
+
+        <rewrite>
+            <rules>
+                <rule enabled="true" name="Sitemap" stopProcessing="true">
+                    <match url="^sitemap$" ignoreCase="true"/>
+                    <action type="Redirect" url="sitemap.xml" redirectType="Permanent" appendQueryString="false"/>
+                </rule>
+                <rule enabled="true" name="Sitemap XML" stopProcessing="true">
+                    <match url="^sitemap.xml$" ignoreCase="true"/>
+                    <action type="Rewrite" url="sitemap" appendQueryString="false"/>
+                </rule>
+            </rules>
+        </rewrite>
+
+    </system.webServer>
+</configuration>

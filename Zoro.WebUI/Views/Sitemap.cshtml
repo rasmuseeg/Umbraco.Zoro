@@ -15,7 +15,8 @@
 
     var sites = Model.Content
         .Descendants()
-        .Where(x => x.IsVisible());
+        .Where(x => x.IsVisible() &&
+            !x.GetPropertyValue<bool>("sitemapHide", false));
 
     channel.Add(GetItems(ns, sites, domain));
 
@@ -25,7 +26,7 @@
     Response.AddHeader("Content-Type", "application/xml, text/xml; charset=utf-8");
     Response.AddHeader("Content-Disposition", "filename=sitemap.xml");
 
-    // write the xml document to respons
+    // write the xml document to response
     @Html.Raw("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
     @Html.Raw(doc.ToString())
 }
