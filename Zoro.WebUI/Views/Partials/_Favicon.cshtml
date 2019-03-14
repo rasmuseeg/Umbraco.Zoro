@@ -1,8 +1,4 @@
 @inherits Umbraco.Web.Mvc.UmbracoViewPage
-@{ 
-    var site = Model.Site();
-    string siteName = site.GetPropertyValue<string>("siteName", site.Name);
-}
 @{
     @*
         This code is generated from
@@ -10,9 +6,13 @@
         1. Upload your favicon
         2. Configure the settings
         3. Download the zip file
-        4. Extract to: ~/content/favicons/
+        4. Extract to: ~/Assets/favicon/
     *@
-    string path = "/Content/favicon";
+
+    var site = Model.Site();
+    string siteName = site.GetPropertyValue<string>("siteName", site.Name);
+
+    string path = "/Assets/favicon";
     string themeColor = "#ffffff";
     string applicationColor = "#da532c";
 }

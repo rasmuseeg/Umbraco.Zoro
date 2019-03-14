@@ -91,9 +91,9 @@
   !*** ./assets/scss/styles.scss ***!
   \*********************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-// extracted by mini-css-extract-plugin
+throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/postcss-loader/src/index.js):\nError: No PostCSS Config found in: C:\\Repos\\GitHub\\Umbraco.Zoro\\Zoro.WebUI\\assets\\scss\n    at config.load.then (C:\\Repos\\GitHub\\Umbraco.Zoro\\Zoro.WebUI\\node_modules\\postcss-load-config\\src\\index.js:55:15)\n    at runLoaders (C:\\Repos\\GitHub\\Umbraco.Zoro\\Zoro.WebUI\\node_modules\\webpack\\lib\\NormalModule.js:301:20)\n    at C:\\Repos\\GitHub\\Umbraco.Zoro\\Zoro.WebUI\\node_modules\\loader-runner\\lib\\LoaderRunner.js:367:11\n    at C:\\Repos\\GitHub\\Umbraco.Zoro\\Zoro.WebUI\\node_modules\\loader-runner\\lib\\LoaderRunner.js:233:18\n    at context.callback (C:\\Repos\\GitHub\\Umbraco.Zoro\\Zoro.WebUI\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at Promise.resolve.then.then.catch (C:\\Repos\\GitHub\\Umbraco.Zoro\\Zoro.WebUI\\node_modules\\postcss-loader\\src\\index.js:208:9)");
 
 /***/ })
 

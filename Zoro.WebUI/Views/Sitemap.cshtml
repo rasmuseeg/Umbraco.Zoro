@@ -40,11 +40,40 @@
             XElement xmlItem = new XElement(ns + "url",
                 new XElement(ns + "loc", item.UrlAbsolute()),
                 new XElement(ns + "lastmod", (Model.Content.UpdateDate).ToString("yyyy-MM-dd")),
-                new XElement(ns + "changefreq", "monthly"),
-                new XElement(ns + "priority", "1.0")
+                new XElement(ns + "changefreq", GetChangeFreq(item)),
+                new XElement(ns + "priority", GetPriority(item))
             );
             items.Add(xmlItem);
         }
         return items.ToArray();
+    }
+}
+
+@functions
+{
+    public decimal GetPriority(IPublishedContent item)
+    {
+        decimal? priority = item.GetPropertyValue<decimal?>("sitemapPriority", null);
+        if(priority.HasValue)
+        {
+            switch(item.DocumentTypeAlias)
+            {
+                // Add custom logic here for each documenttype
+                default: return 0.1;
+            }
+        }
+    }
+
+    public string GetChangeFreq(IPublishedContent item)
+    {
+        string changefreq = item.GetPropertyValue<string>("sitemapChangeFreq", null);
+        if(string.IsNullOrEmpty(changefreq))
+        {
+            switch(item.DocumentTypeAlias)
+            {
+                // Add custom logic here for each documenttype
+                default: return "monthly";
+            }
+        }
     }
 }
