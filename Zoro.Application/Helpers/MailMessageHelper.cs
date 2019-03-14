@@ -36,18 +36,22 @@ namespace Zoro.Application.Helpers
             }
         }
 
-        
+
 
         public void SendMail(MailMessage message)
         {
             using (var client = new SmtpClient())
+            {
                 client.Send(message);
+            }
         }
 
         public async Task SendMailAsync(MailMessage message)
         {
             using (var client = new SmtpClient())
+            {
                 await client.SendMailAsync(message);
+            }
         }
     }
 }
