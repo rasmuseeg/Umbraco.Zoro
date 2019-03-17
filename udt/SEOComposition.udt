@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DocumentType Folders="Compositions">
   <Info>
-    <Name>SEO</Name>
-    <Alias>SEOComposition</Alias>
+    <Name>Search Engine Optimization</Name>
+    <Alias>searchEngineOptimization</Alias>
     <Icon>icon-document</Icon>
     <Thumbnail>folder.png</Thumbnail>
     <Description />
