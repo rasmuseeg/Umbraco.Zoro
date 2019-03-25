@@ -26,7 +26,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoro.WebUI", "Zoro.WebUI\Zo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoro.Domain", "Zoro.Domain\Zoro.Domain.csproj", "{E8E0441C-B53E-4D5A-AF6A-5BF6A7CC4AF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoro.Application", "Zoro.Application\Zoro.Application.csproj", "{6854C789-7F03-4898-8373-AD055CF860BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoro.Application", "Zoro.Application\Zoro.Application.csproj", "{0202550A-B1C3-4765-ABAD-93B4D51A3F22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,10 +42,10 @@ Global
 		{E8E0441C-B53E-4D5A-AF6A-5BF6A7CC4AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8E0441C-B53E-4D5A-AF6A-5BF6A7CC4AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8E0441C-B53E-4D5A-AF6A-5BF6A7CC4AF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6854C789-7F03-4898-8373-AD055CF860BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6854C789-7F03-4898-8373-AD055CF860BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6854C789-7F03-4898-8373-AD055CF860BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6854C789-7F03-4898-8373-AD055CF860BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0202550A-B1C3-4765-ABAD-93B4D51A3F22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0202550A-B1C3-4765-ABAD-93B4D51A3F22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0202550A-B1C3-4765-ABAD-93B4D51A3F22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0202550A-B1C3-4765-ABAD-93B4D51A3F22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

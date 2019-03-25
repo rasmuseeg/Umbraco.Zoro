@@ -1,6 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using Umbraco.Core;
-using Umbraco.Web.Composing;
 
 namespace Umbraco.Web.Templates
 {
@@ -8,7 +6,7 @@ namespace Umbraco.Web.Templates
     {
         public static string ParseInternalMediaLinks(string value)
         {
-            var umbracoHelper = Current.UmbracoHelper;
+            var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
 
             //get all anchors and images with data-id, href's including media and get their values
             string pattern = @"\<(?:a|img)(?=.*?data-id\=\""([0-9]+))(?=.*?(?:(?:src|href)\=\"")(\/media\/\S+)\"")";
