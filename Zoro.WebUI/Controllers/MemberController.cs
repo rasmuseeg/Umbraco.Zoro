@@ -10,7 +10,7 @@ using Umbraco.Web;
 using Umbraco.Web.Mvc;
 using Zoro.WebUI.Helpers;
 using Zoro.WebUI.Models;
-using ContentModels = Zoro.WebUI.PublishedContentModels;
+using ContentModels = Zoro.WebUI.Models.PublishedContent;
 
 namespace Zoro.WebUI.Controllers
 {
@@ -281,13 +281,13 @@ namespace Zoro.WebUI.Controllers
 
                 var model = new ApproveEmailMailModel()
                 {
-                    Member = (ContentModels.Member)Umbraco.Member(member.Id),
+                    Member = Umbraco.TypedMember(member.Id),
                     Permalink = new Uri($"{hostAndScheme}?email={Url.Encode(member.Email)}&key={Url.Encode(securityKey)}"),
                 };
 
-                await MailMessageHelper.Current.SendMailMessageAsync(member.Email, "ConfirmAccountMail", model, this.ControllerContext);
+                //await MailMessageHelper.Current.SendMailMessageAsync(member.Email, "ConfirmAccountMail", model, this.ControllerContext);
 
-                Logger.Info<MemberController>("Register Confirmation Email sent to: {0}", member.Email);
+                Logger.Info<MemberController>("Register Confirmation Email sent to: {0}", () => member.GetValue<string>("Email"));
 
                 TempDataHelper.ApprovalRequestMailSent = true;
 
@@ -333,7 +333,7 @@ namespace Zoro.WebUI.Controllers
 
             TempDataHelper.AccountHasBeenApproved = true;
 
-            Logger.Debug<MemberController>("Member has been approved: {0}", member.Email);
+            Logger.Debug<MemberController>("Member has been approved: {0}", () => member.GetValue<string>("Email"));
             return Redirect(model.LoginPageUrl);
         }
 
@@ -386,12 +386,12 @@ namespace Zoro.WebUI.Controllers
             {
                 Services.MemberService.SavePassword(member, model.Password);
 
-                MailMessageHelper.Current.SendMailMessage(
-                    member.Email,
-                    "PasswordChangedMail",
-                    CurrentPage,
-                    this.ControllerContext
-                );
+                //MailMessageHelper.Current.SendMailMessage(
+                //    member.Email,
+                //    "PasswordChangedMail",
+                //    CurrentPage,
+                //    this.ControllerContext
+                //);
             }
             catch (Exception ex)
             {
@@ -445,12 +445,12 @@ namespace Zoro.WebUI.Controllers
             {
                 Services.MemberService.SavePassword(member, model.Password);
 
-                MailMessageHelper.Current.SendMailMessage(
-                    member.Email,
-                    "PasswordChangedMail",
-                    CurrentPage,
-                    this.ControllerContext
-                );
+                //MailMessageHelper.Current.SendMailMessage(
+                //    member.Email,
+                //    "PasswordChangedMail",
+                //    CurrentPage,
+                //    this.ControllerContext
+                //);
             }
             catch (Exception ex)
             {

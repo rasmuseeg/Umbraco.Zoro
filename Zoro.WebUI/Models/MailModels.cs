@@ -1,5 +1,6 @@
 ﻿using System;
-using ContentModels = Zoro.WebUI.PublishedContentModels;
+using Umbraco.Core.Models;
+using ContentModels = Zoro.WebUI.Models.PublishedContent;
 
 namespace Zoro.WebUI.Models
 {
@@ -12,7 +13,7 @@ namespace Zoro.WebUI.Models
 
     public class ApproveEmailMailModel
     {
-        public ContentModels.Member Member { get; set; }
+        public IPublishedContent Member { get; set; }
 
         /// <summary>
         /// Permanent link to where member can confirm their email.

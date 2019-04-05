@@ -87,11 +87,9 @@
     <Content Include="Assets\dist\main.css" />
     <Content Include="Assets\dist\main.js" />
     <Content Include="Assets\js\components\CookieConsent.js" />
+    <Content Include="Assets\js\validation.js" />
     <Content Include="Assets\js\validation\jquery.cldr.js" />
-    <Content Include="Assets\js\validation\jquery.validate.unobtrusive.js" />
-    <Content Include="Assets\js\validation\jquery.validation.conditional.js">
-      <DependentUpon>jquery.validation.conditional.ts</DependentUpon>
-    </Content>
+    <Content Include="Assets\js\validation\jquery.validation.conditional.js" />
     <Content Include="Assets\js\validation\jquery.validation.custom.js" />
     <Content Include="Assets\js\validation\jquery.validation.globalize.js" />
     <Content Include="Assets\lib\cldrjs\dist\cldr.js" />
@@ -609,7 +607,7 @@
     <Content Include="css\Types.css" />
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="robots.txt" />
+    <Content Include="Scripts\jquery.cldr.es5.js" />
     <Content Include="SmtpDebug.aspx" />
     <Content Include="tailwind.config.js" />
     <Content Include="Web.config">
@@ -624,22 +622,25 @@
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\ExamineExtensions.cs" />
+    <Compile Include="Extensions\TempDataExtensions.cs" />
     <Compile Include="Extensions\TemplateUtillitiesExtensions.cs" />
     <Compile Include="Extensions\UmbracoHelperExtensions.cs" />
+    <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Helpers\CookieHelper.cs" />
     <Compile Include="Helpers\MailMessageHelper.cs" />
     <Compile Include="Helpers\MemberTempDataHelper.cs" />
     <Compile Include="Helpers\ViewHelper.cs" />
+    <Compile Include="MailMessageHelper.cs" />
     <Compile Include="MemberConfiguration.cs" />
     <Compile Include="Models\CookieModels.cs" />
     <Compile Include="Models\MailModels.cs" />
     <Compile Include="Models\MemberModels.cs" />
     <Compile Include="OurConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PublishedContentModels\Builder.cs">
+    <Compile Include="Models\PublishedContent\Builder.cs">
       <Generator>UmbracoModelsBuilder</Generator>
     </Compile>
-    <Compile Include="PublishedContentModels\Member.cs" />
+    <Compile Include="Models\PublishedContent\Member.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config\imageprocessor\security.config" />
@@ -829,7 +830,6 @@
     <Content Include="Views\Partials\_Pagination.cshtml" />
     <Content Include="Views\Partials\_SEO.cshtml" />
     <Content Include="Views\Partials\_SiteNavbar.cshtml" />
-    <Content Include="Views\PDFExample.cshtml" />
     <Content Include="Views\RSS.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Sitemap.cshtml" />
@@ -858,6 +858,8 @@
     <Content Include="Views\Partials\Grid\Editors\Embed.cshtml" />
     <Content Include="Views\Partials\Grid\Editors\Base.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
+    <Content Include="Views\Robots.cshtml" />
+    <Content Include="postcss.config.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -872,7 +874,6 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Assets\js\components\CookieConsent.ts" />
-    <TypeScriptCompile Include="Assets\js\validation\jquery.validation.conditional.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -910,6 +911,9 @@
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Humanizer, Version=2.6.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Humanizer.Core.2.6.2\lib\netstandard2.0\Humanizer.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -986,8 +990,8 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Our.Umbraco.DataAnnotations, Version=1.1.31.37, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Our.Umbraco.DataAnnotations.1.1.31.37\lib\net45\Our.Umbraco.DataAnnotations.dll</HintPath>
+    <Reference Include="Our.Umbraco.DataAnnotations, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Our.Umbraco.DataAnnotations.1.0.0\lib\net45\Our.Umbraco.DataAnnotations.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -1003,6 +1007,7 @@
       <HintPath>..\packages\System.Collections.Immutable.1.1.36\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.1, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.7.14.0\lib\net45\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
@@ -1067,6 +1072,9 @@
     </Reference>
     <Reference Include="Umbraco.ModelsBuilder, Version=3.0.10.102, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Umbraco.ModelsBuilder.3.0.10\lib\Umbraco.ModelsBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.ModelsBuilder.Api, Version=3.0.10.102, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Umbraco.ModelsBuilder.Api.3.0.10\lib\Umbraco.ModelsBuilder.Api.dll</HintPath>
     </Reference>
     <Reference Include="umbraco.providers, Version=1.0.7009.26206, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.7.14.0\lib\net45\umbraco.providers.dll</HintPath>

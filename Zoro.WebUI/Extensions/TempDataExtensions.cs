@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zoro.WebUI.PublishedContentModels
+namespace Zoro.WebUI.Extensions
 {
-    public partial class Member
+    public class TempDataExtensions
     {
         
     }

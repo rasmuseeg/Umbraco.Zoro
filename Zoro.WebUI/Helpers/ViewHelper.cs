@@ -1,10 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using System.IO;
 using System.Web.Routing;
 
-namespace Zoro.WebUI
+namespace Zoro.WebUI.Helpers
 {
 
     /// <summary>

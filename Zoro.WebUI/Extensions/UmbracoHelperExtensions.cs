@@ -168,8 +168,6 @@ namespace Umbraco.Web
             return false;
         }
 
-
-
         public static IEnumerable<T> GetPagedResult<T>(this UmbracoHelper helper, IEnumerable<T> items, int currentPage, int pageSize)
         {
             currentPage = currentPage <= 0 ? 1 : currentPage;

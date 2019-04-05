@@ -31,10 +31,22 @@ module.exports = {
                 ]
             },
             {
-                test: /\.js$/,
+                test: /\.m?js$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader"
+                    loader: "babel-loader",
+                    options: {
+                        presets: [
+                            [
+                                "@babel/preset-env",
+                                {
+                                    "targets": {
+                                        "ie": "11"
+                                    }
+                                }
+                            ]
+                        ]
+                    }
                 }
             }]
     },
@@ -48,6 +60,9 @@ module.exports = {
             filename: "[name].css",
             chunkFilename: "[id].css"
         }),
-        require('autoprefixer')
+        require('autoprefixer'),
+        new webpack.ProvidePlugin({
+            Globalize: "globalize"
+        })
     ]
 };

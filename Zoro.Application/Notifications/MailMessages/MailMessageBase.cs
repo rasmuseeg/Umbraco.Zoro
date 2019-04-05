@@ -1,9 +1,7 @@
 ﻿using System.Globalization;
 using System.Net.Mail;
 using System.Text;
-using System.Web;
 using System.Xml.Linq;
-using Zoro.Application.Helpers;
 using Zoro.Domain.Notifications;
 
 namespace Zoro.Application.Notifications.MailMessages

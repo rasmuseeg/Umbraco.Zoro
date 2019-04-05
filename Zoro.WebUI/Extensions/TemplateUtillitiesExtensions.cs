@@ -15,7 +15,7 @@ namespace Umbraco.Web.Templates
                 Group dataIdGrp = match.Groups[1];
                 Group urlGrp = match.Groups[2];
 
-                var image = umbracoHelper.Media(dataIdGrp.Value);
+                var image = umbracoHelper.TypedMedia(dataIdGrp.Value);
                 if (image == null)
                 {
                     continue;

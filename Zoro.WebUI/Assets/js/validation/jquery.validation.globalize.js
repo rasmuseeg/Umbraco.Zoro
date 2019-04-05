@@ -1,4 +1,5 @@
-﻿/*!
+"use strict";
+/*!
 ** An extension to the jQuery Validation Plugin which makes it use Globalize.js for number and date parsing
 ** Copyright (c) 2013 John Reilly
 */

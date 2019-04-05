@@ -1,10 +1,12 @@
-﻿(function ($) {
-    function setValidationValues(options, ruleName, value) {
-        options.rules[ruleName] = value;
-        if (options.message) {
-            options.messages[ruleName] = options.message;
-        }
-    }
+"use strict";
+(function ($)
+{
+    //function setValidationValues(options, ruleName, value) {
+    //    options.rules[ruleName] = value;
+    //    if (options.message) {
+    //        options.messages[ruleName] = options.message;
+    //    }
+    //}
 
     //$.validator.addMethod("mustbetrue", ["required"], function (value, element, param) {
     //    // check if dependency is met

@@ -1,9 +1,8 @@
 ﻿using System.Net.Mail;
 using System.Threading.Tasks;
 using Umbraco.Core.Configuration;
-using Umbraco.Core.Configuration.UmbracoSettings;
 
-namespace Zoro.Application.Helpers
+namespace Zoro.WebUI.Helpers
 {
     public class MailMessageHelper
     {
@@ -28,8 +27,7 @@ namespace Zoro.Application.Helpers
             {
                 if (string.IsNullOrEmpty(_notificationsEmailAddress))
                 {
-                    var settingsSection = new Configs().GetConfig<IUmbracoSettingsSection>();
-                    _notificationsEmailAddress = settingsSection.Content.NotificationEmailAddress;
+                    _notificationsEmailAddress = UmbracoConfig.For.UmbracoSettings().Content.NotificationEmailAddress;
                 }
 
                 return _notificationsEmailAddress;
