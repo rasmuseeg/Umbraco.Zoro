@@ -3,11 +3,7 @@
 @using UmbracoBootstrap.Web;
 @{
     var site = Model.Site();
-
     var cookiePolicyModel = CookiePolicy.GetSavedOrDefault();
-    cookiePolicyModel.Preferences = true;
-    cookiePolicyModel.Marketing = true;
-    cookiePolicyModel.Statistics = true;
 }
 @if (!CookiePolicy.Exist())
 {
@@ -28,6 +24,7 @@
 
     using (Html.BeginUmbracoForm<PrivacyController>("HandleCookieConsent", FormMethod.Post))
     {
+        @Html.AntiForgeryToken()
         <div class="alert alert-info alert-cookies mb-0" role="alert">
             @site.GetPropertyValue("cookieDisclaimerText")
             @Html.HiddenFor(x=> cookiePolicyModel.Preferences)
