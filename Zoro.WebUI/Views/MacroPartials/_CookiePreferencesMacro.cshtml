@@ -12,6 +12,7 @@
     {
         using (Html.BeginUmbracoForm<PrivacyController>("HandleCookieConsent", FormMethod.Post))
         {
+            @Html.AntiForgeryToken()
             <div class="alert alert-info">
                 @Umbraco.GetDictionaryValue("CookieConsentSavedAlert", "We have saved cookies on your computer, because you accepted them earlier.")
             </div>
@@ -28,6 +29,7 @@
     {
         using (Html.BeginUmbracoForm<PrivacyController>("HandleCookieConsent", FormMethod.Post))
         {
+            @Html.AntiForgeryToken()
             @*var cookieConsentModel = CookieConsent.GetSavedOrDefault();
             cookieConsentModel.Preferences = true;
             cookieConsentModel.Marketing = true;
