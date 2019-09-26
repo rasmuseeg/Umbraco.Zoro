@@ -15,6 +15,7 @@ namespace Zoro.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult HandleCookieConsent([Bind(Prefix = "cookieConsentModel")]CookiePolicy model, bool? acceptAll = null)
         {
             if (acceptAll.HasValue)
