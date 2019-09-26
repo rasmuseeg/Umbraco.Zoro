@@ -194,8 +194,10 @@ namespace Zoro.WebUI
                     Expires = DateTime.Now.AddDays(30),
                     Domain = request.Url.Host,
                     Path = "/",
-                    Secure = request.Url.Scheme == "https",
-                    HttpOnly = false // Client-side script, should not change this cookie
+                    // If the current certificate is not valid, but we are requesting using HTTPS, the following will not work.
+                    // Secure = request.Url.Scheme == "https",
+                    // Client-side script, should not change this cookie
+                    // HttpOnly = false 
                 };
 
                 var savedConsent = GetSaved();
