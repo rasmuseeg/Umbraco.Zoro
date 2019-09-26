@@ -10,8 +10,9 @@ using System.Web;
 
 namespace Zoro.WebUI
 {
-    public class CookiePolicy
+     public class CookiePolicy
     {
+        private static string[] RESERVED_COOKIES = new[] { "ASP.NET_SessionId" };
         public const string COOKIE_NAME = "CookieConsent";
 
         #region Constructors 
@@ -27,27 +28,25 @@ namespace Zoro.WebUI
 
         internal static void DoNotAccept()
         {
+            // Clear cookies
             var cookies = HttpContext.Current.Request.Cookies;
             for (int i = 0; i < cookies.Count; i++)
             {
-                var cookieName = cookies[i].Name;
-
-                if (COOKIE_NAME == cookieName)
+                string cookieName = cookies[i].Name;
+                if (RESERVED_COOKIES.Contains(cookieName))
                 {
-                    var saved = GetSaved();
-                    saved.Preferences = false;
-                    saved.Marketing = false;
-                    saved.Statistics = false;
-                    saved.Save();
                     continue;
                 }
 
-                HttpCookie myCookie = new HttpCookie(cookieName)
-                {
+                var myCookie = new HttpCookie(cookieName) {
                     Expires = DateTime.Now.AddDays(-1d)
                 };
                 HttpContext.Current.Response.SetCookie(myCookie);
             }
+
+            var saved = GetSavedOrDefault();
+            saved.AcceptAll = false;
+            saved.Save();
         }
         #endregion
 
@@ -57,7 +56,7 @@ namespace Zoro.WebUI
         /// </summary>
         [JsonProperty("nescesary", NullValueHandling = NullValueHandling.Ignore,
             DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public readonly bool Nescesary = true;
+        public bool Nescesary { get; set; }
 
         /// <summary>
         /// Wether or not user has accepted the use of preferences cookies.
@@ -91,19 +90,30 @@ namespace Zoro.WebUI
         [JsonIgnore]
         public bool AcceptAll
         {
-            get
-            {
+            get {
                 return (this.Nescesary
                     && this.Preferences
                     && this.Statistics
                     && this.Marketing);
             }
-            set
-            {
+            set {
+                Nescesary = value;
                 Preferences = value;
                 Statistics = value;
-                Marketing = true;
+                Marketing = value;
             }
+        }
+
+        /// <summary>
+        /// Check if any was accepted.
+        /// </summary>
+        /// <returns></returns>
+        public bool AcceptAny()
+        {
+            return (this.Nescesary
+                    || this.Preferences
+                    || this.Statistics
+                    || this.Marketing);
         }
         #endregion
 
@@ -123,18 +133,28 @@ namespace Zoro.WebUI
         /// <returns></returns>
         public static CookiePolicy GetSaved(DateTime? timestamp = null)
         {
-            var cookie = HttpContext.Current.Request.Cookies[COOKIE_NAME];
-            if (cookie != null)
+            string savedValue = HttpContext.Current.Request.Cookies[COOKIE_NAME]?.Value
+                ?? HttpContext.Current.Session[COOKIE_NAME] as string;
+            if (savedValue != null)
             {
-                var saved = JsonConvert.DeserializeObject<CookiePolicy>(cookie.Value);
-                if (timestamp.HasValue)
+                try
                 {
-                    if (saved.Timestamp >= timestamp)
-                        return saved;
+                    byte[] bytes = Convert.FromBase64String(savedValue);
+                    string json = Encoding.UTF8.GetString(bytes);
+                    var saved = JsonConvert.DeserializeObject<CookiePolicy>(json);
+                    if (timestamp.HasValue)
+                    {
+                        if (saved.Timestamp >= timestamp)
+                            return saved;
 
-                    return null;
+                        return null;
+                    }
+                    return saved;
                 }
-                return saved;
+                catch (JsonSerializationException ex)
+                {
+                    // Just ignore saved value
+                }
             }
             return null;
         }
@@ -165,24 +185,33 @@ namespace Zoro.WebUI
             var response = HttpContext.Current.Response;
             var request = HttpContext.Current.Request;
 
-            var cookie = new HttpCookie(COOKIE_NAME, json)
-            {
-                Expires = DateTime.Now.AddDays(30),
-                Domain = request.Url.Host,
-                Path = "/",
-                Secure = request.Url.Scheme == "https",
-                HttpOnly = false // Visible to client-side script
-            };
+            byte[] bytes = Encoding.UTF8.GetBytes(json);
+            string base64 = Convert.ToBase64String(bytes);
 
-            var savedConsent = GetSaved();
-            if (savedConsent != null)
+            if (AcceptAny())
             {
-                // Renew
-                response.SetCookie(cookie);
+                var cookie = new HttpCookie(COOKIE_NAME, base64) {
+                    Expires = DateTime.Now.AddDays(30),
+                    Domain = request.Url.Host,
+                    Path = "/",
+                    Secure = request.Url.Scheme == "https",
+                    HttpOnly = false // Client-side script, should not change this cookie
+                };
+
+                var savedConsent = GetSaved();
+                if (savedConsent != null)
+                {
+                    // Renew
+                    response.SetCookie(cookie);
+                }
+                else
+                {
+                    response.AppendCookie(cookie);
+                }
             }
             else
             {
-                response.AppendCookie(cookie);
+                HttpContext.Current.Session[COOKIE_NAME] = base64;
             }
         }
     }
