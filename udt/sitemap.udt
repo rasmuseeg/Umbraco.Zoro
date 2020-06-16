@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DocumentType Folders="Pages">
+  <Info>
+    <Name>Sitemap.xml</Name>
+    <Alias>sitemap</Alias>
+    <Icon>icon-forms-file-xml</Icon>
+    <Thumbnail>folder.png</Thumbnail>
+    <Description>Create a new sitemap.xml</Description>
+    <AllowAtRoot>False</AllowAtRoot>
+    <IsListView>False</IsListView>
+    <Compositions />
+    <AllowedTemplates>
+      <Template>Sitemap</Template>
+    </AllowedTemplates>
+    <DefaultTemplate>Sitemap</DefaultTemplate>
+  </Info>
+  <Structure />
+  <GenericProperties />
+  <Tabs />
+</DocumentType>
